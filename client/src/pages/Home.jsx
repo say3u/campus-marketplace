@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Laptop, BookOpen, Sofa, Shirt, Wrench, Package, LayoutGrid } from 'lucide-react';
+import { Laptop, BookOpen, Sofa, Shirt, Wrench, Package, LayoutGrid, SlidersHorizontal, X } from 'lucide-react';
 import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import { useFeed } from '../hooks/useFeed';
@@ -36,28 +36,61 @@ export default function Home() {
   const { user } = useAuth();
   const [category, setCategory] = useState('');
   const [search, setSearch] = useState('');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
 
   useFeed(user?.school);
 
   const { data: listings = [], isLoading } = useQuery({
-    queryKey: ['listings', { category, search }],
-    queryFn: () => api.get('/listings', { params: { category: category || undefined, search: search || undefined } }).then(r => r.data),
+    queryKey: ['listings', { category, search, minPrice, maxPrice }],
+    queryFn: () => api.get('/listings', { params: { category: category || undefined, search: search || undefined, minPrice: minPrice || undefined, maxPrice: maxPrice || undefined } }).then(r => r.data),
   });
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* Search */}
-      <div className="relative mb-6">
+      <div className="flex gap-3 mb-4">
         <input
           type="text"
           placeholder="Search listings..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full border-2 border-gray-200 rounded-2xl px-4 py-3.5 text-base focus:outline-none bg-white shadow-sm font-medium"
+          className="flex-1 border-2 border-gray-200 rounded-2xl px-4 py-3.5 text-base focus:outline-none bg-white shadow-sm font-medium"
           onFocus={e => e.target.style.borderColor = '#CC0033'}
           onBlur={e => e.target.style.borderColor = '#e5e7eb'}
         />
+        <button onClick={() => setShowFilters(f => !f)}
+          className="flex items-center gap-2 px-4 py-3 rounded-2xl border-2 font-bold text-sm transition-all"
+          style={{ borderColor: showFilters ? '#CC0033' : '#e5e7eb', color: showFilters ? '#CC0033' : '#6b7280', backgroundColor: showFilters ? '#fff0f3' : 'white' }}>
+          <SlidersHorizontal size={16} /> Filters
+        </button>
       </div>
+
+      {/* Price filters */}
+      {showFilters && (
+        <div className="bg-white border-2 border-gray-100 rounded-2xl p-4 mb-4 flex flex-wrap items-center gap-3">
+          <span className="text-sm font-bold text-gray-700">Price:</span>
+          <div className="flex items-center gap-2">
+            <input type="number" placeholder="Min $" value={minPrice} onChange={e => setMinPrice(e.target.value)}
+              className="w-24 border-2 border-gray-100 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none"
+              onFocus={e => e.target.style.borderColor = '#CC0033'}
+              onBlur={e => e.target.style.borderColor = '#f3f4f6'} />
+            <span className="text-gray-400">—</span>
+            <input type="number" placeholder="Max $" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
+              className="w-24 border-2 border-gray-100 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none"
+              onFocus={e => e.target.style.borderColor = '#CC0033'}
+              onBlur={e => e.target.style.borderColor = '#f3f4f6'} />
+          </div>
+          {(minPrice || maxPrice) && (
+            <button onClick={() => { setMinPrice(''); setMaxPrice(''); }}
+              className="flex items-center gap-1 text-xs font-bold text-gray-400 hover:text-gray-600">
+              <X size={12} /> Clear
+            </button>
+          )}
+        </div>
+      )}
+
 
       {/* Category pills */}
       <div className="flex gap-2 flex-wrap mb-8">

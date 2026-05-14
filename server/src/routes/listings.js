@@ -12,14 +12,16 @@ const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 // GET /api/listings — paginated, filterable
 router.get('/', async (req, res) => {
-  const { category, school, search, page = 1, limit = 20 } = req.query;
+  const { category, school, search, minPrice, maxPrice, page = 1, limit = 20 } = req.query;
   const offset = (page - 1) * limit;
   const params = [];
   const conditions = ["l.status = 'active'"];
 
-  if (category) { params.push(category); conditions.push(`l.category = $${params.length}`); }
-  if (school)   { params.push(school);   conditions.push(`u.school = $${params.length}`); }
+  if (category) { params.push(category);      conditions.push(`l.category = $${params.length}`); }
+  if (school)   { params.push(school);        conditions.push(`u.school = $${params.length}`); }
   if (search)   { params.push(`%${search}%`); conditions.push(`l.title ILIKE $${params.length}`); }
+  if (minPrice) { params.push(minPrice);      conditions.push(`l.price >= $${params.length}`); }
+  if (maxPrice) { params.push(maxPrice);      conditions.push(`l.price <= $${params.length}`); }
 
   params.push(limit, offset);
   const where = conditions.join(' AND ');
@@ -70,6 +72,27 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
       [req.user.id, title, description, price, category, image_url, lat || null, lng || null]
     );
     res.status(201).json(rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT /api/listings/:id — edit listing
+router.put('/:id', auth, upload.single('image'), async (req, res) => {
+  const { title, description, price, category, status } = req.body;
+  try {
+    const existing = await db.query('SELECT * FROM listings WHERE id=$1 AND seller_id=$2', [req.params.id, req.user.id]);
+    if (!existing.rows.length) return res.status(403).json({ error: 'Not found or not authorized' });
+
+    const image_url = req.file ? `/uploads/${req.file.filename}` : existing.rows[0].image_url;
+
+    const { rows } = await db.query(
+      `UPDATE listings SET title=$1, description=$2, price=$3, category=$4, status=$5, image_url=$6
+       WHERE id=$7 AND seller_id=$8 RETURNING *`,
+      [title, description, price, category, status, image_url, req.params.id, req.user.id]
+    );
+    res.json(rows[0]);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
