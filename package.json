@@ -1,0 +1,8 @@
+{
+  "name": "campus-marketplace",
+  "scripts": {
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "db:init": "psql $DATABASE_URL -f server/src/db/schema.sql"
+  }
+}
