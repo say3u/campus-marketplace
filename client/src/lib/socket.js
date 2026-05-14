@@ -4,7 +4,7 @@ let socket = null;
 
 export function getSocket() {
   if (!socket) {
-    socket = io('http://localhost:4000', {
+    socket = io(import.meta.env.VITE_API_URL || 'http://localhost:4000', {
       auth: { token: localStorage.getItem('token') },
       autoConnect: false,
     });
