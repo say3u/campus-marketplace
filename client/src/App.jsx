@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import ListingDetail from './pages/ListingDetail';
 import NewListing from './pages/NewListing';
 import Messages from './pages/Messages';
+import Profile from './pages/Profile';
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,7 @@ export default function App() {
               <Route path="/listings/new" element={<PrivateRoute><NewListing /></PrivateRoute>} />
               <Route path="/messages" element={<PrivateRoute><Messages /></PrivateRoute>} />
               <Route path="/messages/:id" element={<PrivateRoute><Messages /></PrivateRoute>} />
+              <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
             </Routes>
           </div>
         </BrowserRouter>
