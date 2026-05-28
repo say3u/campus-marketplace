@@ -34,7 +34,7 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-6">
+    <div className="w-full px-6 py-6">
       {/* Search row */}
       <div className="flex gap-2 mb-4">
         <div className="relative flex-1">
@@ -115,7 +115,7 @@ export default function Home() {
 
       {/* Grid */}
       {isLoading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
           {Array.from({ length: 10 }).map((_, i) => (
             <div key={i} className="rounded-xl border bg-white animate-pulse" style={{ borderColor: 'var(--border)' }}>
               <div className="aspect-square rounded-t-xl" style={{ backgroundColor: 'var(--surface2)' }} />
@@ -134,7 +134,7 @@ export default function Home() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
           {listings.map(l => <ListingCard key={l.id} listing={l} />)}
         </div>
       )}

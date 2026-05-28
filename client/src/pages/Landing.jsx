@@ -15,11 +15,6 @@ export default function Landing() {
       {/* Hero */}
       <div className="max-w-6xl mx-auto px-6 pt-20 pb-16 flex flex-col lg:flex-row items-center gap-16">
         <div className="flex-1">
-          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest mb-8 px-3 py-1.5 rounded-full border"
-            style={{ borderColor: '#BAE6FD', color: '#0369A1', backgroundColor: '#F0F9FF' }}>
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: '#3B82F6' }} />
-            Live marketplace
-          </div>
           <h1 className="text-5xl font-bold leading-tight mb-5" style={{ color: 'var(--text)' }}>
             Buy and sell<br />
             <span style={{ color: '#3B82F6' }}>on your campus.</span>
