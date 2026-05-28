@@ -15,16 +15,16 @@ export default function ListingCard({ listing }) {
   return (
     <Link to={`/listings/${listing.id}`}
       className="block rounded-xl border card-hover overflow-hidden"
-      style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
-      <div className="aspect-square overflow-hidden" style={{ backgroundColor: '#1e2130' }}>
+      style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
+      <div className="aspect-square overflow-hidden" style={{ backgroundColor: '#1e3a5f' }}>
         {listing.image_url
           ? <img src={listing.image_url} alt={listing.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
-          : <div className="w-full h-full flex items-center justify-center text-4xl" style={{ color: '#2a2d3e' }}>?</div>
+          : <div className="w-full h-full flex items-center justify-center text-4xl" style={{ color: '#475569' }}>?</div>
         }
       </div>
       <div className="p-3">
         <p className="text-sm font-semibold text-white truncate">{listing.title}</p>
-        <p className="text-base font-bold mt-0.5" style={{ color: '#F97316' }}>
+        <p className="text-base font-bold mt-0.5" style={{ color: '#3B82F6' }}>
           ${Number(listing.price).toFixed(2)}
         </p>
         <div className="flex items-center justify-between mt-2">

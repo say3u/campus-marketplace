@@ -64,12 +64,12 @@ export default function ListingDetail() {
         <ArrowLeft size={14} /> Back
       </button>
 
-      <div className="rounded-2xl border overflow-hidden" style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
+      <div className="rounded-2xl border overflow-hidden" style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
         {/* Image */}
-        <div className="w-full overflow-hidden" style={{ backgroundColor: '#1e2130', maxHeight: '400px' }}>
+        <div className="w-full overflow-hidden" style={{ backgroundColor: '#1e3a5f', maxHeight: '400px' }}>
           {listing.image_url
             ? <img src={listing.image_url} alt={listing.title} className="w-full object-cover" style={{ maxHeight: '400px' }} />
-            : <div className="w-full h-56 flex items-center justify-center text-5xl font-bold" style={{ color: '#2a2d3e' }}>?</div>
+            : <div className="w-full h-56 flex items-center justify-center text-5xl font-bold" style={{ color: '#475569' }}>?</div>
           }
         </div>
 
@@ -86,7 +86,7 @@ export default function ListingDetail() {
           </div>
 
           <h1 className="text-2xl font-bold text-white mb-2">{listing.title}</h1>
-          <p className="text-3xl font-bold mb-5" style={{ color: '#F97316' }}>
+          <p className="text-3xl font-bold mb-5" style={{ color: '#3B82F6' }}>
             ${Number(listing.price).toFixed(2)}
           </p>
 
@@ -95,9 +95,9 @@ export default function ListingDetail() {
           )}
 
           {/* Seller */}
-          <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: '#1e2130' }}>
+          <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: '#1e3a5f' }}>
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-              style={{ backgroundColor: '#F97316' }}>
+              style={{ backgroundColor: '#3B82F6' }}>
               {listing.username[0].toUpperCase()}
             </div>
             <div>
@@ -112,19 +112,19 @@ export default function ListingDetail() {
               <>
                 <Link to={`/listings/${id}/edit`}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-white/5"
-                  style={{ borderColor: '#2a2d3e', color: '#94a3b8' }}>
+                  style={{ borderColor: '#475569', color: '#94a3b8' }}>
                   <Pencil size={13} /> Edit
                 </Link>
                 {listing.status === 'active' && (
                   <button onClick={() => markSold.mutate()} disabled={markSold.isPending}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-white/5 disabled:opacity-50"
-                    style={{ borderColor: '#2a2d3e', color: '#4ade80' }}>
+                    style={{ borderColor: '#475569', color: '#4ade80' }}>
                     <CheckCircle size={13} /> Mark Sold
                   </button>
                 )}
                 <button onClick={() => { if (confirm('Delete this listing?')) deleteListing.mutate(); }}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-red-500/10 disabled:opacity-50"
-                  style={{ borderColor: '#2a2d3e', color: '#f87171' }}>
+                  style={{ borderColor: '#475569', color: '#f87171' }}>
                   <Trash2 size={13} /> Delete
                 </button>
               </>
@@ -132,20 +132,20 @@ export default function ListingDetail() {
               <>
                 <button onClick={() => startConvo.mutate()} disabled={startConvo.isPending}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-50 hover:opacity-85 transition-opacity"
-                  style={{ backgroundColor: '#F97316' }}>
+                  style={{ backgroundColor: '#3B82F6' }}>
                   <MessageCircle size={14} />
                   {startConvo.isPending ? 'Opening...' : 'Message Seller'}
                 </button>
                 <button onClick={() => report.mutate()} disabled={reported}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-white/5 disabled:opacity-40"
-                  style={{ borderColor: '#2a2d3e', color: '#64748b' }}>
+                  style={{ borderColor: '#475569', color: '#64748b' }}>
                   <Flag size={13} /> {reported ? 'Reported' : 'Report'}
                 </button>
               </>
             ) : !user ? (
               <Link to="/login"
                 className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: '#F97316' }}>
+                style={{ backgroundColor: '#3B82F6' }}>
                 Login to Message Seller
               </Link>
             ) : null}

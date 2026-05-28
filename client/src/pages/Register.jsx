@@ -24,21 +24,21 @@ export default function Register() {
   }
 
   const inputStyle = {
-    backgroundColor: '#0f1117',
-    border: '1px solid #2a2d3e',
+    backgroundColor: '#0f172a',
+    border: '1px solid #334155',
     color: '#f1f5f9',
   };
 
   return (
-    <div className="min-h-[90vh] flex items-center justify-center px-4" style={{ backgroundColor: '#0f1117' }}>
+    <div className="min-h-[90vh] flex items-center justify-center px-4" style={{ backgroundColor: '#0f172a' }}>
       <div className="w-full max-w-sm">
         <div className="mb-8">
-          <Link to="/" className="text-base font-bold" style={{ color: '#F97316' }}>Dormly</Link>
+          <Link to="/" className="text-base font-bold" style={{ color: '#3B82F6' }}>Dormly</Link>
           <h1 className="text-2xl font-bold text-white mt-6 mb-1">Create an account</h1>
           <p className="text-sm" style={{ color: '#64748b' }}>Requires a .edu email address</p>
         </div>
 
-        <div className="rounded-xl border p-6" style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
+        <div className="rounded-xl border p-6" style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>School email</label>
@@ -68,7 +68,7 @@ export default function Register() {
             )}
             <button type="submit" disabled={loading}
               className="w-full text-white py-2 rounded-md text-sm font-semibold disabled:opacity-50 hover:opacity-80 transition-opacity"
-              style={{ backgroundColor: '#F97316' }}>
+              style={{ backgroundColor: '#3B82F6' }}>
               {loading ? 'Creating account...' : 'Create account'}
             </button>
           </form>
@@ -76,7 +76,7 @@ export default function Register() {
 
         <p className="text-center text-sm mt-5" style={{ color: '#475569' }}>
           Already have an account?{' '}
-          <Link to="/login" className="font-semibold hover:underline" style={{ color: '#F97316' }}>
+          <Link to="/login" className="font-semibold hover:underline" style={{ color: '#3B82F6' }}>
             Sign in
           </Link>
         </p>

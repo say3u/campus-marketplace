@@ -10,19 +10,19 @@ const FEATURES = [
 
 export default function Landing() {
   return (
-    <div style={{ backgroundColor: '#0f1117' }}>
+    <div style={{ backgroundColor: '#0f172a' }}>
 
       {/* Hero */}
       <div className="max-w-6xl mx-auto px-6 pt-24 pb-20 flex flex-col lg:flex-row items-center gap-16">
         <div className="flex-1">
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest mb-8 px-3 py-1.5 rounded-full border"
-            style={{ borderColor: '#2a2d3e', color: '#F97316', backgroundColor: 'rgba(249,115,22,0.08)' }}>
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: '#F97316' }} />
+            style={{ borderColor: '#475569', color: '#3B82F6', backgroundColor: 'rgba(59,130,246,0.08)' }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: '#3B82F6' }} />
             Live marketplace
           </div>
           <h1 className="text-5xl font-bold text-white leading-tight mb-5">
             Buy and sell<br />
-            <span style={{ color: '#F97316' }}>on your campus.</span>
+            <span style={{ color: '#3B82F6' }}>on your campus.</span>
           </h1>
           <p className="text-lg mb-10 leading-relaxed max-w-md" style={{ color: '#94a3b8' }}>
             Dormly is the real-time marketplace built for students. Zero fees, verified buyers, instant listings.
@@ -30,12 +30,12 @@ export default function Landing() {
           <div className="flex items-center gap-3">
             <Link to="/register"
               className="inline-flex items-center gap-2 text-sm font-semibold text-white px-6 py-3 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#F97316' }}>
+              style={{ backgroundColor: '#3B82F6' }}>
               Get started free <ArrowRight size={14} />
             </Link>
             <Link to="/login"
               className="text-sm font-medium px-6 py-3 rounded-md border transition-colors hover:bg-white/5"
-              style={{ borderColor: '#2a2d3e', color: '#94a3b8' }}>
+              style={{ borderColor: '#475569', color: '#94a3b8' }}>
               Log in
             </Link>
           </div>
@@ -43,10 +43,10 @@ export default function Landing() {
 
         <div className="flex-1 w-full relative">
           {/* Glow effect */}
-          <div className="absolute inset-0 rounded-2xl blur-3xl opacity-20" style={{ backgroundColor: '#F97316' }} />
+          <div className="absolute inset-0 rounded-2xl blur-3xl opacity-20" style={{ backgroundColor: '#3B82F6' }} />
           <div
             className="relative w-full rounded-2xl overflow-hidden flex items-center justify-center"
-            style={{ minHeight: '340px', maxHeight: '420px', border: '1px solid #2a2d3e', background: 'linear-gradient(135deg, #1e2130 0%, #16181f 50%, #1a1d2e 100%)' }}
+            style={{ minHeight: '340px', maxHeight: '420px', border: '1px solid #334155', background: 'linear-gradient(135deg, #1e3a5f 0%, #1e293b 50%, #1a1d2e 100%)' }}
           >
             <img
               src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=700&auto=format&fit=crop&q=80"
@@ -57,16 +57,16 @@ export default function Landing() {
             />
             {/* Overlay grid pattern */}
             <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: 'linear-gradient(#F97316 1px, transparent 1px), linear-gradient(90deg, #F97316 1px, transparent 1px)',
+              backgroundImage: 'linear-gradient(#3B82F6 1px, transparent 1px), linear-gradient(90deg, #3B82F6 1px, transparent 1px)',
               backgroundSize: '40px 40px'
             }} />
             {/* Floating stat cards */}
             <div className="relative z-10 flex flex-col gap-3 p-6 w-full">
-              {[['📦 New listing', 'Calculus textbook — $25', '#16181f'],
-                ['💬 New message', 'Is this still available?', '#1e2130'],
-                ['✅ Sold', 'Mini fridge — $80', '#16181f']].map(([label, sub, bg]) => (
+              {[['📦 New listing', 'Calculus textbook — $25', '#1e293b'],
+                ['💬 New message', 'Is this still available?', '#1e3a5f'],
+                ['✅ Sold', 'Mini fridge — $80', '#1e293b']].map(([label, sub, bg]) => (
                 <div key={label} className="flex items-center gap-3 px-4 py-3 rounded-xl backdrop-blur-sm border"
-                  style={{ backgroundColor: bg + 'cc', borderColor: '#2a2d3e', maxWidth: '260px' }}>
+                  style={{ backgroundColor: bg + 'cc', borderColor: '#475569', maxWidth: '260px' }}>
                   <div>
                     <p className="text-xs font-semibold text-white">{label}</p>
                     <p className="text-xs mt-0.5" style={{ color: '#64748b' }}>{sub}</p>
@@ -79,7 +79,7 @@ export default function Landing() {
       </div>
 
       {/* Stats */}
-      <div className="border-y py-8" style={{ borderColor: '#2a2d3e' }}>
+      <div className="border-y py-8" style={{ borderColor: '#475569' }}>
         <div className="max-w-4xl mx-auto px-6 grid grid-cols-3 gap-6 text-center">
           {[['Free', 'No fees, ever'], ['Real-Time', 'Live updates'], ['.edu Only', 'Verified students']].map(([title, sub]) => (
             <div key={title}>
@@ -97,10 +97,10 @@ export default function Landing() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {FEATURES.map(({ icon: Icon, title, desc }) => (
             <div key={title} className="p-5 rounded-xl border card-hover"
-              style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
+              style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
               <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
-                style={{ backgroundColor: 'rgba(249,115,22,0.12)' }}>
-                <Icon size={18} style={{ color: '#F97316' }} />
+                style={{ backgroundColor: 'rgba(59,130,246,0.12)' }}>
+                <Icon size={18} style={{ color: '#3B82F6' }} />
               </div>
               <h3 className="text-sm font-semibold text-white mb-1">{title}</h3>
               <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{desc}</p>
@@ -110,7 +110,7 @@ export default function Landing() {
       </div>
 
       {/* How it works */}
-      <div className="border-t py-20" style={{ borderColor: '#2a2d3e' }}>
+      <div className="border-t py-20" style={{ borderColor: '#475569' }}>
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-2xl font-bold text-white mb-2">How it works</h2>
           <p className="mb-12" style={{ color: '#64748b' }}>Up and running in under a minute.</p>
@@ -133,23 +133,23 @@ export default function Landing() {
       </div>
 
       {/* CTA */}
-      <div className="border-t" style={{ borderColor: '#2a2d3e' }}>
+      <div className="border-t" style={{ borderColor: '#475569' }}>
         <div className="max-w-6xl mx-auto px-6 py-20 text-center">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to get started?</h2>
           <p className="mb-8" style={{ color: '#64748b' }}>Join students already buying and selling on Dormly.</p>
           <Link to="/register"
             className="inline-flex items-center gap-2 text-sm font-semibold text-white px-8 py-3 rounded-md transition-opacity hover:opacity-80"
-            style={{ backgroundColor: '#F97316' }}>
+            style={{ backgroundColor: '#3B82F6' }}>
             Create your account <ArrowRight size={14} />
           </Link>
         </div>
       </div>
 
       {/* Footer */}
-      <div className="border-t px-6 py-5" style={{ borderColor: '#2a2d3e' }}>
+      <div className="border-t px-6 py-5" style={{ borderColor: '#475569' }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <span className="text-sm font-bold" style={{ color: '#F97316' }}>Dormly</span>
-          <span className="text-xs" style={{ color: '#334155' }}>© 2025 Dormly. Built for students.</span>
+          <span className="text-sm font-bold" style={{ color: '#3B82F6' }}>Dormly</span>
+          <span className="text-xs" style={{ color: '#475569' }}>© 2025 Dormly. Built for students.</span>
         </div>
       </div>
     </div>

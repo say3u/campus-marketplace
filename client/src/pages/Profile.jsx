@@ -20,14 +20,14 @@ function RateModal({ sellerId, listingId, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="w-full max-w-sm rounded-2xl border p-6" style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
+      <div className="w-full max-w-sm rounded-2xl border p-6" style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
         <h2 className="text-base font-bold text-white mb-5">Rate this seller</h2>
         <div className="mb-4">
           <p className="text-xs font-medium mb-2" style={{ color: '#94a3b8' }}>Score</p>
           <div className="flex gap-1.5">
             {[1,2,3,4,5].map(n => (
               <button key={n} type="button" onClick={() => setScore(n)}>
-                <Star size={26} fill={n <= score ? '#F97316' : 'none'} style={{ color: '#F97316' }} />
+                <Star size={26} fill={n <= score ? '#3B82F6' : 'none'} style={{ color: '#3B82F6' }} />
               </button>
             ))}
           </div>
@@ -37,18 +37,18 @@ function RateModal({ sellerId, listingId, onClose }) {
           <textarea value={comment} onChange={e => setComment(e.target.value)} rows={3}
             placeholder="How was the transaction?"
             className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none resize-none"
-            style={{ backgroundColor: '#0f1117', border: '1px solid #2a2d3e', color: '#f1f5f9' }} />
+            style={{ backgroundColor: '#0f172a', border: '1px solid #334155', color: '#f1f5f9' }} />
         </div>
         {mutation.isError && <p className="text-xs mb-3 text-red-400">Failed to submit.</p>}
         <div className="flex gap-2">
           <button onClick={onClose}
             className="flex-1 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-white/5"
-            style={{ borderColor: '#2a2d3e', color: '#94a3b8' }}>
+            style={{ borderColor: '#475569', color: '#94a3b8' }}>
             Cancel
           </button>
           <button onClick={() => mutation.mutate()} disabled={!score || mutation.isPending}
             className="flex-1 text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85"
-            style={{ backgroundColor: '#F97316' }}>
+            style={{ backgroundColor: '#3B82F6' }}>
             {mutation.isPending ? 'Submitting...' : 'Submit'}
           </button>
         </div>
@@ -89,10 +89,10 @@ export default function Profile() {
       {rateModal && <RateModal sellerId={me.id} listingId={rateModal} onClose={() => setRateModal(null)} />}
 
       {/* Profile header */}
-      <div className="rounded-2xl border p-6 mb-8" style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
+      <div className="rounded-2xl border p-6 mb-8" style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
           <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold text-white flex-shrink-0"
-            style={{ backgroundColor: '#F97316' }}>
+            style={{ backgroundColor: '#3B82F6' }}>
             {data.username[0].toUpperCase()}
           </div>
           <div className="flex-1 text-center sm:text-left">
@@ -109,7 +109,7 @@ export default function Profile() {
                 { label: 'Reviews',    value: data.ratings.length },
               ].map(({ label, value }) => (
                 <div key={label} className="text-center">
-                  <p className="text-xl font-bold" style={{ color: '#F97316' }}>{value}</p>
+                  <p className="text-xl font-bold" style={{ color: '#3B82F6' }}>{value}</p>
                   <p className="text-xs mt-0.5" style={{ color: '#64748b' }}>{label}</p>
                 </div>
               ))}
@@ -122,30 +122,30 @@ export default function Profile() {
       <div className="mb-10">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Package size={16} style={{ color: '#F97316' }} /> My Listings
+            <Package size={16} style={{ color: '#3B82F6' }} /> My Listings
           </h2>
           <Link to="/listings/new"
             className="flex items-center gap-1.5 text-xs font-semibold text-white px-3 py-1.5 rounded-lg hover:opacity-85"
-            style={{ backgroundColor: '#F97316' }}>
+            style={{ backgroundColor: '#3B82F6' }}>
             <Plus size={12} /> Post New
           </Link>
         </div>
 
         {data.listings.length === 0 ? (
-          <div className="text-center py-12 rounded-xl border border-dashed" style={{ borderColor: '#2a2d3e' }}>
+          <div className="text-center py-12 rounded-xl border border-dashed" style={{ borderColor: '#475569' }}>
             <p className="text-sm" style={{ color: '#475569' }}>No listings yet.</p>
-            <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: '#F97316' }}>
+            <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: '#3B82F6' }}>
               Post your first item
             </Link>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.listings.map(l => (
-              <div key={l.id} className="rounded-xl border overflow-hidden" style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
-                <div className="aspect-video relative overflow-hidden" style={{ backgroundColor: '#1e2130' }}>
+              <div key={l.id} className="rounded-xl border overflow-hidden" style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
+                <div className="aspect-video relative overflow-hidden" style={{ backgroundColor: '#1e3a5f' }}>
                   {l.image_url
                     ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover" />
-                    : <div className="w-full h-full flex items-center justify-center text-2xl font-bold" style={{ color: '#2a2d3e' }}>?</div>
+                    : <div className="w-full h-full flex items-center justify-center text-2xl font-bold" style={{ color: '#475569' }}>?</div>
                   }
                   <span className={`absolute top-2 left-2 text-xs font-semibold px-2 py-0.5 rounded-full ${
                     l.status === 'active' ? 'bg-green-500/10 text-green-400' :
@@ -154,16 +154,16 @@ export default function Profile() {
                 </div>
                 <div className="p-3">
                   <p className="font-semibold text-white truncate text-sm">{l.title}</p>
-                  <p className="font-bold text-base mt-0.5" style={{ color: '#F97316' }}>${Number(l.price).toFixed(2)}</p>
+                  <p className="font-bold text-base mt-0.5" style={{ color: '#3B82F6' }}>${Number(l.price).toFixed(2)}</p>
                   <div className="flex gap-2 mt-3">
                     <Link to={`/listings/${l.id}/edit`}
                       className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-white/5"
-                      style={{ borderColor: '#2a2d3e', color: '#94a3b8' }}>
+                      style={{ borderColor: '#475569', color: '#94a3b8' }}>
                       <Pencil size={10} /> Edit
                     </Link>
                     <button onClick={() => deleteListing.mutate(l.id)}
                       className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-red-500/10"
-                      style={{ borderColor: '#2a2d3e', color: '#f87171' }}>
+                      style={{ borderColor: '#475569', color: '#f87171' }}>
                       <Trash2 size={10} /> Delete
                     </button>
                   </div>
@@ -177,26 +177,26 @@ export default function Profile() {
       {/* Reviews */}
       <div>
         <h2 className="text-base font-bold text-white flex items-center gap-2 mb-5">
-          <Star size={16} style={{ color: '#F97316' }} /> Reviews ({data.ratings.length})
+          <Star size={16} style={{ color: '#3B82F6' }} /> Reviews ({data.ratings.length})
         </h2>
         {data.ratings.length === 0 ? (
-          <div className="text-center py-12 rounded-xl border border-dashed" style={{ borderColor: '#2a2d3e' }}>
+          <div className="text-center py-12 rounded-xl border border-dashed" style={{ borderColor: '#475569' }}>
             <p className="text-sm" style={{ color: '#475569' }}>No reviews yet.</p>
           </div>
         ) : (
           <div className="space-y-3">
             {data.ratings.map(r => (
-              <div key={r.id} className="rounded-xl border p-4" style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
+              <div key={r.id} className="rounded-xl border p-4" style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-sm font-semibold text-white">{r.rater_username}</span>
                   <div className="flex gap-0.5">
                     {[1,2,3,4,5].map(n => (
-                      <Star key={n} size={13} fill={n <= r.score ? '#F97316' : 'none'} style={{ color: '#F97316' }} />
+                      <Star key={n} size={13} fill={n <= r.score ? '#3B82F6' : 'none'} style={{ color: '#3B82F6' }} />
                     ))}
                   </div>
                 </div>
                 {r.comment && <p className="text-sm" style={{ color: '#94a3b8' }}>{r.comment}</p>}
-                <p className="text-xs mt-2" style={{ color: '#334155' }}>{new Date(r.created_at).toLocaleDateString()}</p>
+                <p className="text-xs mt-2" style={{ color: '#475569' }}>{new Date(r.created_at).toLocaleDateString()}</p>
               </div>
             ))}
           </div>

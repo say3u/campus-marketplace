@@ -7,8 +7,8 @@ import { ImagePlus } from 'lucide-react';
 const CATEGORIES = ['Electronics', 'Textbooks', 'Furniture', 'Clothing', 'Services', 'Other'];
 
 const inputStyle = {
-  backgroundColor: '#16181f',
-  border: '1px solid #2a2d3e',
+  backgroundColor: '#1e293b',
+  border: '1px solid #334155',
   color: '#f1f5f9',
 };
 
@@ -80,7 +80,7 @@ export default function EditListing() {
           <label className="block text-sm font-medium mb-2" style={{ color: '#94a3b8' }}>Photo</label>
           <label className="block cursor-pointer">
             <div className="rounded-xl border-2 border-dashed overflow-hidden flex items-center justify-center transition-colors hover:border-indigo-500"
-              style={{ borderColor: '#2a2d3e', backgroundColor: '#16181f', minHeight: '160px' }}>
+              style={{ borderColor: '#475569', backgroundColor: '#1e293b', minHeight: '160px' }}>
               {preview
                 ? <img src={preview} alt="preview" className="w-full object-cover" style={{ maxHeight: '240px' }} />
                 : (
@@ -98,14 +98,14 @@ export default function EditListing() {
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Title</label>
           <input value={form.title} onChange={set('title')} required
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
             style={inputStyle} />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Description</label>
           <textarea value={form.description} onChange={set('description')} rows={3}
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 resize-none"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 resize-none"
             style={inputStyle} />
         </div>
 
@@ -113,15 +113,15 @@ export default function EditListing() {
           <div>
             <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Price ($)</label>
             <input type="number" min="0" step="0.01" value={form.price} onChange={set('price')} required
-              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
               style={inputStyle} />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Category</label>
             <select value={form.category} onChange={set('category')}
-              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
               style={{ ...inputStyle, appearance: 'auto' }}>
-              {CATEGORIES.map(c => <option key={c} style={{ backgroundColor: '#16181f' }}>{c}</option>)}
+              {CATEGORIES.map(c => <option key={c} style={{ backgroundColor: '#1e293b' }}>{c}</option>)}
             </select>
           </div>
         </div>
@@ -129,11 +129,11 @@ export default function EditListing() {
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Status</label>
           <select value={form.status} onChange={set('status')}
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40"
             style={{ ...inputStyle, appearance: 'auto' }}>
-            <option value="active" style={{ backgroundColor: '#16181f' }}>Active</option>
-            <option value="sold" style={{ backgroundColor: '#16181f' }}>Sold</option>
-            <option value="removed" style={{ backgroundColor: '#16181f' }}>Removed</option>
+            <option value="active" style={{ backgroundColor: '#1e293b' }}>Active</option>
+            <option value="sold" style={{ backgroundColor: '#1e293b' }}>Sold</option>
+            <option value="removed" style={{ backgroundColor: '#1e293b' }}>Removed</option>
           </select>
         </div>
 
@@ -146,12 +146,12 @@ export default function EditListing() {
         <div className="flex gap-3 pt-1">
           <button type="button" onClick={() => navigate(-1)}
             className="flex-1 py-2.5 rounded-lg text-sm font-medium border transition-colors hover:bg-white/5"
-            style={{ borderColor: '#2a2d3e', color: '#94a3b8' }}>
+            style={{ borderColor: '#475569', color: '#94a3b8' }}>
             Cancel
           </button>
           <button type="submit" disabled={loading}
             className="flex-1 text-white py-2.5 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-            style={{ backgroundColor: '#F97316' }}>
+            style={{ backgroundColor: '#3B82F6' }}>
             {loading ? 'Saving...' : 'Save changes'}
           </button>
         </div>
