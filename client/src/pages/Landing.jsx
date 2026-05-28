@@ -100,20 +100,18 @@ export default function Landing() {
 
       {/* ── Listings ─────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-6 pb-20">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-base font-bold" style={{ color: 'var(--text)' }}>
-            {query
-              ? searching ? `Searching "${query}"…` : `${listings.length} result${listings.length !== 1 ? 's' : ''} for "${query}"`
-              : 'Latest on doormly'}
-          </h2>
-          {query && (
+        {query && (
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+              {searching ? `Searching "${query}"…` : `${listings.length} result${listings.length !== 1 ? 's' : ''} for "${query}"`}
+            </p>
             <button onClick={() => { setInput(''); setQuery(''); }}
               className="text-xs font-medium hover:underline"
               style={{ color: 'var(--muted)' }}>
               Clear
             </button>
-          )}
-        </div>
+          </div>
+        )}
 
         {isLoading ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
