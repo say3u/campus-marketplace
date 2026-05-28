@@ -11,15 +11,16 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-white border-b border-gray-200 px-6 py-0 flex items-center justify-between sticky top-0 z-50 h-14">
+    <nav className="sticky top-0 z-50 h-14 flex items-center justify-between px-6 border-b"
+      style={{ backgroundColor: '#0f1117', borderColor: '#2a2d3e' }}>
       <div className="flex items-center gap-8">
         <Link to="/" className="text-lg font-bold tracking-tight" style={{ color: '#CC0033' }}>
           Dormly
         </Link>
         {user && (
           <div className="hidden sm:flex items-center gap-6">
-            <Link to="/browse" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Browse</Link>
-            <Link to="/messages" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">Messages</Link>
+            <Link to="/browse" className="text-sm text-slate-400 hover:text-white transition-colors">Browse</Link>
+            <Link to="/messages" className="text-sm text-slate-400 hover:text-white transition-colors">Messages</Link>
           </div>
         )}
       </div>
@@ -27,30 +28,27 @@ export default function Navbar() {
       <div className="flex items-center gap-3">
         {user ? (
           <>
-            <Link
-              to="/listings/new"
-              className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-colors"
-              style={{ backgroundColor: '#CC0033' }}
-            >
-              Sell an item
+            <Link to="/listings/new"
+              className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
+              style={{ backgroundColor: '#CC0033' }}>
+              + Sell
             </Link>
-            <Link to="/profile" className="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors">
+            <Link to="/profile"
+              className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
               {user.username}
             </Link>
-            <button onClick={handleLogout} className="text-sm text-gray-400 hover:text-gray-600 transition-colors">
+            <button onClick={handleLogout} className="text-sm text-slate-500 hover:text-slate-300 transition-colors">
               Sign out
             </button>
           </>
         ) : (
           <>
-            <Link to="/login" className="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors">
+            <Link to="/login" className="text-sm text-slate-400 hover:text-white font-medium transition-colors">
               Log in
             </Link>
-            <Link
-              to="/register"
-              className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-colors"
-              style={{ backgroundColor: '#CC0033' }}
-            >
+            <Link to="/register"
+              className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
+              style={{ backgroundColor: '#CC0033' }}>
               Sign up
             </Link>
           </>
