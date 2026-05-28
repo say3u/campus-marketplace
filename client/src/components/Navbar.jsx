@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+﻿import { Link, useNavigate } from 'react-router-dom';
 import { Sun, Moon } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
@@ -18,7 +18,7 @@ export default function Navbar() {
       style={{ backgroundColor: '#0F172A', borderColor: '#1e293b' }}>
       <div className="flex items-center gap-8">
         <Link to="/" className="text-lg font-bold tracking-tight text-white">
-          Doormly
+          doormly
         </Link>
         {user && (
           <div className="hidden sm:flex items-center gap-6">
@@ -43,7 +43,7 @@ export default function Navbar() {
           <>
             <Link to="/listings/new"
               className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#3B82F6' }}>
+              style={{ backgroundColor: '#16A34A' }}>
               + Sell
             </Link>
             <Link to="/profile" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
@@ -60,7 +60,7 @@ export default function Navbar() {
             </Link>
             <Link to="/register"
               className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#3B82F6' }}>
+              style={{ backgroundColor: '#16A34A' }}>
               Sign up
             </Link>
           </>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import api from '../lib/api';
@@ -44,7 +44,7 @@ export default function Home() {
             placeholder="Search listings..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+            className="w-full rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
             style={inputStyle}
           />
         </div>
@@ -52,14 +52,14 @@ export default function Home() {
           onClick={() => setShowFilters(f => !f)}
           className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium transition-colors"
           style={{
-            backgroundColor: showFilters || hasFilters ? '#EFF6FF' : 'var(--surface)',
-            borderColor: showFilters || hasFilters ? '#93C5FD' : 'var(--border)',
-            color: showFilters || hasFilters ? '#2563EB' : '#64748B',
+            backgroundColor: showFilters || hasFilters ? '#F0FDF4' : 'var(--surface)',
+            borderColor: showFilters || hasFilters ? '#86EFAC' : 'var(--border)',
+            color: showFilters || hasFilters ? '#15803D' : '#64748B',
           }}
         >
           <SlidersHorizontal size={14} />
           Filters
-          {hasFilters && <span className="w-1.5 h-1.5 rounded-full ml-0.5" style={{ backgroundColor: '#3B82F6' }} />}
+          {hasFilters && <span className="w-1.5 h-1.5 rounded-full ml-0.5" style={{ backgroundColor: '#16A34A' }} />}
         </button>
       </div>
 
@@ -72,7 +72,7 @@ export default function Home() {
             <input type="number" placeholder="Min $" value={minPrice} onChange={e => setMinPrice(e.target.value)}
               className="w-20 rounded px-2 py-1 text-xs focus:outline-none border"
               style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
-            <span style={{ color: 'var(--very-muted)' }} className="text-xs">—</span>
+            <span style={{ color: 'var(--very-muted)' }} className="text-xs">â€”</span>
             <input type="number" placeholder="Max $" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
               className="w-20 rounded px-2 py-1 text-xs focus:outline-none border"
               style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
@@ -94,8 +94,8 @@ export default function Home() {
             <button key={cat} onClick={() => setCategory(cat === 'All' ? '' : cat)}
               className="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px"
               style={{
-                borderBottomColor: active ? '#3B82F6' : 'transparent',
-                color: active ? '#2563EB' : '#94A3B8',
+                borderBottomColor: active ? '#16A34A' : 'transparent',
+                color: active ? '#15803D' : '#94A3B8',
               }}
             >
               {cat}

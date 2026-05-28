@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import api from '../lib/api';
@@ -81,25 +81,25 @@ export default function EditListing() {
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Title</label>
           <input value={form.title} onChange={set('title')} required
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40" style={inputStyle} />
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40" style={inputStyle} />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Description</label>
           <textarea value={form.description} onChange={set('description')} rows={3}
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40 resize-none" style={inputStyle} />
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40 resize-none" style={inputStyle} />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Price ($)</label>
             <input type="number" min="0" step="0.01" value={form.price} onChange={set('price')} required
-              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40" style={inputStyle} />
+              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40" style={inputStyle} />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Category</label>
             <select value={form.category} onChange={set('category')}
-              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
               style={{ ...inputStyle, appearance: 'auto' }}>
               {CATEGORIES.map(c => <option key={c}>{c}</option>)}
             </select>
@@ -109,7 +109,7 @@ export default function EditListing() {
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Status</label>
           <select value={form.status} onChange={set('status')}
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
             style={{ ...inputStyle, appearance: 'auto' }}>
             <option value="active">Active</option>
             <option value="sold">Sold</option>
@@ -127,7 +127,7 @@ export default function EditListing() {
           </button>
           <button type="submit" disabled={loading}
             className="flex-1 text-white py-2.5 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-            style={{ backgroundColor: '#3B82F6' }}>
+            style={{ backgroundColor: '#16A34A' }}>
             {loading ? 'Saving...' : 'Save changes'}
           </button>
         </div>

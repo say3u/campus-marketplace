@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Send, MessageSquare } from 'lucide-react';
@@ -31,7 +31,7 @@ function ChatPanel({ conversationId, other }) {
     <div className="flex-1 flex flex-col min-h-0">
       <div className="px-5 py-3.5 border-b flex items-center gap-3 bg-white" style={{ borderColor: 'var(--border)' }}>
         <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
-          style={{ backgroundColor: '#3B82F6' }}>
+          style={{ backgroundColor: '#16A34A' }}>
           {other?.[0]?.toUpperCase() || '?'}
         </div>
         <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{other}</span>
@@ -47,7 +47,7 @@ function ChatPanel({ conversationId, other }) {
             <div key={m.id} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}>
               <div className="max-w-xs lg:max-w-sm">
                 <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${mine ? 'rounded-br-sm' : 'rounded-bl-sm'}`}
-                  style={{ backgroundColor: mine ? '#3B82F6' : 'var(--surface)', color: mine ? '#fff' : '#0F172A', border: mine ? 'none' : '1px solid var(--border)' }}>
+                  style={{ backgroundColor: mine ? '#16A34A' : 'var(--surface)', color: mine ? '#fff' : '#0F172A', border: mine ? 'none' : '1px solid var(--border)' }}>
                   {m.body}
                 </div>
                 <p className="text-xs mt-1 px-1" style={{ color: 'var(--very-muted)', textAlign: mine ? 'right' : 'left' }}>
@@ -62,11 +62,11 @@ function ChatPanel({ conversationId, other }) {
 
       <form onSubmit={handleSend} className="p-4 border-t flex gap-2 bg-white" style={{ borderColor: 'var(--border)' }}>
         <input value={draft} onChange={e => setDraft(e.target.value)} placeholder="Type a message..."
-          className="flex-1 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+          className="flex-1 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-400/40"
           style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }} />
         <button type="submit" disabled={!draft.trim()}
           className="flex items-center justify-center w-10 h-10 rounded-xl disabled:opacity-40 transition-opacity hover:opacity-80"
-          style={{ backgroundColor: '#3B82F6' }}>
+          style={{ backgroundColor: '#16A34A' }}>
           <Send size={15} className="text-white" />
         </button>
       </form>
@@ -105,14 +105,14 @@ export default function Messages() {
             return (
               <Link key={c.id} to={`/messages/${c.id}`}
                 className="block px-4 py-3 border-b transition-colors hover:bg-slate-50"
-                style={{ borderColor: 'var(--surface2)', backgroundColor: isActive ? '#EFF6FF' : 'transparent' }}>
+                style={{ borderColor: 'var(--surface2)', backgroundColor: isActive ? '#F0FDF4' : 'transparent' }}>
                 <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                    style={{ backgroundColor: isActive ? '#3B82F6' : '#CBD5E1' }}>
+                    style={{ backgroundColor: isActive ? '#16A34A' : '#CBD5E1' }}>
                     {other[0].toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium truncate" style={{ color: isActive ? '#2563EB' : '#0F172A' }}>{other}</p>
+                    <p className="text-sm font-medium truncate" style={{ color: isActive ? '#15803D' : '#0F172A' }}>{other}</p>
                     <p className="text-xs truncate" style={{ color: 'var(--muted)' }}>{c.listing_title}</p>
                   </div>
                 </div>

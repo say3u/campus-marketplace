@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
+﻿import { Link } from 'react-router-dom';
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: '#EFF6FF', color: '#2563EB' },
+  Electronics: { bg: '#F0FDF4', color: '#15803D' },
   Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
   Furniture:   { bg: '#F0FDF4', color: '#16A34A' },
   Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },

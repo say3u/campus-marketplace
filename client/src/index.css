@@ -1,8 +1,8 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Light theme (default) ─────────────────────────────── */
+/* â”€â”€ Light theme (default) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root {
   --bg:         #FAF8F5;
   --surface:    #FFFEFB;
@@ -15,7 +15,7 @@
   --very-muted: #CBD5E1;
 }
 
-/* ── Dark theme ─────────────────────────────────────────── */
+/* â”€â”€ Dark theme â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .dark {
   --bg:         #0F172A;
   --surface:    #1E293B;
@@ -40,7 +40,7 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* ── Tailwind class overrides for dark mode ─────────────── */
+/* â”€â”€ Tailwind class overrides for dark mode â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .dark .bg-white            { background-color: var(--surface)  !important; }
 .dark .bg-slate-50,
 .dark .hover\:bg-slate-50:hover  { background-color: var(--surface2) !important; }
@@ -54,14 +54,14 @@ body {
 .dark .text-red-500         { color: #f87171 !important; }
 .dark .border-dashed        { border-color: var(--border) !important; }
 
-/* ── Card hover ─────────────────────────────────────────── */
+/* â”€â”€ Card hover â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .card-hover {
   transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
 }
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  border-color: #3B82F6 !important;
+  border-color: #16A34A !important;
 }
 .dark .card-hover:hover {
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);

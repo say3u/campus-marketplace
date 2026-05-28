@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Pencil, Trash2, MessageCircle, Flag, CheckCircle, ArrowLeft } from 'lucide-react';
@@ -6,7 +6,7 @@ import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: '#EFF6FF', color: '#2563EB' },
+  Electronics: { bg: '#F0FDF4', color: '#15803D' },
   Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
   Furniture:   { bg: '#F0FDF4', color: '#16A34A' },
   Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
@@ -88,12 +88,12 @@ export default function ListingDetail() {
 
           <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--surface2)' }}>
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-              style={{ backgroundColor: '#3B82F6' }}>
+              style={{ backgroundColor: '#16A34A' }}>
               {listing.username[0].toUpperCase()}
             </div>
             <div>
               <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{listing.username}</p>
-              <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{listing.rep_score} reputation · {listing.school}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{listing.rep_score} reputation Â· {listing.school}</p>
             </div>
           </div>
 
@@ -122,7 +122,7 @@ export default function ListingDetail() {
               <>
                 <button onClick={() => startConvo.mutate()} disabled={startConvo.isPending}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-50 hover:opacity-85 transition-opacity"
-                  style={{ backgroundColor: '#3B82F6' }}>
+                  style={{ backgroundColor: '#16A34A' }}>
                   <MessageCircle size={14} />
                   {startConvo.isPending ? 'Opening...' : 'Message Seller'}
                 </button>
@@ -134,7 +134,7 @@ export default function ListingDetail() {
               </>
             ) : !user ? (
               <Link to="/login" className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: '#3B82F6' }}>
+                style={{ backgroundColor: '#16A34A' }}>
                 Login to Message Seller
               </Link>
             ) : null}

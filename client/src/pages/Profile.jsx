@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { Star, Package, Calendar, Pencil, Trash2, Plus } from 'lucide-react';
@@ -24,7 +24,7 @@ function RateModal({ sellerId, listingId, onClose }) {
           <div className="flex gap-1.5">
             {[1,2,3,4,5].map(n => (
               <button key={n} type="button" onClick={() => setScore(n)}>
-                <Star size={26} fill={n <= score ? '#3B82F6' : 'none'} style={{ color: '#3B82F6' }} />
+                <Star size={26} fill={n <= score ? '#16A34A' : 'none'} style={{ color: '#16A34A' }} />
               </button>
             ))}
           </div>
@@ -33,7 +33,7 @@ function RateModal({ sellerId, listingId, onClose }) {
           <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text3)' }}>Comment (optional)</label>
           <textarea value={comment} onChange={e => setComment(e.target.value)} rows={3}
             placeholder="How was the transaction?"
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none resize-none focus:ring-2 focus:ring-blue-400/40"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none resize-none focus:ring-2 focus:ring-green-400/40"
             style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }} />
         </div>
         {mutation.isError && <p className="text-xs mb-3 text-red-500">Failed to submit.</p>}
@@ -43,7 +43,7 @@ function RateModal({ sellerId, listingId, onClose }) {
             style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>Cancel</button>
           <button onClick={() => mutation.mutate()} disabled={!score || mutation.isPending}
             className="flex-1 text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85"
-            style={{ backgroundColor: '#3B82F6' }}>
+            style={{ backgroundColor: '#16A34A' }}>
             {mutation.isPending ? 'Submitting...' : 'Submit'}
           </button>
         </div>
@@ -74,7 +74,7 @@ export default function Profile() {
 
   const avgScore = data.ratings.length
     ? (data.ratings.reduce((s, r) => s + r.score, 0) / data.ratings.length).toFixed(1)
-    : '—';
+    : 'â€”';
   const activeListings = data.listings.filter(l => l.status === 'active');
   const soldListings = data.listings.filter(l => l.status === 'sold');
 
@@ -86,7 +86,7 @@ export default function Profile() {
       <div className="rounded-2xl border bg-white p-6 mb-8" style={{ borderColor: 'var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
           <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold text-white flex-shrink-0"
-            style={{ backgroundColor: '#3B82F6' }}>
+            style={{ backgroundColor: '#16A34A' }}>
             {data.username[0].toUpperCase()}
           </div>
           <div className="flex-1 text-center sm:text-left">
@@ -103,7 +103,7 @@ export default function Profile() {
                 { label: 'Reviews',    value: data.ratings.length },
               ].map(({ label, value }) => (
                 <div key={label} className="text-center">
-                  <p className="text-xl font-bold" style={{ color: '#3B82F6' }}>{value}</p>
+                  <p className="text-xl font-bold" style={{ color: '#16A34A' }}>{value}</p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{label}</p>
                 </div>
               ))}
@@ -116,11 +116,11 @@ export default function Profile() {
       <div className="mb-10">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-bold flex items-center gap-2" style={{ color: 'var(--text)' }}>
-            <Package size={16} style={{ color: '#3B82F6' }} /> My Listings
+            <Package size={16} style={{ color: '#16A34A' }} /> My Listings
           </h2>
           <Link to="/listings/new"
             className="flex items-center gap-1.5 text-xs font-semibold text-white px-3 py-1.5 rounded-lg hover:opacity-85"
-            style={{ backgroundColor: '#3B82F6' }}>
+            style={{ backgroundColor: '#16A34A' }}>
             <Plus size={12} /> Post New
           </Link>
         </div>
@@ -128,7 +128,7 @@ export default function Profile() {
         {data.listings.length === 0 ? (
           <div className="text-center py-12 rounded-xl border border-dashed bg-white" style={{ borderColor: 'var(--border)' }}>
             <p className="text-sm" style={{ color: 'var(--muted)' }}>No listings yet.</p>
-            <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: '#3B82F6' }}>
+            <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: '#16A34A' }}>
               Post your first item
             </Link>
           </div>
@@ -171,7 +171,7 @@ export default function Profile() {
       {/* Reviews */}
       <div>
         <h2 className="text-base font-bold flex items-center gap-2 mb-5" style={{ color: 'var(--text)' }}>
-          <Star size={16} style={{ color: '#3B82F6' }} /> Reviews ({data.ratings.length})
+          <Star size={16} style={{ color: '#16A34A' }} /> Reviews ({data.ratings.length})
         </h2>
         {data.ratings.length === 0 ? (
           <div className="text-center py-12 rounded-xl border border-dashed bg-white" style={{ borderColor: 'var(--border)' }}>
@@ -185,7 +185,7 @@ export default function Profile() {
                   <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{r.rater_username}</span>
                   <div className="flex gap-0.5">
                     {[1,2,3,4,5].map(n => (
-                      <Star key={n} size={13} fill={n <= r.score ? '#3B82F6' : 'none'} style={{ color: '#3B82F6' }} />
+                      <Star key={n} size={13} fill={n <= r.score ? '#16A34A' : 'none'} style={{ color: '#16A34A' }} />
                     ))}
                   </div>
                 </div>

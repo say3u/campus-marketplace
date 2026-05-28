@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../lib/api';
 import { getSocket } from '../lib/socket';
@@ -70,7 +70,7 @@ export default function NewListing() {
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Title</label>
           <input value={form.title} onChange={set('title')} required placeholder="e.g. Calculus textbook"
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
             style={inputStyle} />
         </div>
 
@@ -78,7 +78,7 @@ export default function NewListing() {
           <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Description</label>
           <textarea value={form.description} onChange={set('description')} rows={3}
             placeholder="Condition, any details buyers should know..."
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40 resize-none"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40 resize-none"
             style={inputStyle} />
         </div>
 
@@ -86,13 +86,13 @@ export default function NewListing() {
           <div>
             <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Price ($)</label>
             <input type="number" min="0" step="0.01" value={form.price} onChange={set('price')} required placeholder="0.00"
-              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
               style={inputStyle} />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Category</label>
             <select value={form.category} onChange={set('category')}
-              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
               style={{ ...inputStyle, appearance: 'auto' }}>
               {CATEGORIES.map(c => <option key={c}>{c}</option>)}
             </select>
@@ -103,7 +103,7 @@ export default function NewListing() {
 
         <button type="submit" disabled={loading}
           className="w-full text-white py-2.5 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-          style={{ backgroundColor: '#3B82F6' }}>
+          style={{ backgroundColor: '#16A34A' }}>
           {loading ? 'Posting...' : 'Post listing'}
         </button>
       </form>

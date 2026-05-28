@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
@@ -29,7 +29,7 @@ export default function Register() {
     <div className="min-h-[90vh] flex items-center justify-center px-4" style={{ backgroundColor: 'var(--bg)' }}>
       <div className="w-full max-w-sm">
         <div className="mb-8">
-          <Link to="/" className="text-base font-bold" style={{ color: '#3B82F6' }}>Doormly</Link>
+          <Link to="/" className="text-base font-bold" style={{ color: '#16A34A' }}>doormly</Link>
           <h1 className="text-2xl font-bold mt-6 mb-1" style={{ color: 'var(--text)' }}>Create an account</h1>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>Requires a .edu email address</p>
         </div>
@@ -40,21 +40,21 @@ export default function Register() {
               <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>School email</label>
               <input type="email" placeholder="you@school.edu" value={form.email}
                 onChange={e => setForm(f => ({ ...f, email: e.target.value }))} required
-                className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+                className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 style={inputStyle} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Username</label>
               <input type="text" placeholder="username" value={form.username}
                 onChange={e => setForm(f => ({ ...f, username: e.target.value }))} required
-                className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+                className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 style={inputStyle} />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Password</label>
               <input type="password" placeholder="Min 8 characters" value={form.password}
                 onChange={e => setForm(f => ({ ...f, password: e.target.value }))} required minLength={8}
-                className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+                className="w-full rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
                 style={inputStyle} />
             </div>
             {error && (
@@ -64,7 +64,7 @@ export default function Register() {
             )}
             <button type="submit" disabled={loading}
               className="w-full text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-              style={{ backgroundColor: '#3B82F6' }}>
+              style={{ backgroundColor: '#16A34A' }}>
               {loading ? 'Creating account...' : 'Create account'}
             </button>
           </form>
@@ -72,7 +72,7 @@ export default function Register() {
 
         <p className="text-center text-sm mt-5" style={{ color: 'var(--muted)' }}>
           Already have an account?{' '}
-          <Link to="/login" className="font-semibold hover:underline" style={{ color: '#3B82F6' }}>Sign in</Link>
+          <Link to="/login" className="font-semibold hover:underline" style={{ color: '#16A34A' }}>Sign in</Link>
         </p>
       </div>
     </div>
