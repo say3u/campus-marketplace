@@ -1,64 +1,165 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, Tag, MessageCircle, Laptop, BookOpen, Sofa, Shirt, Wrench, Package } from 'lucide-react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import {
+  Search, ArrowRight, ShieldCheck, Tag, MessageCircle,
+  Laptop, BookOpen, Sofa, Shirt, Wrench, Package,
+} from 'lucide-react';
+import api from '../lib/api';
 
 const CATEGORIES = [
-  { name: 'Electronics', Icon: Laptop,    bg: '#F0FDF4', color: '#16A34A' },
-  { name: 'Textbooks',   Icon: BookOpen,  bg: '#FFFBEB', color: '#D97706' },
-  { name: 'Furniture',   Icon: Sofa,      bg: '#FEF9EE', color: '#B45309' },
-  { name: 'Clothing',    Icon: Shirt,     bg: '#FDF4FF', color: '#A21CAF' },
-  { name: 'Services',    Icon: Wrench,    bg: '#F5F3FF', color: '#7C3AED' },
-  { name: 'Other',       Icon: Package,   bg: '#FFF7ED', color: '#EA580C' },
+  { name: 'Electronics', Icon: Laptop,   bg: '#F0FDF4', color: '#16A34A' },
+  { name: 'Textbooks',   Icon: BookOpen, bg: '#FFFBEB', color: '#D97706' },
+  { name: 'Furniture',   Icon: Sofa,     bg: '#FEF9EE', color: '#B45309' },
+  { name: 'Clothing',    Icon: Shirt,    bg: '#FDF4FF', color: '#A21CAF' },
+  { name: 'Services',    Icon: Wrench,   bg: '#F5F3FF', color: '#7C3AED' },
+  { name: 'Other',       Icon: Package,  bg: '#FFF7ED', color: '#EA580C' },
 ];
 
+const CATEGORY_COLORS = {
+  Electronics: { bg: '#F0FDF4', color: '#16A34A' },
+  Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
+  Furniture:   { bg: '#FEF9EE', color: '#B45309' },
+  Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
+  Services:    { bg: '#F5F3FF', color: '#7C3AED' },
+  Other:       { bg: '#FFF7ED', color: '#EA580C' },
+};
+
 export default function Landing() {
+  const [search, setSearch] = useState('');
+  const navigate = useNavigate();
+
+  const { data: listings = [] } = useQuery({
+    queryKey: ['landing-listings'],
+    queryFn: () => api.get('/listings', { params: { limit: 12 } }).then(r => r.data),
+    staleTime: 60_000,
+  });
+
+  function handleSearch(e) {
+    e.preventDefault();
+    navigate('/register');
+  }
+
   return (
     <div style={{ backgroundColor: 'var(--bg)' }}>
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <div className="max-w-4xl mx-auto px-6 pt-24 pb-16 text-center">
-        <h1 className="text-6xl font-extrabold leading-tight mb-5 tracking-tight" style={{ color: 'var(--text)' }}>
-          Your campus.<br />
-          <span style={{ color: '#16A34A' }}>Your marketplace.</span>
-        </h1>
-        <p className="text-xl leading-relaxed max-w-xl mx-auto mb-10" style={{ color: 'var(--text3)' }}>
-          Buy and sell textbooks, furniture, electronics and more &mdash; only with verified students at your school.
-        </p>
-        <div className="flex items-center justify-center gap-3">
-          <Link to="/register"
-            className="inline-flex items-center gap-2 font-semibold text-white px-8 py-3.5 rounded-xl text-base transition-opacity hover:opacity-85"
-            style={{ backgroundColor: '#16A34A' }}>
-            Start for free <ArrowRight size={16} />
-          </Link>
-          <Link to="/login"
-            className="inline-flex items-center gap-2 font-medium px-8 py-3.5 rounded-xl text-base border transition-colors hover:bg-slate-50"
-            style={{ borderColor: 'var(--border)', color: 'var(--text2)' }}>
-            Sign in
-          </Link>
+      <div className="max-w-2xl mx-auto px-6 pt-20 pb-14 text-center">
+        <div className="inline-flex items-center gap-1.5 mb-6 px-3 py-1 rounded-full border text-xs font-semibold uppercase tracking-wide"
+          style={{ borderColor: '#BBF7D0', backgroundColor: '#F0FDF4', color: '#15803D' }}>
+          <ShieldCheck size={12} />
+          .edu verified only
         </div>
+
+        <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.1] mb-4 tracking-tight"
+          style={{ color: 'var(--text)' }}>
+          Buy &amp; sell anything<br />
+          <span style={{ color: '#16A34A' }}>on your campus.</span>
+        </h1>
+        <p className="text-lg leading-relaxed max-w-md mx-auto mb-8"
+          style={{ color: 'var(--text3)' }}>
+          Textbooks, furniture, electronics and more &mdash; only with verified students at your school. Zero fees.
+        </p>
+
+        {/* Search bar */}
+        <form onSubmit={handleSearch} className="flex gap-2 max-w-md mx-auto mb-4">
+          <div className="relative flex-1">
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
+              style={{ color: 'var(--muted)' }} />
+            <input
+              type="text"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search for anything..."
+              className="w-full rounded-xl pl-10 pr-4 py-3 text-sm border focus:outline-none focus:ring-2 focus:ring-green-400/40"
+              style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
+            />
+          </div>
+          <button type="submit"
+            className="font-semibold text-white px-5 py-3 rounded-xl text-sm transition-opacity hover:opacity-85 whitespace-nowrap"
+            style={{ backgroundColor: '#16A34A' }}>
+            Search
+          </button>
+        </form>
+
+        <p className="text-xs" style={{ color: 'var(--muted)' }}>
+          Already have an account?{' '}
+          <Link to="/login" className="font-semibold hover:underline" style={{ color: '#16A34A' }}>Sign in</Link>
+        </p>
       </div>
 
       {/* ── Categories ───────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-6 pb-20">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-5 text-center" style={{ color: 'var(--muted)' }}>
-          Browse by category
-        </p>
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+      <div className="max-w-4xl mx-auto px-6 pb-14">
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
           {CATEGORIES.map(({ name, Icon, bg, color }) => (
             <Link key={name} to="/register"
-              className="flex flex-col items-center gap-3 py-5 px-3 rounded-2xl border text-center transition-all hover:scale-105 hover:shadow-md"
+              className="flex flex-col items-center gap-2 py-4 px-2 rounded-xl border text-center transition-all hover:scale-105 hover:shadow-md"
               style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ backgroundColor: bg }}>
-                <Icon size={22} style={{ color }} strokeWidth={1.75} />
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: bg }}>
+                <Icon size={20} style={{ color }} strokeWidth={1.75} />
               </div>
-              <span className="text-xs font-semibold" style={{ color: 'var(--text2)' }}>{name}</span>
+              <span className="text-xs font-semibold leading-tight" style={{ color: 'var(--text2)' }}>{name}</span>
             </Link>
           ))}
         </div>
       </div>
 
+      {/* ── Live listings ────────────────────────────────── */}
+      {listings.length > 0 && (
+        <div className="max-w-7xl mx-auto px-6 pb-20">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-base font-bold" style={{ color: 'var(--text)' }}>
+              Latest on doormly
+            </h2>
+            <Link to="/register"
+              className="text-xs font-semibold flex items-center gap-1 hover:underline"
+              style={{ color: '#16A34A' }}>
+              See all <ArrowRight size={12} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+            {listings.map(l => {
+              const cat = CATEGORY_COLORS[l.category] || { bg: '#F3F4F6', color: '#6B7280' };
+              return (
+                <Link key={l.id} to="/register"
+                  className="block rounded-xl border card-hover overflow-hidden bg-white"
+                  style={{ borderColor: 'var(--border)' }}>
+                  <div className="aspect-square overflow-hidden" style={{ backgroundColor: 'var(--surface2)' }}>
+                    {l.image_url
+                      ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                      : <div className="w-full h-full flex items-center justify-center text-3xl font-bold" style={{ color: 'var(--very-muted)' }}>?</div>
+                    }
+                  </div>
+                  <div className="p-3">
+                    <p className="text-sm font-semibold truncate" style={{ color: 'var(--text)' }}>{l.title}</p>
+                    <p className="text-base font-bold mt-0.5" style={{ color: '#16A34A' }}>
+                      ${Number(l.price).toFixed(2)}
+                    </p>
+                    <span className="inline-block mt-1.5 text-xs font-medium px-2 py-0.5 rounded-full"
+                      style={{ backgroundColor: cat.bg, color: cat.color }}>
+                      {l.category}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+          {/* Blur overlay / CTA */}
+          <div className="relative -mt-32 h-32 rounded-b-xl overflow-hidden pointer-events-none"
+            style={{ background: 'linear-gradient(to bottom, transparent, var(--bg))' }} />
+          <div className="text-center -mt-4 relative z-10">
+            <Link to="/register"
+              className="inline-flex items-center gap-2 font-semibold text-white px-6 py-2.5 rounded-xl text-sm transition-opacity hover:opacity-85"
+              style={{ backgroundColor: '#16A34A' }}>
+              Sign up to see all listings <ArrowRight size={14} />
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* ── Trust bar ────────────────────────────────────── */}
       <div className="border-y py-10" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface)' }}>
-        <div className="max-w-4xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+        <div className="max-w-3xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
           {[
             { icon: Tag,           title: 'Always free',   desc: 'Zero fees for buyers and sellers, ever.' },
             { icon: ShieldCheck,   title: '.edu verified', desc: 'Every account requires a school email.' },
@@ -77,23 +178,23 @@ export default function Landing() {
       </div>
 
       {/* ── How it works ─────────────────────────────────── */}
-      <div className="max-w-4xl mx-auto px-6 py-20">
-        <h2 className="text-2xl font-bold mb-12 text-center" style={{ color: 'var(--text)' }}>
+      <div className="max-w-3xl mx-auto px-6 py-16">
+        <h2 className="text-xl font-bold mb-10 text-center" style={{ color: 'var(--text)' }}>
           How it works
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {[
-            { n: '1', title: 'Sign up',        desc: 'Create an account with your .edu email — takes 30 seconds.' },
+            { n: '1', title: 'Sign up',        desc: 'Create an account with your .edu email in 30 seconds.' },
             { n: '2', title: 'Post or browse', desc: 'List something you want to sell, or find a deal near you.' },
             { n: '3', title: 'Meet on campus', desc: 'Chat with the buyer or seller and meet up safely.' },
           ].map(({ n, title, desc }) => (
-            <div key={n} className="rounded-2xl border p-6"
+            <div key={n} className="rounded-2xl border p-5"
               style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
-              <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white mb-4"
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white mb-3"
                 style={{ backgroundColor: '#16A34A' }}>
                 {n}
               </div>
-              <h3 className="font-bold mb-1.5" style={{ color: 'var(--text)' }}>{title}</h3>
+              <h3 className="font-bold text-sm mb-1" style={{ color: 'var(--text)' }}>{title}</h3>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{desc}</p>
             </div>
           ))}
@@ -101,16 +202,16 @@ export default function Landing() {
       </div>
 
       {/* ── CTA banner ───────────────────────────────────── */}
-      <div className="mx-6 mb-20 rounded-3xl overflow-hidden" style={{ backgroundColor: '#16A34A' }}>
-        <div className="max-w-3xl mx-auto px-8 py-16 text-center">
-          <h2 className="text-3xl font-extrabold text-white mb-3">
+      <div className="mx-6 mb-16 rounded-3xl overflow-hidden" style={{ backgroundColor: '#16A34A' }}>
+        <div className="max-w-2xl mx-auto px-8 py-14 text-center">
+          <h2 className="text-3xl font-extrabold text-white mb-2">
             Ready to find a deal?
           </h2>
-          <p className="text-green-100 mb-8 text-base">
+          <p className="text-green-100 mb-7 text-sm">
             Join thousands of students already buying and selling on doormly.
           </p>
           <Link to="/register"
-            className="inline-flex items-center gap-2 font-semibold bg-white px-8 py-3 rounded-xl text-sm transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-2 font-semibold bg-white px-7 py-2.5 rounded-xl text-sm transition-opacity hover:opacity-90"
             style={{ color: '#15803D' }}>
             Create a free account <ArrowRight size={14} />
           </Link>
