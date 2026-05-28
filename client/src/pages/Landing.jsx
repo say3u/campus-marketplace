@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import {
   Search, ArrowRight, ShieldCheck, Tag, MessageCircle,
-  Laptop, BookOpen, Sofa, Shirt, Wrench, Package,
+  Laptop, BookOpen, Sofa, Shirt, Wrench, Package, X,
 } from 'lucide-react';
+import api from '../lib/api';
 
 const CATEGORIES = [
   { name: 'Electronics', Icon: Laptop,   bg: '#F0FDF4', color: '#16A34A' },
@@ -13,7 +16,36 @@ const CATEGORIES = [
   { name: 'Other',       Icon: Package,  bg: '#FFF7ED', color: '#EA580C' },
 ];
 
+const CATEGORY_COLORS = {
+  Electronics: { bg: '#F0FDF4', color: '#16A34A' },
+  Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
+  Furniture:   { bg: '#FEF9EE', color: '#B45309' },
+  Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
+  Services:    { bg: '#F5F3FF', color: '#7C3AED' },
+  Other:       { bg: '#FFF7ED', color: '#EA580C' },
+};
+
 export default function Landing() {
+  const [showModal, setShowModal]       = useState(false);
+  const [activeCategory, setActive]     = useState(null);
+
+  const activeMeta = CATEGORIES.find(c => c.name === activeCategory);
+
+  const { data: listings = [] } = useQuery({
+    queryKey: ['modal-listings', activeCategory],
+    queryFn: () =>
+      api.get('/listings', {
+        params: { ...(activeCategory && { category: activeCategory }), limit: 18 },
+      }).then(r => r.data),
+    enabled: !!activeCategory,
+    staleTime: 60_000,
+  });
+
+  function openCategory(name) {
+    setActive(name);
+    setShowModal(true);
+  }
+
   return (
     <div style={{ backgroundColor: 'var(--bg)' }}>
 
@@ -53,14 +85,14 @@ export default function Landing() {
       <div className="max-w-4xl mx-auto px-6 pb-16">
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
           {CATEGORIES.map(({ name, Icon, bg, color }) => (
-            <Link key={name} to="/register"
+            <button key={name} onClick={() => openCategory(name)}
               className="flex flex-col items-center gap-2 py-4 px-2 rounded-xl border text-center transition-all hover:scale-105 hover:shadow-md"
               style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
               <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: bg }}>
                 <Icon size={20} style={{ color }} strokeWidth={1.75} />
               </div>
               <span className="text-xs font-semibold leading-tight" style={{ color: 'var(--text2)' }}>{name}</span>
-            </Link>
+            </button>
           ))}
         </div>
       </div>
@@ -107,6 +139,79 @@ export default function Landing() {
           <span className="text-xs" style={{ color: 'var(--very-muted)' }}>&copy; 2025 doormly. Built for students.</span>
         </div>
       </div>
+
+      {/* ── Category modal ───────────────────────────────── */}
+      {showModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
+          onClick={() => setShowModal(false)}>
+
+          {/* Listings grid — dimmed backdrop */}
+          <div className="absolute inset-0 overflow-hidden p-4 pt-16 pointer-events-none select-none"
+            style={{ opacity: 0.18 }}>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-6 gap-2">
+              {listings.map(l => {
+                const cat = CATEGORY_COLORS[l.category] || { bg: '#F3F4F6', color: '#6B7280' };
+                return (
+                  <div key={l.id} className="rounded-xl overflow-hidden bg-white">
+                    <div className="aspect-square overflow-hidden" style={{ backgroundColor: '#E5E7EB' }}>
+                      {l.image_url
+                        ? <img src={l.image_url} alt="" className="w-full h-full object-cover" />
+                        : <div className="w-full h-full" style={{ backgroundColor: '#D1D5DB' }} />
+                      }
+                    </div>
+                    <div className="p-2">
+                      <div className="h-2.5 rounded w-3/4 mb-1.5" style={{ backgroundColor: '#D1D5DB' }} />
+                      <div className="h-2.5 rounded w-1/2" style={{ backgroundColor: '#E5E7EB' }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Modal card */}
+          <div
+            className="relative bg-white rounded-2xl p-8 max-w-xs w-full text-center shadow-2xl"
+            onClick={e => e.stopPropagation()}>
+
+            {/* Close */}
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-full transition-colors"
+              style={{ color: 'var(--muted)', backgroundColor: 'var(--surface2)' }}>
+              <X size={14} />
+            </button>
+
+            {/* Icon */}
+            {activeMeta && (
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
+                style={{ backgroundColor: activeMeta.bg }}>
+                <activeMeta.Icon size={28} style={{ color: activeMeta.color }} strokeWidth={1.75} />
+              </div>
+            )}
+
+            <h2 className="text-lg font-bold mb-1" style={{ color: '#111111' }}>
+              Browse {activeCategory}
+            </h2>
+            <p className="text-sm mb-6" style={{ color: '#6B7280' }}>
+              Create a free account to see listings from students at your school.
+            </p>
+
+            <Link to="/register"
+              className="flex items-center justify-center gap-2 w-full font-semibold text-white py-2.5 rounded-xl text-sm transition-opacity hover:opacity-85 mb-3"
+              style={{ backgroundColor: '#16A34A' }}>
+              Create free account <ArrowRight size={14} />
+            </Link>
+            <Link to="/login"
+              className="block text-sm font-medium hover:underline"
+              style={{ color: '#6B7280' }}>
+              Already have an account? Sign in
+            </Link>
+          </div>
+        </div>
+      )}
 
     </div>
   );
