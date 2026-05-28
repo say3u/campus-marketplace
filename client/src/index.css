@@ -19,7 +19,7 @@ body {
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  border-color: #CC0033 !important;
+  border-color: #4F46E5 !important;
 }
 
 .surface { background-color: #16181f; }

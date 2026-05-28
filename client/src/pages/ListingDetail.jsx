@@ -56,7 +56,7 @@ export default function ListingDetail() {
           <div className="flex items-start justify-between gap-4 mb-6">
             <div>
               <h1 className="text-3xl font-black text-gray-900">{listing.title}</h1>
-              <p className="text-4xl font-black mt-2" style={{ color: '#CC0033' }}>
+              <p className="text-4xl font-black mt-2" style={{ color: '#4F46E5' }}>
                 ${Number(listing.price).toFixed(2)}
               </p>
             </div>
@@ -80,7 +80,7 @@ export default function ListingDetail() {
           {/* Seller */}
           <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl mb-6">
             <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-black text-sm"
-              style={{ backgroundColor: '#CC0033' }}>
+              style={{ backgroundColor: '#4F46E5' }}>
               {listing.username[0].toUpperCase()}
             </div>
             <div>
@@ -105,7 +105,7 @@ export default function ListingDetail() {
                 )}
                 <button onClick={() => { if (confirm('Delete this listing?')) deleteListing.mutate(); }}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold border-2 border-red-100 hover:bg-red-50"
-                  style={{ color: '#CC0033' }}>
+                  style={{ color: '#4F46E5' }}>
                   <Trash2 size={15} /> Delete
                 </button>
               </>
@@ -113,7 +113,7 @@ export default function ListingDetail() {
               <>
                 <button onClick={() => startConvo.mutate()} disabled={startConvo.isPending}
                   className="flex items-center gap-2 text-white px-6 py-2.5 rounded-xl font-bold disabled:opacity-50"
-                  style={{ backgroundColor: '#CC0033' }}>
+                  style={{ backgroundColor: '#4F46E5' }}>
                   <MessageCircle size={15} />
                   {startConvo.isPending ? 'Opening...' : 'Message Seller'}
                 </button>
@@ -123,7 +123,7 @@ export default function ListingDetail() {
                 </button>
               </>
             ) : !user ? (
-              <Link to="/login" className="text-white px-6 py-2.5 rounded-xl font-bold" style={{ backgroundColor: '#CC0033' }}>
+              <Link to="/login" className="text-white px-6 py-2.5 rounded-xl font-bold" style={{ backgroundColor: '#4F46E5' }}>
                 Login to Message Seller
               </Link>
             ) : null}

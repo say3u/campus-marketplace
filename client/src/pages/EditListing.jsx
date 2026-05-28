@@ -61,20 +61,20 @@ export default function EditListing() {
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-1.5">Title</label>
             <input value={form.title} onChange={set('title')} required className={inputClass}
-              onFocus={e => e.target.style.borderColor = '#CC0033'}
+              onFocus={e => e.target.style.borderColor = '#4F46E5'}
               onBlur={e => e.target.style.borderColor = '#f3f4f6'} />
           </div>
           <div>
             <label className="block text-sm font-bold text-gray-700 mb-1.5">Description</label>
             <textarea value={form.description} onChange={set('description')} rows={3} className={inputClass + ' resize-none'}
-              onFocus={e => e.target.style.borderColor = '#CC0033'}
+              onFocus={e => e.target.style.borderColor = '#4F46E5'}
               onBlur={e => e.target.style.borderColor = '#f3f4f6'} />
           </div>
           <div className="flex gap-3">
             <div className="flex-1">
               <label className="block text-sm font-bold text-gray-700 mb-1.5">Price ($)</label>
               <input type="number" min="0" step="0.01" value={form.price} onChange={set('price')} required className={inputClass}
-                onFocus={e => e.target.style.borderColor = '#CC0033'}
+                onFocus={e => e.target.style.borderColor = '#4F46E5'}
                 onBlur={e => e.target.style.borderColor = '#f3f4f6'} />
             </div>
             <div className="flex-1">
@@ -97,7 +97,7 @@ export default function EditListing() {
             <input type="file" accept="image/*" onChange={e => setImage(e.target.files[0])}
               className="w-full text-sm text-gray-500" />
           </div>
-          {error && <p className="text-sm font-medium" style={{ color: '#CC0033' }}>{error}</p>}
+          {error && <p className="text-sm font-medium" style={{ color: '#4F46E5' }}>{error}</p>}
           <div className="flex gap-3 pt-2">
             <button type="button" onClick={() => navigate(-1)}
               className="flex-1 border-2 border-gray-200 text-gray-600 py-3 rounded-xl font-bold hover:bg-gray-50">
@@ -105,7 +105,7 @@ export default function EditListing() {
             </button>
             <button type="submit" disabled={loading}
               className="flex-1 text-white py-3 rounded-xl font-black disabled:opacity-50"
-              style={{ backgroundColor: '#CC0033' }}>
+              style={{ backgroundColor: '#4F46E5' }}>
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
           </div>

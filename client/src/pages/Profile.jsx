@@ -27,7 +27,7 @@ function RateModal({ sellerId, listingId, onClose }) {
           <div className="flex gap-1">
             {[1,2,3,4,5].map(n => (
               <button key={n} type="button" onClick={() => setScore(n)}>
-                <Star size={28} fill={n <= score ? '#CC0033' : 'none'} style={{ color: '#CC0033' }} />
+                <Star size={28} fill={n <= score ? '#4F46E5' : 'none'} style={{ color: '#4F46E5' }} />
               </button>
             ))}
           </div>
@@ -37,17 +37,17 @@ function RateModal({ sellerId, listingId, onClose }) {
           <textarea value={comment} onChange={e => setComment(e.target.value)} rows={3}
             placeholder="How was the transaction?"
             className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 focus:outline-none font-medium resize-none"
-            onFocus={e => e.target.style.borderColor = '#CC0033'}
+            onFocus={e => e.target.style.borderColor = '#4F46E5'}
             onBlur={e => e.target.style.borderColor = '#f3f4f6'} />
         </div>
-        {mutation.isError && <p className="text-sm mb-4" style={{ color: '#CC0033' }}>Failed to submit.</p>}
+        {mutation.isError && <p className="text-sm mb-4" style={{ color: '#4F46E5' }}>Failed to submit.</p>}
         <div className="flex gap-3">
           <button onClick={onClose} className="flex-1 border-2 border-gray-200 text-gray-600 py-2.5 rounded-xl font-bold hover:bg-gray-50">
             Cancel
           </button>
           <button onClick={() => mutation.mutate()} disabled={!score || mutation.isPending}
             className="flex-1 text-white py-2.5 rounded-xl font-bold disabled:opacity-50"
-            style={{ backgroundColor: '#CC0033' }}>
+            style={{ backgroundColor: '#4F46E5' }}>
             {mutation.isPending ? 'Submitting...' : 'Submit'}
           </button>
         </div>
@@ -91,7 +91,7 @@ export default function Profile() {
       <div className="bg-white rounded-3xl border-2 border-gray-100 p-8 mb-8">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
           <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-black text-white flex-shrink-0"
-            style={{ backgroundColor: '#CC0033' }}>
+            style={{ backgroundColor: '#4F46E5' }}>
             {data.username[0].toUpperCase()}
           </div>
           <div className="flex-1 text-center sm:text-left">
@@ -108,7 +108,7 @@ export default function Profile() {
                 { label: 'Reviews',    value: data.ratings.length },
               ].map(({ label, value }) => (
                 <div key={label} className="text-center">
-                  <p className="text-2xl font-black" style={{ color: '#CC0033' }}>{value}</p>
+                  <p className="text-2xl font-black" style={{ color: '#4F46E5' }}>{value}</p>
                   <p className="text-xs text-gray-400 mt-0.5">{label}</p>
                 </div>
               ))}
@@ -121,11 +121,11 @@ export default function Profile() {
       <div className="mb-10">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-xl font-black text-gray-900 flex items-center gap-2">
-            <Package size={20} style={{ color: '#CC0033' }} /> My Listings
+            <Package size={20} style={{ color: '#4F46E5' }} /> My Listings
           </h2>
           <Link to="/listings/new"
             className="flex items-center gap-1.5 text-sm font-bold text-white px-4 py-2 rounded-full"
-            style={{ backgroundColor: '#CC0033' }}>
+            style={{ backgroundColor: '#4F46E5' }}>
             <Plus size={14} /> Post New
           </Link>
         </div>
@@ -133,7 +133,7 @@ export default function Profile() {
         {data.listings.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-2xl border-2 border-dashed border-gray-200">
             <p className="text-gray-400 font-medium">No listings yet.</p>
-            <Link to="/listings/new" className="text-sm font-bold mt-2 inline-block" style={{ color: '#CC0033' }}>
+            <Link to="/listings/new" className="text-sm font-bold mt-2 inline-block" style={{ color: '#4F46E5' }}>
               Post your first item
             </Link>
           </div>
@@ -153,7 +153,7 @@ export default function Profile() {
                 </div>
                 <div className="p-3">
                   <p className="font-bold text-gray-900 truncate text-sm">{l.title}</p>
-                  <p className="font-black text-lg mt-0.5" style={{ color: '#CC0033' }}>${Number(l.price).toFixed(2)}</p>
+                  <p className="font-black text-lg mt-0.5" style={{ color: '#4F46E5' }}>${Number(l.price).toFixed(2)}</p>
                   <div className="flex gap-2 mt-3">
                     <Link to={`/listings/${l.id}/edit`}
                       className="flex-1 flex items-center justify-center gap-1 text-xs font-bold py-1.5 rounded-lg border-2 border-gray-200 text-gray-600 hover:border-gray-400">
@@ -161,7 +161,7 @@ export default function Profile() {
                     </Link>
                     <button onClick={() => deleteListing.mutate(l.id)}
                       className="flex-1 flex items-center justify-center gap-1 text-xs font-bold py-1.5 rounded-lg border-2 border-red-100 hover:bg-red-50"
-                      style={{ color: '#CC0033' }}>
+                      style={{ color: '#4F46E5' }}>
                       <Trash2 size={11} /> Delete
                     </button>
                   </div>
@@ -175,7 +175,7 @@ export default function Profile() {
       {/* Reviews */}
       <div>
         <h2 className="text-xl font-black text-gray-900 flex items-center gap-2 mb-5">
-          <Star size={20} style={{ color: '#CC0033' }} /> Reviews ({data.ratings.length})
+          <Star size={20} style={{ color: '#4F46E5' }} /> Reviews ({data.ratings.length})
         </h2>
         {data.ratings.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-2xl border-2 border-dashed border-gray-200">
@@ -189,7 +189,7 @@ export default function Profile() {
                   <span className="font-bold text-gray-800">{r.rater_username}</span>
                   <div className="flex gap-0.5">
                     {[1,2,3,4,5].map(n => (
-                      <Star key={n} size={14} fill={n <= r.score ? '#CC0033' : 'none'} style={{ color: '#CC0033' }} />
+                      <Star key={n} size={14} fill={n <= r.score ? '#4F46E5' : 'none'} style={{ color: '#4F46E5' }} />
                     ))}
                   </div>
                 </div>

@@ -14,7 +14,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 h-14 flex items-center justify-between px-6 border-b"
       style={{ backgroundColor: '#0f1117', borderColor: '#2a2d3e' }}>
       <div className="flex items-center gap-8">
-        <Link to="/" className="text-lg font-bold tracking-tight" style={{ color: '#CC0033' }}>
+        <Link to="/" className="text-lg font-bold tracking-tight" style={{ color: '#4F46E5' }}>
           Dormly
         </Link>
         {user && (
@@ -30,7 +30,7 @@ export default function Navbar() {
           <>
             <Link to="/listings/new"
               className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#CC0033' }}>
+              style={{ backgroundColor: '#4F46E5' }}>
               + Sell
             </Link>
             <Link to="/profile"
@@ -48,7 +48,7 @@ export default function Navbar() {
             </Link>
             <Link to="/register"
               className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#CC0033' }}>
+              style={{ backgroundColor: '#4F46E5' }}>
               Sign up
             </Link>
           </>
