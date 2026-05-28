@@ -80,7 +80,7 @@ export default function ListingDetail() {
           </div>
 
           <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>{listing.title}</h1>
-          <p className="text-3xl font-bold mb-5" style={{ color: '#14B8A6' }}>${Number(listing.price).toFixed(2)}</p>
+          <p className="text-3xl font-bold mb-5" style={{ color: '#16A34A' }}>${Number(listing.price).toFixed(2)}</p>
 
           {listing.description && (
             <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text3)' }}>{listing.description}</p>
@@ -93,7 +93,7 @@ export default function ListingDetail() {
             </div>
             <div>
               <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{listing.username}</p>
-              <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{listing.rep_score} reputation Â· {listing.school}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{listing.rep_score} reputation &middot; {listing.school}</p>
             </div>
           </div>
 
@@ -133,10 +133,19 @@ export default function ListingDetail() {
                 </button>
               </>
             ) : !user ? (
-              <Link to="/login" className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: '#16A34A' }}>
-                Login to Message Seller
-              </Link>
+              <div className="w-full rounded-xl border p-4 text-center" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface)' }}>
+                <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text)' }}>
+                  Want to message this seller?
+                </p>
+                <p className="text-xs mb-3" style={{ color: 'var(--muted)' }}>
+                  Create a free account with your .edu email to get in touch.
+                </p>
+                <Link to="/register"
+                  className="inline-flex items-center gap-2 font-semibold text-white px-5 py-2 rounded-lg text-sm transition-opacity hover:opacity-85"
+                  style={{ backgroundColor: '#16A34A' }}>
+                  Start for free
+                </Link>
+              </div>
             ) : null}
           </div>
         </div>
