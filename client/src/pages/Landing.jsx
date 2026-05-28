@@ -82,10 +82,18 @@ export default function Landing() {
           </button>
         </form>
 
-        <p className="text-xs" style={{ color: 'var(--muted)' }}>
-          Already have an account?{' '}
-          <Link to="/login" className="font-semibold hover:underline" style={{ color: '#16A34A' }}>Sign in</Link>
-        </p>
+        <div className="flex items-center justify-center gap-3 mt-4">
+          <Link to="/register"
+            className="inline-flex items-center gap-2 font-semibold text-white px-7 py-3 rounded-xl text-sm transition-opacity hover:opacity-85"
+            style={{ backgroundColor: '#16A34A' }}>
+            Start for free <ArrowRight size={15} />
+          </Link>
+          <Link to="/login"
+            className="inline-flex items-center gap-2 font-medium px-7 py-3 rounded-xl text-sm border transition-colors hover:bg-slate-50"
+            style={{ borderColor: 'var(--border)', color: 'var(--text2)' }}>
+            Sign in
+          </Link>
+        </div>
       </div>
 
       {/* ── Categories ───────────────────────────────────── */}
