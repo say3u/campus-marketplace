@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: 'rgba(59,130,246,0.15)', color: '#60a5fa' },
-  Textbooks:   { bg: 'rgba(245,158,11,0.15)', color: '#fbbf24' },
-  Furniture:   { bg: 'rgba(34,197,94,0.15)',  color: '#4ade80' },
-  Clothing:    { bg: 'rgba(236,72,153,0.15)', color: '#f472b6' },
-  Services:    { bg: 'rgba(168,85,247,0.15)', color: '#c084fc' },
-  Other:       { bg: 'rgba(100,116,139,0.15)',color: '#94a3b8' },
+  Electronics: { bg: '#EFF6FF', color: '#2563EB' },
+  Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
+  Furniture:   { bg: '#F0FDF4', color: '#16A34A' },
+  Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
+  Services:    { bg: '#F5F3FF', color: '#7C3AED' },
+  Other:       { bg: '#F8FAFC', color: '#64748B' },
 };
 
 export default function ListingCard({ listing }) {
@@ -14,25 +14,25 @@ export default function ListingCard({ listing }) {
 
   return (
     <Link to={`/listings/${listing.id}`}
-      className="block rounded-xl border card-hover overflow-hidden"
-      style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
-      <div className="aspect-square overflow-hidden" style={{ backgroundColor: '#1e3a5f' }}>
+      className="block rounded-xl border card-hover overflow-hidden bg-white"
+      style={{ borderColor: '#E2E8F0' }}>
+      <div className="aspect-square overflow-hidden" style={{ backgroundColor: '#F1F5F9' }}>
         {listing.image_url
           ? <img src={listing.image_url} alt={listing.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
-          : <div className="w-full h-full flex items-center justify-center text-4xl" style={{ color: '#475569' }}>?</div>
+          : <div className="w-full h-full flex items-center justify-center text-4xl font-bold" style={{ color: '#CBD5E1' }}>?</div>
         }
       </div>
       <div className="p-3">
-        <p className="text-sm font-semibold text-white truncate">{listing.title}</p>
-        <p className="text-base font-bold mt-0.5" style={{ color: '#3B82F6' }}>
+        <p className="text-sm font-semibold truncate" style={{ color: '#0F172A' }}>{listing.title}</p>
+        <p className="text-base font-bold mt-0.5" style={{ color: '#14B8A6' }}>
           ${Number(listing.price).toFixed(2)}
         </p>
         <div className="flex items-center justify-between mt-2">
-          <span className="text-xs font-medium px-2 py-0.5 rounded"
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full"
             style={{ backgroundColor: cat.bg, color: cat.color }}>
             {listing.category}
           </span>
-          <span className="text-xs" style={{ color: '#475569' }}>{listing.username}</span>
+          <span className="text-xs" style={{ color: '#94A3B8' }}>{listing.username}</span>
         </div>
       </div>
     </Link>

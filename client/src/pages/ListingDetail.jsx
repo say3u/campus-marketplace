@@ -6,12 +6,12 @@ import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: 'rgba(59,130,246,0.15)', color: '#60a5fa' },
-  Textbooks:   { bg: 'rgba(245,158,11,0.15)', color: '#fbbf24' },
-  Furniture:   { bg: 'rgba(34,197,94,0.15)',  color: '#4ade80' },
-  Clothing:    { bg: 'rgba(236,72,153,0.15)', color: '#f472b6' },
-  Services:    { bg: 'rgba(168,85,247,0.15)', color: '#c084fc' },
-  Other:       { bg: 'rgba(100,116,139,0.15)',color: '#94a3b8' },
+  Electronics: { bg: '#EFF6FF', color: '#2563EB' },
+  Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
+  Furniture:   { bg: '#F0FDF4', color: '#16A34A' },
+  Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
+  Services:    { bg: '#F5F3FF', color: '#7C3AED' },
+  Other:       { bg: '#F8FAFC', color: '#64748B' },
 };
 
 export default function ListingDetail() {
@@ -46,12 +46,8 @@ export default function ListingDetail() {
     onSuccess: () => setReported(true),
   });
 
-  if (isLoading) return (
-    <div className="text-center py-24 text-sm" style={{ color: '#475569' }}>Loading...</div>
-  );
-  if (!listing) return (
-    <div className="text-center py-24 text-sm" style={{ color: '#475569' }}>Listing not found.</div>
-  );
+  if (isLoading) return <div className="text-center py-24 text-sm" style={{ color: '#94A3B8' }}>Loading...</div>;
+  if (!listing) return <div className="text-center py-24 text-sm" style={{ color: '#94A3B8' }}>Listing not found.</div>;
 
   const isSeller = user?.id === listing.seller_id;
   const cat = CATEGORY_COLORS[listing.category] || CATEGORY_COLORS.Other;
@@ -59,72 +55,66 @@ export default function ListingDetail() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <button onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-sm mb-6 transition-colors hover:text-white"
-        style={{ color: '#64748b' }}>
+        className="flex items-center gap-1.5 text-sm mb-6 transition-colors hover:text-slate-700"
+        style={{ color: '#94A3B8' }}>
         <ArrowLeft size={14} /> Back
       </button>
 
-      <div className="rounded-2xl border overflow-hidden" style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
-        {/* Image */}
-        <div className="w-full overflow-hidden" style={{ backgroundColor: '#1e3a5f', maxHeight: '400px' }}>
+      <div className="rounded-2xl border bg-white overflow-hidden" style={{ borderColor: '#E2E8F0', boxShadow: '0 1px 8px rgba(0,0,0,0.06)' }}>
+        <div className="w-full overflow-hidden" style={{ backgroundColor: '#F1F5F9', maxHeight: '400px' }}>
           {listing.image_url
             ? <img src={listing.image_url} alt={listing.title} className="w-full object-cover" style={{ maxHeight: '400px' }} />
-            : <div className="w-full h-56 flex items-center justify-center text-5xl font-bold" style={{ color: '#475569' }}>?</div>
+            : <div className="w-full h-56 flex items-center justify-center text-5xl font-bold" style={{ color: '#E2E8F0' }}>?</div>
           }
         </div>
 
         <div className="p-6">
-          {/* Status badge */}
           <div className="flex items-center gap-2 mb-4">
             <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-              listing.status === 'active' ? 'bg-green-500/10 text-green-400' :
-              listing.status === 'sold'   ? 'bg-slate-500/20 text-slate-400' : 'bg-red-500/10 text-red-400'
+              listing.status === 'active' ? 'bg-green-50 text-green-700' :
+              listing.status === 'sold'   ? 'bg-slate-100 text-slate-500' : 'bg-red-50 text-red-500'
             }`}>{listing.status}</span>
             <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ backgroundColor: cat.bg, color: cat.color }}>
               {listing.category}
             </span>
           </div>
 
-          <h1 className="text-2xl font-bold text-white mb-2">{listing.title}</h1>
-          <p className="text-3xl font-bold mb-5" style={{ color: '#3B82F6' }}>
-            ${Number(listing.price).toFixed(2)}
-          </p>
+          <h1 className="text-2xl font-bold mb-2" style={{ color: '#0F172A' }}>{listing.title}</h1>
+          <p className="text-3xl font-bold mb-5" style={{ color: '#14B8A6' }}>${Number(listing.price).toFixed(2)}</p>
 
           {listing.description && (
-            <p className="text-sm leading-relaxed mb-6" style={{ color: '#94a3b8' }}>{listing.description}</p>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: '#64748B' }}>{listing.description}</p>
           )}
 
-          {/* Seller */}
-          <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: '#1e3a5f' }}>
+          <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: '#F8FAFC', border: '1px solid #F1F5F9' }}>
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
               style={{ backgroundColor: '#3B82F6' }}>
               {listing.username[0].toUpperCase()}
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">{listing.username}</p>
-              <p className="text-xs mt-0.5" style={{ color: '#64748b' }}>{listing.rep_score} reputation · {listing.school}</p>
+              <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>{listing.username}</p>
+              <p className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>{listing.rep_score} reputation · {listing.school}</p>
             </div>
           </div>
 
-          {/* Actions */}
           <div className="flex flex-wrap gap-2">
             {isSeller ? (
               <>
                 <Link to={`/listings/${id}/edit`}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-white/5"
-                  style={{ borderColor: '#475569', color: '#94a3b8' }}>
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-slate-50"
+                  style={{ borderColor: '#E2E8F0', color: '#64748B' }}>
                   <Pencil size={13} /> Edit
                 </Link>
                 {listing.status === 'active' && (
                   <button onClick={() => markSold.mutate()} disabled={markSold.isPending}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-white/5 disabled:opacity-50"
-                    style={{ borderColor: '#475569', color: '#4ade80' }}>
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-green-50 disabled:opacity-50"
+                    style={{ borderColor: '#E2E8F0', color: '#16A34A' }}>
                     <CheckCircle size={13} /> Mark Sold
                   </button>
                 )}
                 <button onClick={() => { if (confirm('Delete this listing?')) deleteListing.mutate(); }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-red-500/10 disabled:opacity-50"
-                  style={{ borderColor: '#475569', color: '#f87171' }}>
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-red-50"
+                  style={{ borderColor: '#E2E8F0', color: '#DC2626' }}>
                   <Trash2 size={13} /> Delete
                 </button>
               </>
@@ -137,14 +127,13 @@ export default function ListingDetail() {
                   {startConvo.isPending ? 'Opening...' : 'Message Seller'}
                 </button>
                 <button onClick={() => report.mutate()} disabled={reported}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-white/5 disabled:opacity-40"
-                  style={{ borderColor: '#475569', color: '#64748b' }}>
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-slate-50 disabled:opacity-40"
+                  style={{ borderColor: '#E2E8F0', color: '#94A3B8' }}>
                   <Flag size={13} /> {reported ? 'Reported' : 'Report'}
                 </button>
               </>
             ) : !user ? (
-              <Link to="/login"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white hover:opacity-85 transition-opacity"
+              <Link to="/login" className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white hover:opacity-85 transition-opacity"
                 style={{ backgroundColor: '#3B82F6' }}>
                 Login to Message Seller
               </Link>

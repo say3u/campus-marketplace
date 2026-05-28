@@ -12,10 +12,10 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 h-14 flex items-center justify-between px-6 border-b"
-      style={{ backgroundColor: '#0f172a', borderColor: '#475569' }}>
+      style={{ backgroundColor: '#0F172A', borderColor: '#1e293b' }}>
       <div className="flex items-center gap-8">
-        <Link to="/" className="text-lg font-bold tracking-tight" style={{ color: '#3B82F6' }}>
-          Dormly
+        <Link to="/" className="text-lg font-bold tracking-tight text-white">
+          Doormly
         </Link>
         {user && (
           <div className="hidden sm:flex items-center gap-6">
@@ -33,8 +33,7 @@ export default function Navbar() {
               style={{ backgroundColor: '#3B82F6' }}>
               + Sell
             </Link>
-            <Link to="/profile"
-              className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+            <Link to="/profile" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
               {user.username}
             </Link>
             <button onClick={handleLogout} className="text-sm text-slate-500 hover:text-slate-300 transition-colors">

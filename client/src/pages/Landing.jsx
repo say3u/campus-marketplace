@@ -10,81 +10,77 @@ const FEATURES = [
 
 export default function Landing() {
   return (
-    <div style={{ backgroundColor: '#0f172a' }}>
+    <div style={{ backgroundColor: '#F8FAFC' }}>
 
       {/* Hero */}
-      <div className="max-w-6xl mx-auto px-6 pt-24 pb-20 flex flex-col lg:flex-row items-center gap-16">
+      <div className="max-w-6xl mx-auto px-6 pt-20 pb-16 flex flex-col lg:flex-row items-center gap-16">
         <div className="flex-1">
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest mb-8 px-3 py-1.5 rounded-full border"
-            style={{ borderColor: '#475569', color: '#3B82F6', backgroundColor: 'rgba(59,130,246,0.08)' }}>
+            style={{ borderColor: '#BAE6FD', color: '#0369A1', backgroundColor: '#F0F9FF' }}>
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ backgroundColor: '#3B82F6' }} />
             Live marketplace
           </div>
-          <h1 className="text-5xl font-bold text-white leading-tight mb-5">
+          <h1 className="text-5xl font-bold leading-tight mb-5" style={{ color: '#0F172A' }}>
             Buy and sell<br />
             <span style={{ color: '#3B82F6' }}>on your campus.</span>
           </h1>
-          <p className="text-lg mb-10 leading-relaxed max-w-md" style={{ color: '#94a3b8' }}>
-            Dormly is the real-time marketplace built for students. Zero fees, verified buyers, instant listings.
+          <p className="text-lg mb-10 leading-relaxed max-w-md" style={{ color: '#64748B' }}>
+            Doormly is the real-time marketplace built for students. Zero fees, verified buyers, instant listings.
           </p>
           <div className="flex items-center gap-3">
             <Link to="/register"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-white px-6 py-3 rounded-md transition-opacity hover:opacity-80"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-white px-6 py-3 rounded-lg transition-opacity hover:opacity-85"
               style={{ backgroundColor: '#3B82F6' }}>
               Get started free <ArrowRight size={14} />
             </Link>
             <Link to="/login"
-              className="text-sm font-medium px-6 py-3 rounded-md border transition-colors hover:bg-white/5"
-              style={{ borderColor: '#475569', color: '#94a3b8' }}>
+              className="text-sm font-medium px-6 py-3 rounded-lg border transition-colors hover:bg-slate-50"
+              style={{ borderColor: '#E2E8F0', color: '#64748B' }}>
               Log in
             </Link>
           </div>
         </div>
 
-        <div className="flex-1 w-full relative">
-          {/* Glow effect */}
-          <div className="absolute inset-0 rounded-2xl blur-3xl opacity-20" style={{ backgroundColor: '#3B82F6' }} />
-          <div
-            className="relative w-full rounded-2xl overflow-hidden flex items-center justify-center"
-            style={{ minHeight: '340px', maxHeight: '420px', border: '1px solid #334155', background: 'linear-gradient(135deg, #1e3a5f 0%, #1e293b 50%, #1a1d2e 100%)' }}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=700&auto=format&fit=crop&q=80"
-              alt="Students working together"
-              className="w-full h-full object-cover absolute inset-0"
-              style={{ opacity: 0.85 }}
-              onError={e => { e.target.style.display = 'none'; }}
-            />
-            {/* Overlay grid pattern */}
-            <div className="absolute inset-0 opacity-10" style={{
-              backgroundImage: 'linear-gradient(#3B82F6 1px, transparent 1px), linear-gradient(90deg, #3B82F6 1px, transparent 1px)',
-              backgroundSize: '40px 40px'
-            }} />
-            {/* Floating stat cards */}
-            <div className="relative z-10 flex flex-col gap-3 p-6 w-full">
-              {[['📦 New listing', 'Calculus textbook — $25', '#1e293b'],
-                ['💬 New message', 'Is this still available?', '#1e3a5f'],
-                ['✅ Sold', 'Mini fridge — $80', '#1e293b']].map(([label, sub, bg]) => (
-                <div key={label} className="flex items-center gap-3 px-4 py-3 rounded-xl backdrop-blur-sm border"
-                  style={{ backgroundColor: bg + 'cc', borderColor: '#475569', maxWidth: '260px' }}>
-                  <div>
-                    <p className="text-xs font-semibold text-white">{label}</p>
-                    <p className="text-xs mt-0.5" style={{ color: '#64748b' }}>{sub}</p>
+        {/* Hero visual */}
+        <div className="flex-1 w-full">
+          <div className="relative rounded-2xl overflow-hidden border p-6"
+            style={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0', boxShadow: '0 20px 60px rgba(15,23,42,0.08)' }}>
+            {/* Mock listing cards */}
+            <div className="space-y-3">
+              {[
+                { title: 'Calculus Textbook — 8th Ed.', price: '$25', cat: 'Textbooks', catBg: '#FFFBEB', catColor: '#D97706', dot: '#10B981' },
+                { title: 'Mini Fridge — barely used',   price: '$80', cat: 'Furniture',  catBg: '#F0FDF4', catColor: '#16A34A', dot: '#3B82F6' },
+                { title: 'MacBook Charger 65W',         price: '$18', cat: 'Electronics',catBg: '#EFF6FF', catColor: '#2563EB', dot: '#F59E0B' },
+              ].map(item => (
+                <div key={item.title} className="flex items-center gap-3 p-3 rounded-xl border" style={{ borderColor: '#F1F5F9', backgroundColor: '#F8FAFC' }}>
+                  <div className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: item.catBg }}>
+                    <span className="w-3 h-3 rounded-full" style={{ backgroundColor: item.dot }} />
                   </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold truncate" style={{ color: '#0F172A' }}>{item.title}</p>
+                    <span className="text-xs font-medium px-1.5 py-0.5 rounded-full" style={{ backgroundColor: item.catBg, color: item.catColor }}>{item.cat}</span>
+                  </div>
+                  <p className="text-sm font-bold flex-shrink-0" style={{ color: '#14B8A6' }}>{item.price}</p>
                 </div>
               ))}
+            </div>
+            <div className="mt-4 pt-4 border-t flex items-center justify-between" style={{ borderColor: '#F1F5F9' }}>
+              <p className="text-xs font-medium" style={{ color: '#94A3B8' }}>3 new listings · just now</p>
+              <div className="flex gap-1">
+                {[0,1,2].map(i => <div key={i} className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: i === 0 ? '#3B82F6' : '#E2E8F0' }} />)}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="border-y py-8" style={{ borderColor: '#475569' }}>
+      {/* Stats bar */}
+      <div className="border-y py-7" style={{ borderColor: '#E2E8F0', backgroundColor: '#FFFFFF' }}>
         <div className="max-w-4xl mx-auto px-6 grid grid-cols-3 gap-6 text-center">
           {[['Free', 'No fees, ever'], ['Real-Time', 'Live updates'], ['.edu Only', 'Verified students']].map(([title, sub]) => (
             <div key={title}>
-              <p className="text-xl font-bold text-white">{title}</p>
-              <p className="text-sm mt-1" style={{ color: '#64748b' }}>{sub}</p>
+              <p className="text-xl font-bold" style={{ color: '#0F172A' }}>{title}</p>
+              <p className="text-sm mt-1" style={{ color: '#94A3B8' }}>{sub}</p>
             </div>
           ))}
         </div>
@@ -92,28 +88,26 @@ export default function Landing() {
 
       {/* Features */}
       <div className="max-w-6xl mx-auto px-6 py-20">
-        <h2 className="text-2xl font-bold text-white mb-2">Everything you need</h2>
-        <p className="mb-12" style={{ color: '#64748b' }}>Built specifically for campus buying and selling.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <h2 className="text-2xl font-bold mb-2" style={{ color: '#0F172A' }}>Everything you need</h2>
+        <p className="mb-12" style={{ color: '#94A3B8' }}>Built specifically for campus buying and selling.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {FEATURES.map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="p-5 rounded-xl border card-hover"
-              style={{ backgroundColor: '#1e293b', borderColor: '#475569' }}>
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4"
-                style={{ backgroundColor: 'rgba(59,130,246,0.12)' }}>
+            <div key={title} className="p-5 rounded-xl border bg-white card-hover" style={{ borderColor: '#E2E8F0' }}>
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: '#EFF6FF' }}>
                 <Icon size={18} style={{ color: '#3B82F6' }} />
               </div>
-              <h3 className="text-sm font-semibold text-white mb-1">{title}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{desc}</p>
+              <h3 className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>{title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: '#94A3B8' }}>{desc}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* How it works */}
-      <div className="border-t py-20" style={{ borderColor: '#475569' }}>
+      <div className="border-t py-20" style={{ borderColor: '#E2E8F0', backgroundColor: '#FFFFFF' }}>
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-2xl font-bold text-white mb-2">How it works</h2>
-          <p className="mb-12" style={{ color: '#64748b' }}>Up and running in under a minute.</p>
+          <h2 className="text-2xl font-bold mb-2" style={{ color: '#0F172A' }}>How it works</h2>
+          <p className="mb-12" style={{ color: '#94A3B8' }}>Up and running in under a minute.</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
               { step: '01', title: 'Create an account', desc: 'Sign up with your .edu email in 30 seconds.' },
@@ -121,10 +115,10 @@ export default function Landing() {
               { step: '03', title: 'Meet on campus',    desc: 'Message the seller and arrange a safe meetup.' },
             ].map(({ step, title, desc }) => (
               <div key={step} className="flex gap-4">
-                <span className="text-2xl font-bold tabular-nums opacity-30 text-white">{step}</span>
+                <span className="text-2xl font-bold tabular-nums" style={{ color: '#CBD5E1' }}>{step}</span>
                 <div>
-                  <h3 className="text-sm font-semibold text-white mb-1">{title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#64748b' }}>{desc}</p>
+                  <h3 className="text-sm font-semibold mb-1" style={{ color: '#0F172A' }}>{title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: '#94A3B8' }}>{desc}</p>
                 </div>
               </div>
             ))}
@@ -133,12 +127,12 @@ export default function Landing() {
       </div>
 
       {/* CTA */}
-      <div className="border-t" style={{ borderColor: '#475569' }}>
+      <div className="border-t" style={{ borderColor: '#E2E8F0' }}>
         <div className="max-w-6xl mx-auto px-6 py-20 text-center">
-          <h2 className="text-4xl font-bold text-white mb-4">Ready to get started?</h2>
-          <p className="mb-8" style={{ color: '#64748b' }}>Join students already buying and selling on Dormly.</p>
+          <h2 className="text-4xl font-bold mb-4" style={{ color: '#0F172A' }}>Ready to get started?</h2>
+          <p className="mb-8" style={{ color: '#94A3B8' }}>Join students already buying and selling on Doormly.</p>
           <Link to="/register"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-white px-8 py-3 rounded-md transition-opacity hover:opacity-80"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-white px-8 py-3 rounded-lg transition-opacity hover:opacity-85"
             style={{ backgroundColor: '#3B82F6' }}>
             Create your account <ArrowRight size={14} />
           </Link>
@@ -146,10 +140,10 @@ export default function Landing() {
       </div>
 
       {/* Footer */}
-      <div className="border-t px-6 py-5" style={{ borderColor: '#475569' }}>
+      <div className="border-t px-6 py-5" style={{ borderColor: '#E2E8F0' }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <span className="text-sm font-bold" style={{ color: '#3B82F6' }}>Dormly</span>
-          <span className="text-xs" style={{ color: '#475569' }}>© 2025 Dormly. Built for students.</span>
+          <span className="text-sm font-bold" style={{ color: '#3B82F6' }}>Doormly</span>
+          <span className="text-xs" style={{ color: '#CBD5E1' }}>© 2025 Doormly. Built for students.</span>
         </div>
       </div>
     </div>

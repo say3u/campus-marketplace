@@ -1,4 +1,4 @@
-# Dormly — Real-Time Campus Marketplace
+# Doormly — Real-Time Campus Marketplace
 
 A full-stack web app for students to buy and sell items on campus. Built with real-time WebSockets, verified student accounts, and a reputation system.
 

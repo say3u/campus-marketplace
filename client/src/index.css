@@ -9,8 +9,8 @@
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #0f172a;
-  color: #f1f5f9;
+  background-color: #F8FAFC;
+  color: #0F172A;
 }
 
 .card-hover {
@@ -18,29 +18,6 @@ body {
 }
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border-color: #3B82F6 !important;
 }
-
-.input-dark {
-  background-color: #1e293b;
-  border: 1px solid #334155;
-  color: #f1f5f9;
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.875rem;
-  width: 100%;
-  outline: none;
-  transition: border-color 0.15s ease;
-}
-.input-dark:focus {
-  border-color: #3B82F6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-}
-.input-dark::placeholder {
-  color: #64748b;
-}
-
-.surface { background-color: #1e293b; }
-.surface-2 { background-color: #162032; }
-.border-dark { border-color: #334155; }
