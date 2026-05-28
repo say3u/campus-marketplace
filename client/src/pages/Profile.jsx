@@ -17,10 +17,10 @@ function RateModal({ sellerId, listingId, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 p-4">
-      <div className="w-full max-w-sm rounded-2xl border bg-white p-6" style={{ borderColor: '#E2E8F0', boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
-        <h2 className="text-base font-bold mb-5" style={{ color: '#0F172A' }}>Rate this seller</h2>
+      <div className="w-full max-w-sm rounded-2xl border bg-white p-6" style={{ borderColor: 'var(--border)', boxShadow: '0 20px 60px rgba(0,0,0,0.15)' }}>
+        <h2 className="text-base font-bold mb-5" style={{ color: 'var(--text)' }}>Rate this seller</h2>
         <div className="mb-4">
-          <p className="text-xs font-medium mb-2" style={{ color: '#64748B' }}>Score</p>
+          <p className="text-xs font-medium mb-2" style={{ color: 'var(--text3)' }}>Score</p>
           <div className="flex gap-1.5">
             {[1,2,3,4,5].map(n => (
               <button key={n} type="button" onClick={() => setScore(n)}>
@@ -30,17 +30,17 @@ function RateModal({ sellerId, listingId, onClose }) {
           </div>
         </div>
         <div className="mb-5">
-          <label className="block text-xs font-medium mb-1.5" style={{ color: '#64748B' }}>Comment (optional)</label>
+          <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text3)' }}>Comment (optional)</label>
           <textarea value={comment} onChange={e => setComment(e.target.value)} rows={3}
             placeholder="How was the transaction?"
             className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none resize-none focus:ring-2 focus:ring-blue-400/40"
-            style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0', color: '#0F172A' }} />
+            style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }} />
         </div>
         {mutation.isError && <p className="text-xs mb-3 text-red-500">Failed to submit.</p>}
         <div className="flex gap-2">
           <button onClick={onClose}
             className="flex-1 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-slate-50"
-            style={{ borderColor: '#E2E8F0', color: '#64748B' }}>Cancel</button>
+            style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>Cancel</button>
           <button onClick={() => mutation.mutate()} disabled={!score || mutation.isPending}
             className="flex-1 text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85"
             style={{ backgroundColor: '#3B82F6' }}>
@@ -68,8 +68,8 @@ export default function Profile() {
     onSuccess: () => queryClient.invalidateQueries(['profile', me?.id]),
   });
 
-  if (!me) return <div className="text-center py-20 text-sm" style={{ color: '#94A3B8' }}>Please log in.</div>;
-  if (isLoading) return <div className="text-center py-20 text-sm" style={{ color: '#94A3B8' }}>Loading...</div>;
+  if (!me) return <div className="text-center py-20 text-sm" style={{ color: 'var(--muted)' }}>Please log in.</div>;
+  if (isLoading) return <div className="text-center py-20 text-sm" style={{ color: 'var(--muted)' }}>Loading...</div>;
   if (!data) return null;
 
   const avgScore = data.ratings.length
@@ -83,16 +83,16 @@ export default function Profile() {
       {rateModal && <RateModal sellerId={me.id} listingId={rateModal} onClose={() => setRateModal(null)} />}
 
       {/* Profile header */}
-      <div className="rounded-2xl border bg-white p-6 mb-8" style={{ borderColor: '#E2E8F0', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+      <div className="rounded-2xl border bg-white p-6 mb-8" style={{ borderColor: 'var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
           <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold text-white flex-shrink-0"
             style={{ backgroundColor: '#3B82F6' }}>
             {data.username[0].toUpperCase()}
           </div>
           <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-xl font-bold" style={{ color: '#0F172A' }}>{data.username}</h1>
-            <p className="text-sm mt-0.5" style={{ color: '#64748B' }}>{data.school}</p>
-            <p className="text-xs mt-1 flex items-center gap-1 justify-center sm:justify-start" style={{ color: '#94A3B8' }}>
+            <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{data.username}</h1>
+            <p className="text-sm mt-0.5" style={{ color: 'var(--text3)' }}>{data.school}</p>
+            <p className="text-xs mt-1 flex items-center gap-1 justify-center sm:justify-start" style={{ color: 'var(--muted)' }}>
               <Calendar size={11} /> Joined {new Date(data.created_at).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </p>
             <div className="flex gap-6 mt-4 justify-center sm:justify-start">
@@ -104,7 +104,7 @@ export default function Profile() {
               ].map(({ label, value }) => (
                 <div key={label} className="text-center">
                   <p className="text-xl font-bold" style={{ color: '#3B82F6' }}>{value}</p>
-                  <p className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>{label}</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{label}</p>
                 </div>
               ))}
             </div>
@@ -115,7 +115,7 @@ export default function Profile() {
       {/* Listings */}
       <div className="mb-10">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-base font-bold flex items-center gap-2" style={{ color: '#0F172A' }}>
+          <h2 className="text-base font-bold flex items-center gap-2" style={{ color: 'var(--text)' }}>
             <Package size={16} style={{ color: '#3B82F6' }} /> My Listings
           </h2>
           <Link to="/listings/new"
@@ -126,8 +126,8 @@ export default function Profile() {
         </div>
 
         {data.listings.length === 0 ? (
-          <div className="text-center py-12 rounded-xl border border-dashed bg-white" style={{ borderColor: '#E2E8F0' }}>
-            <p className="text-sm" style={{ color: '#94A3B8' }}>No listings yet.</p>
+          <div className="text-center py-12 rounded-xl border border-dashed bg-white" style={{ borderColor: 'var(--border)' }}>
+            <p className="text-sm" style={{ color: 'var(--muted)' }}>No listings yet.</p>
             <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: '#3B82F6' }}>
               Post your first item
             </Link>
@@ -135,11 +135,11 @@ export default function Profile() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.listings.map(l => (
-              <div key={l.id} className="rounded-xl border bg-white overflow-hidden" style={{ borderColor: '#E2E8F0' }}>
-                <div className="aspect-video relative overflow-hidden" style={{ backgroundColor: '#F1F5F9' }}>
+              <div key={l.id} className="rounded-xl border bg-white overflow-hidden" style={{ borderColor: 'var(--border)' }}>
+                <div className="aspect-video relative overflow-hidden" style={{ backgroundColor: 'var(--surface2)' }}>
                   {l.image_url
                     ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover" />
-                    : <div className="w-full h-full flex items-center justify-center text-2xl font-bold" style={{ color: '#E2E8F0' }}>?</div>
+                    : <div className="w-full h-full flex items-center justify-center text-2xl font-bold" style={{ color: 'var(--border)' }}>?</div>
                   }
                   <span className={`absolute top-2 left-2 text-xs font-semibold px-2 py-0.5 rounded-full ${
                     l.status === 'active' ? 'bg-green-50 text-green-700' :
@@ -147,17 +147,17 @@ export default function Profile() {
                   }`}>{l.status}</span>
                 </div>
                 <div className="p-3">
-                  <p className="font-semibold truncate text-sm" style={{ color: '#0F172A' }}>{l.title}</p>
+                  <p className="font-semibold truncate text-sm" style={{ color: 'var(--text)' }}>{l.title}</p>
                   <p className="font-bold text-base mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
                   <div className="flex gap-2 mt-3">
                     <Link to={`/listings/${l.id}/edit`}
                       className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-slate-50"
-                      style={{ borderColor: '#E2E8F0', color: '#64748B' }}>
+                      style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>
                       <Pencil size={10} /> Edit
                     </Link>
                     <button onClick={() => deleteListing.mutate(l.id)}
                       className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-red-50"
-                      style={{ borderColor: '#E2E8F0', color: '#DC2626' }}>
+                      style={{ borderColor: 'var(--border)', color: '#DC2626' }}>
                       <Trash2 size={10} /> Delete
                     </button>
                   </div>
@@ -170,27 +170,27 @@ export default function Profile() {
 
       {/* Reviews */}
       <div>
-        <h2 className="text-base font-bold flex items-center gap-2 mb-5" style={{ color: '#0F172A' }}>
+        <h2 className="text-base font-bold flex items-center gap-2 mb-5" style={{ color: 'var(--text)' }}>
           <Star size={16} style={{ color: '#3B82F6' }} /> Reviews ({data.ratings.length})
         </h2>
         {data.ratings.length === 0 ? (
-          <div className="text-center py-12 rounded-xl border border-dashed bg-white" style={{ borderColor: '#E2E8F0' }}>
-            <p className="text-sm" style={{ color: '#94A3B8' }}>No reviews yet.</p>
+          <div className="text-center py-12 rounded-xl border border-dashed bg-white" style={{ borderColor: 'var(--border)' }}>
+            <p className="text-sm" style={{ color: 'var(--muted)' }}>No reviews yet.</p>
           </div>
         ) : (
           <div className="space-y-3">
             {data.ratings.map(r => (
-              <div key={r.id} className="rounded-xl border bg-white p-4" style={{ borderColor: '#E2E8F0' }}>
+              <div key={r.id} className="rounded-xl border bg-white p-4" style={{ borderColor: 'var(--border)' }}>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm font-semibold" style={{ color: '#0F172A' }}>{r.rater_username}</span>
+                  <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{r.rater_username}</span>
                   <div className="flex gap-0.5">
                     {[1,2,3,4,5].map(n => (
                       <Star key={n} size={13} fill={n <= r.score ? '#3B82F6' : 'none'} style={{ color: '#3B82F6' }} />
                     ))}
                   </div>
                 </div>
-                {r.comment && <p className="text-sm" style={{ color: '#64748B' }}>{r.comment}</p>}
-                <p className="text-xs mt-2" style={{ color: '#CBD5E1' }}>{new Date(r.created_at).toLocaleDateString()}</p>
+                {r.comment && <p className="text-sm" style={{ color: 'var(--text3)' }}>{r.comment}</p>}
+                <p className="text-xs mt-2" style={{ color: 'var(--very-muted)' }}>{new Date(r.created_at).toLocaleDateString()}</p>
               </div>
             ))}
           </div>

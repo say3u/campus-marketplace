@@ -1,8 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { Sun, Moon } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../hooks/useTheme';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { dark, toggle } = useTheme();
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -26,6 +29,16 @@ export default function Navbar() {
       </div>
 
       <div className="flex items-center gap-3">
+        {/* Theme toggle */}
+        <button onClick={toggle}
+          className="w-8 h-8 flex items-center justify-center rounded-md transition-colors hover:bg-white/10"
+          title={dark ? 'Switch to light mode' : 'Switch to dark mode'}>
+          {dark
+            ? <Sun size={15} className="text-slate-400" />
+            : <Moon size={15} className="text-slate-400" />
+          }
+        </button>
+
         {user ? (
           <>
             <Link to="/listings/new"

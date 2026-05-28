@@ -11,7 +11,7 @@ const CATEGORY_COLORS = {
   Furniture:   { bg: '#F0FDF4', color: '#16A34A' },
   Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
   Services:    { bg: '#F5F3FF', color: '#7C3AED' },
-  Other:       { bg: '#F8FAFC', color: '#64748B' },
+  Other:       { bg: 'var(--bg)', color: 'var(--text3)' },
 };
 
 export default function ListingDetail() {
@@ -46,8 +46,8 @@ export default function ListingDetail() {
     onSuccess: () => setReported(true),
   });
 
-  if (isLoading) return <div className="text-center py-24 text-sm" style={{ color: '#94A3B8' }}>Loading...</div>;
-  if (!listing) return <div className="text-center py-24 text-sm" style={{ color: '#94A3B8' }}>Listing not found.</div>;
+  if (isLoading) return <div className="text-center py-24 text-sm" style={{ color: 'var(--muted)' }}>Loading...</div>;
+  if (!listing) return <div className="text-center py-24 text-sm" style={{ color: 'var(--muted)' }}>Listing not found.</div>;
 
   const isSeller = user?.id === listing.seller_id;
   const cat = CATEGORY_COLORS[listing.category] || CATEGORY_COLORS.Other;
@@ -56,15 +56,15 @@ export default function ListingDetail() {
     <div className="max-w-3xl mx-auto px-4 py-8">
       <button onClick={() => navigate(-1)}
         className="flex items-center gap-1.5 text-sm mb-6 transition-colors hover:text-slate-700"
-        style={{ color: '#94A3B8' }}>
+        style={{ color: 'var(--muted)' }}>
         <ArrowLeft size={14} /> Back
       </button>
 
-      <div className="rounded-2xl border bg-white overflow-hidden" style={{ borderColor: '#E2E8F0', boxShadow: '0 1px 8px rgba(0,0,0,0.06)' }}>
-        <div className="w-full overflow-hidden" style={{ backgroundColor: '#F1F5F9', maxHeight: '400px' }}>
+      <div className="rounded-2xl border bg-white overflow-hidden" style={{ borderColor: 'var(--border)', boxShadow: '0 1px 8px rgba(0,0,0,0.06)' }}>
+        <div className="w-full overflow-hidden" style={{ backgroundColor: 'var(--surface2)', maxHeight: '400px' }}>
           {listing.image_url
             ? <img src={listing.image_url} alt={listing.title} className="w-full object-cover" style={{ maxHeight: '400px' }} />
-            : <div className="w-full h-56 flex items-center justify-center text-5xl font-bold" style={{ color: '#E2E8F0' }}>?</div>
+            : <div className="w-full h-56 flex items-center justify-center text-5xl font-bold" style={{ color: 'var(--border)' }}>?</div>
           }
         </div>
 
@@ -79,21 +79,21 @@ export default function ListingDetail() {
             </span>
           </div>
 
-          <h1 className="text-2xl font-bold mb-2" style={{ color: '#0F172A' }}>{listing.title}</h1>
+          <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>{listing.title}</h1>
           <p className="text-3xl font-bold mb-5" style={{ color: '#14B8A6' }}>${Number(listing.price).toFixed(2)}</p>
 
           {listing.description && (
-            <p className="text-sm leading-relaxed mb-6" style={{ color: '#64748B' }}>{listing.description}</p>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text3)' }}>{listing.description}</p>
           )}
 
-          <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: '#F8FAFC', border: '1px solid #F1F5F9' }}>
+          <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--surface2)' }}>
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
               style={{ backgroundColor: '#3B82F6' }}>
               {listing.username[0].toUpperCase()}
             </div>
             <div>
-              <p className="text-sm font-semibold" style={{ color: '#0F172A' }}>{listing.username}</p>
-              <p className="text-xs mt-0.5" style={{ color: '#94A3B8' }}>{listing.rep_score} reputation · {listing.school}</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{listing.username}</p>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{listing.rep_score} reputation · {listing.school}</p>
             </div>
           </div>
 
@@ -102,19 +102,19 @@ export default function ListingDetail() {
               <>
                 <Link to={`/listings/${id}/edit`}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-slate-50"
-                  style={{ borderColor: '#E2E8F0', color: '#64748B' }}>
+                  style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>
                   <Pencil size={13} /> Edit
                 </Link>
                 {listing.status === 'active' && (
                   <button onClick={() => markSold.mutate()} disabled={markSold.isPending}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-green-50 disabled:opacity-50"
-                    style={{ borderColor: '#E2E8F0', color: '#16A34A' }}>
+                    style={{ borderColor: 'var(--border)', color: '#16A34A' }}>
                     <CheckCircle size={13} /> Mark Sold
                   </button>
                 )}
                 <button onClick={() => { if (confirm('Delete this listing?')) deleteListing.mutate(); }}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-red-50"
-                  style={{ borderColor: '#E2E8F0', color: '#DC2626' }}>
+                  style={{ borderColor: 'var(--border)', color: '#DC2626' }}>
                   <Trash2 size={13} /> Delete
                 </button>
               </>
@@ -128,7 +128,7 @@ export default function ListingDetail() {
                 </button>
                 <button onClick={() => report.mutate()} disabled={reported}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-slate-50 disabled:opacity-40"
-                  style={{ borderColor: '#E2E8F0', color: '#94A3B8' }}>
+                  style={{ borderColor: 'var(--border)', color: 'var(--muted)' }}>
                   <Flag size={13} /> {reported ? 'Reported' : 'Report'}
                 </button>
               </>

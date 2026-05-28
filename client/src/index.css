@@ -2,6 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Light theme (default) ─────────────────────────────── */
+:root {
+  --bg:         #FAF8F5;
+  --surface:    #FFFEFB;
+  --surface2:   #F3F0EA;
+  --border:     #E6E0D6;
+  --text:       #0F172A;
+  --text2:      #475569;
+  --text3:      #64748B;
+  --muted:      #94A3B8;
+  --very-muted: #CBD5E1;
+}
+
+/* ── Dark theme ─────────────────────────────────────────── */
+.dark {
+  --bg:         #0F172A;
+  --surface:    #1E293B;
+  --surface2:   #162032;
+  --border:     #334155;
+  --text:       #F1F5F9;
+  --text2:      #CBD5E1;
+  --text3:      #94A3B8;
+  --muted:      #64748B;
+  --very-muted: #475569;
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -9,15 +35,34 @@
 
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #F8FAFC;
-  color: #0F172A;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* ── Tailwind class overrides for dark mode ─────────────── */
+.dark .bg-white            { background-color: var(--surface)  !important; }
+.dark .bg-slate-50,
+.dark .hover\:bg-slate-50:hover  { background-color: var(--surface2) !important; }
+.dark .hover\:bg-green-50:hover  { background-color: rgba(16,185,129,0.1) !important; }
+.dark .hover\:bg-red-50:hover    { background-color: rgba(239,68,68,0.1)  !important; }
+.dark .bg-green-50          { background-color: rgba(16,185,129,0.1) !important; color: #4ade80 !important; }
+.dark .bg-slate-100         { background-color: var(--surface2) !important; color: var(--muted) !important; }
+.dark .bg-red-50            { background-color: rgba(239,68,68,0.1) !important; color: #f87171 !important; }
+.dark .text-green-700       { color: #4ade80 !important; }
+.dark .text-slate-500       { color: var(--muted) !important; }
+.dark .text-red-500         { color: #f87171 !important; }
+.dark .border-dashed        { border-color: var(--border) !important; }
+
+/* ── Card hover ─────────────────────────────────────────── */
 .card-hover {
   transition: box-shadow 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
 }
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   border-color: #3B82F6 !important;
+}
+.dark .card-hover:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }

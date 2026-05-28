@@ -5,7 +5,7 @@ import api from '../lib/api';
 import { ImagePlus } from 'lucide-react';
 
 const CATEGORIES = ['Electronics', 'Textbooks', 'Furniture', 'Clothing', 'Services', 'Other'];
-const inputStyle = { backgroundColor: '#FFFFFF', border: '1px solid #E2E8F0', color: '#0F172A' };
+const inputStyle = { backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' };
 
 export default function EditListing() {
   const { id } = useParams();
@@ -57,19 +57,19 @@ export default function EditListing() {
   return (
     <div className="max-w-xl mx-auto px-4 py-10">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Edit listing</h1>
-        <p className="text-sm mt-1" style={{ color: '#94A3B8' }}>Update your listing details below.</p>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Edit listing</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--muted)' }}>Update your listing details below.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium mb-2" style={{ color: '#475569' }}>Photo</label>
+          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text2)' }}>Photo</label>
           <label className="block cursor-pointer">
             <div className="rounded-xl border-2 border-dashed overflow-hidden flex items-center justify-center transition-colors hover:border-blue-400 bg-white"
-              style={{ borderColor: '#E2E8F0', minHeight: '160px' }}>
+              style={{ borderColor: 'var(--border)', minHeight: '160px' }}>
               {preview
                 ? <img src={preview} alt="preview" className="w-full object-cover" style={{ maxHeight: '240px' }} />
-                : <div className="flex flex-col items-center gap-2 py-10" style={{ color: '#CBD5E1' }}>
+                : <div className="flex flex-col items-center gap-2 py-10" style={{ color: 'var(--very-muted)' }}>
                     <ImagePlus size={28} /><span className="text-sm">Click to upload a photo</span>
                   </div>
               }
@@ -79,25 +79,25 @@ export default function EditListing() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Title</label>
+          <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Title</label>
           <input value={form.title} onChange={set('title')} required
             className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40" style={inputStyle} />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Description</label>
+          <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Description</label>
           <textarea value={form.description} onChange={set('description')} rows={3}
             className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40 resize-none" style={inputStyle} />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Price ($)</label>
+            <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Price ($)</label>
             <input type="number" min="0" step="0.01" value={form.price} onChange={set('price')} required
               className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40" style={inputStyle} />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Category</label>
+            <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Category</label>
             <select value={form.category} onChange={set('category')}
               className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
               style={{ ...inputStyle, appearance: 'auto' }}>
@@ -107,7 +107,7 @@ export default function EditListing() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Status</label>
+          <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Status</label>
           <select value={form.status} onChange={set('status')}
             className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
             style={{ ...inputStyle, appearance: 'auto' }}>
@@ -122,7 +122,7 @@ export default function EditListing() {
         <div className="flex gap-3 pt-1">
           <button type="button" onClick={() => navigate(-1)}
             className="flex-1 py-2.5 rounded-lg text-sm font-medium border transition-colors hover:bg-slate-50"
-            style={{ borderColor: '#E2E8F0', color: '#64748B' }}>
+            style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>
             Cancel
           </button>
           <button type="submit" disabled={loading}

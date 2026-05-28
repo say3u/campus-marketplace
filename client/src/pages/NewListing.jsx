@@ -5,7 +5,7 @@ import { getSocket } from '../lib/socket';
 import { ImagePlus } from 'lucide-react';
 
 const CATEGORIES = ['Electronics', 'Textbooks', 'Furniture', 'Clothing', 'Services', 'Other'];
-const inputStyle = { backgroundColor: '#FFFFFF', border: '1px solid #E2E8F0', color: '#0F172A' };
+const inputStyle = { backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' };
 
 export default function NewListing() {
   const navigate = useNavigate();
@@ -45,19 +45,19 @@ export default function NewListing() {
   return (
     <div className="max-w-xl mx-auto px-4 py-10">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold" style={{ color: '#0F172A' }}>Post a listing</h1>
-        <p className="text-sm mt-1" style={{ color: '#94A3B8' }}>Fill in the details to list your item.</p>
+        <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>Post a listing</h1>
+        <p className="text-sm mt-1" style={{ color: 'var(--muted)' }}>Fill in the details to list your item.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium mb-2" style={{ color: '#475569' }}>Photo (optional)</label>
+          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text2)' }}>Photo (optional)</label>
           <label className="block cursor-pointer">
             <div className="rounded-xl border-2 border-dashed overflow-hidden flex items-center justify-center transition-colors hover:border-blue-400 bg-white"
-              style={{ borderColor: '#E2E8F0', minHeight: '160px' }}>
+              style={{ borderColor: 'var(--border)', minHeight: '160px' }}>
               {preview
                 ? <img src={preview} alt="preview" className="w-full object-cover" style={{ maxHeight: '240px' }} />
-                : <div className="flex flex-col items-center gap-2 py-10" style={{ color: '#CBD5E1' }}>
+                : <div className="flex flex-col items-center gap-2 py-10" style={{ color: 'var(--very-muted)' }}>
                     <ImagePlus size={28} />
                     <span className="text-sm">Click to upload a photo</span>
                   </div>
@@ -68,14 +68,14 @@ export default function NewListing() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Title</label>
+          <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Title</label>
           <input value={form.title} onChange={set('title')} required placeholder="e.g. Calculus textbook"
             className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
             style={inputStyle} />
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Description</label>
+          <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Description</label>
           <textarea value={form.description} onChange={set('description')} rows={3}
             placeholder="Condition, any details buyers should know..."
             className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40 resize-none"
@@ -84,13 +84,13 @@ export default function NewListing() {
 
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Price ($)</label>
+            <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Price ($)</label>
             <input type="number" min="0" step="0.01" value={form.price} onChange={set('price')} required placeholder="0.00"
               className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
               style={inputStyle} />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5" style={{ color: '#475569' }}>Category</label>
+            <label className="block text-sm font-medium mb-1.5" style={{ color: 'var(--text2)' }}>Category</label>
             <select value={form.category} onChange={set('category')}
               className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400/40"
               style={{ ...inputStyle, appearance: 'auto' }}>
