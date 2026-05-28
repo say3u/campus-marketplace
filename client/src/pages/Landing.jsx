@@ -1,15 +1,13 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShieldCheck, Tag, MessageCircle } from 'lucide-react';
-
-const TWEMOJI = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72';
+import { ArrowRight, ShieldCheck, Tag, MessageCircle, Laptop, BookOpen, Sofa, Shirt, Wrench, Package } from 'lucide-react';
 
 const CATEGORIES = [
-  { name: 'Electronics', icon: `${TWEMOJI}/1f4bb.png`, bg: '#F0FDF4', color: '#16A34A' },
-  { name: 'Textbooks',   icon: `${TWEMOJI}/1f4da.png`, bg: '#FFFBEB', color: '#D97706' },
-  { name: 'Furniture',   icon: `${TWEMOJI}/1f6cb.png`, bg: '#FEF9EE', color: '#B45309' },
-  { name: 'Clothing',    icon: `${TWEMOJI}/1f455.png`, bg: '#FDF4FF', color: '#A21CAF' },
-  { name: 'Services',    icon: `${TWEMOJI}/1f527.png`, bg: '#F5F3FF', color: '#7C3AED' },
-  { name: 'Other',       icon: `${TWEMOJI}/1f4e6.png`, bg: '#FFF7ED', color: '#EA580C' },
+  { name: 'Electronics', Icon: Laptop,    bg: '#F0FDF4', color: '#16A34A' },
+  { name: 'Textbooks',   Icon: BookOpen,  bg: '#FFFBEB', color: '#D97706' },
+  { name: 'Furniture',   Icon: Sofa,      bg: '#FEF9EE', color: '#B45309' },
+  { name: 'Clothing',    Icon: Shirt,     bg: '#FDF4FF', color: '#A21CAF' },
+  { name: 'Services',    Icon: Wrench,    bg: '#F5F3FF', color: '#7C3AED' },
+  { name: 'Other',       Icon: Package,   bg: '#FFF7ED', color: '#EA580C' },
 ];
 
 export default function Landing() {
@@ -45,12 +43,14 @@ export default function Landing() {
           Browse by category
         </p>
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
-          {CATEGORIES.map(cat => (
-            <Link key={cat.name} to="/register"
-              className="flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl border text-center transition-all hover:scale-105 hover:shadow-md"
+          {CATEGORIES.map(({ name, Icon, bg, color }) => (
+            <Link key={name} to="/register"
+              className="flex flex-col items-center gap-3 py-5 px-3 rounded-2xl border text-center transition-all hover:scale-105 hover:shadow-md"
               style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
-              <img src={cat.icon} alt={cat.name} className="w-9 h-9" />
-              <span className="text-xs font-semibold" style={{ color: 'var(--text2)' }}>{cat.name}</span>
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ backgroundColor: bg }}>
+                <Icon size={22} style={{ color }} strokeWidth={1.75} />
+              </div>
+              <span className="text-xs font-semibold" style={{ color: 'var(--text2)' }}>{name}</span>
             </Link>
           ))}
         </div>
@@ -83,7 +83,7 @@ export default function Landing() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
-            { n: '1', title: 'Sign up',        desc: 'Create an account with your .edu email &mdash; takes 30 seconds.' },
+            { n: '1', title: 'Sign up',        desc: 'Create an account with your .edu email — takes 30 seconds.' },
             { n: '2', title: 'Post or browse', desc: 'List something you want to sell, or find a deal near you.' },
             { n: '3', title: 'Meet on campus', desc: 'Chat with the buyer or seller and meet up safely.' },
           ].map(({ n, title, desc }) => (
@@ -94,8 +94,7 @@ export default function Landing() {
                 {n}
               </div>
               <h3 className="font-bold mb-1.5" style={{ color: 'var(--text)' }}>{title}</h3>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}
-                dangerouslySetInnerHTML={{ __html: desc }} />
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{desc}</p>
             </div>
           ))}
         </div>
