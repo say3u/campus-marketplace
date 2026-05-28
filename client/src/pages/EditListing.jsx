@@ -98,14 +98,14 @@ export default function EditListing() {
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Title</label>
           <input value={form.title} onChange={set('title')} required
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
             style={inputStyle} />
         </div>
 
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Description</label>
           <textarea value={form.description} onChange={set('description')} rows={3}
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40 resize-none"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 resize-none"
             style={inputStyle} />
         </div>
 
@@ -113,13 +113,13 @@ export default function EditListing() {
           <div>
             <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Price ($)</label>
             <input type="number" min="0" step="0.01" value={form.price} onChange={set('price')} required
-              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
               style={inputStyle} />
           </div>
           <div>
             <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Category</label>
             <select value={form.category} onChange={set('category')}
-              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+              className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
               style={{ ...inputStyle, appearance: 'auto' }}>
               {CATEGORIES.map(c => <option key={c} style={{ backgroundColor: '#16181f' }}>{c}</option>)}
             </select>
@@ -129,7 +129,7 @@ export default function EditListing() {
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: '#94a3b8' }}>Status</label>
           <select value={form.status} onChange={set('status')}
-            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+            className="w-full rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
             style={{ ...inputStyle, appearance: 'auto' }}>
             <option value="active" style={{ backgroundColor: '#16181f' }}>Active</option>
             <option value="sold" style={{ backgroundColor: '#16181f' }}>Sold</option>
@@ -151,7 +151,7 @@ export default function EditListing() {
           </button>
           <button type="submit" disabled={loading}
             className="flex-1 text-white py-2.5 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-            style={{ backgroundColor: '#4F46E5' }}>
+            style={{ backgroundColor: '#F97316' }}>
             {loading ? 'Saving...' : 'Save changes'}
           </button>
         </div>

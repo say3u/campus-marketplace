@@ -86,7 +86,7 @@ export default function ListingDetail() {
           </div>
 
           <h1 className="text-2xl font-bold text-white mb-2">{listing.title}</h1>
-          <p className="text-3xl font-bold mb-5" style={{ color: '#4F46E5' }}>
+          <p className="text-3xl font-bold mb-5" style={{ color: '#F97316' }}>
             ${Number(listing.price).toFixed(2)}
           </p>
 
@@ -97,7 +97,7 @@ export default function ListingDetail() {
           {/* Seller */}
           <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: '#1e2130' }}>
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-              style={{ backgroundColor: '#4F46E5' }}>
+              style={{ backgroundColor: '#F97316' }}>
               {listing.username[0].toUpperCase()}
             </div>
             <div>
@@ -132,7 +132,7 @@ export default function ListingDetail() {
               <>
                 <button onClick={() => startConvo.mutate()} disabled={startConvo.isPending}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-50 hover:opacity-85 transition-opacity"
-                  style={{ backgroundColor: '#4F46E5' }}>
+                  style={{ backgroundColor: '#F97316' }}>
                   <MessageCircle size={14} />
                   {startConvo.isPending ? 'Opening...' : 'Message Seller'}
                 </button>
@@ -145,7 +145,7 @@ export default function ListingDetail() {
             ) : !user ? (
               <Link to="/login"
                 className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white hover:opacity-85 transition-opacity"
-                style={{ backgroundColor: '#4F46E5' }}>
+                style={{ backgroundColor: '#F97316' }}>
                 Login to Message Seller
               </Link>
             ) : null}

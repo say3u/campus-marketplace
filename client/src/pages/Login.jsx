@@ -33,7 +33,7 @@ export default function Login() {
     <div className="min-h-[90vh] flex items-center justify-center px-4" style={{ backgroundColor: '#0f1117' }}>
       <div className="w-full max-w-sm">
         <div className="mb-8">
-          <Link to="/" className="text-base font-bold" style={{ color: '#4F46E5' }}>Dormly</Link>
+          <Link to="/" className="text-base font-bold" style={{ color: '#F97316' }}>Dormly</Link>
           <h1 className="text-2xl font-bold text-white mt-6 mb-1">Welcome back</h1>
           <p className="text-sm" style={{ color: '#64748b' }}>Sign in to your account</p>
         </div>
@@ -61,7 +61,7 @@ export default function Login() {
             )}
             <button type="submit" disabled={loading}
               className="w-full text-white py-2 rounded-md text-sm font-semibold disabled:opacity-50 hover:opacity-80 transition-opacity"
-              style={{ backgroundColor: '#4F46E5' }}>
+              style={{ backgroundColor: '#F97316' }}>
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
@@ -69,7 +69,7 @@ export default function Login() {
 
         <p className="text-center text-sm mt-5" style={{ color: '#475569' }}>
           Don't have an account?{' '}
-          <Link to="/register" className="font-semibold hover:underline" style={{ color: '#4F46E5' }}>
+          <Link to="/register" className="font-semibold hover:underline" style={{ color: '#F97316' }}>
             Sign up
           </Link>
         </p>

@@ -24,7 +24,7 @@ export default function ListingCard({ listing }) {
       </div>
       <div className="p-3">
         <p className="text-sm font-semibold text-white truncate">{listing.title}</p>
-        <p className="text-base font-bold mt-0.5" style={{ color: '#4F46E5' }}>
+        <p className="text-base font-bold mt-0.5" style={{ color: '#F97316' }}>
           ${Number(listing.price).toFixed(2)}
         </p>
         <div className="flex items-center justify-between mt-2">

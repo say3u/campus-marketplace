@@ -34,7 +34,7 @@ function ChatPanel({ conversationId, other }) {
       {/* Chat header */}
       <div className="px-5 py-3.5 border-b flex items-center gap-3" style={{ borderColor: '#2a2d3e' }}>
         <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold"
-          style={{ backgroundColor: '#4F46E5' }}>
+          style={{ backgroundColor: '#F97316' }}>
           {other?.[0]?.toUpperCase() || '?'}
         </div>
         <span className="text-sm font-semibold text-white">{other}</span>
@@ -55,7 +55,7 @@ function ChatPanel({ conversationId, other }) {
                 <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   mine ? 'rounded-br-sm' : 'rounded-bl-sm'
                 }`} style={{
-                  backgroundColor: mine ? '#4F46E5' : '#1e2130',
+                  backgroundColor: mine ? '#F97316' : '#1e2130',
                   color: mine ? '#fff' : '#e2e8f0',
                 }}>
                   {m.body}
@@ -82,12 +82,12 @@ function ChatPanel({ conversationId, other }) {
             border: '1px solid #2a2d3e',
             color: '#f1f5f9',
           }}
-          onFocus={e => e.target.style.borderColor = '#4F46E5'}
+          onFocus={e => e.target.style.borderColor = '#F97316'}
           onBlur={e => e.target.style.borderColor = '#2a2d3e'}
         />
         <button type="submit" disabled={!draft.trim()}
           className="flex items-center justify-center w-10 h-10 rounded-xl disabled:opacity-40 transition-opacity hover:opacity-80"
-          style={{ backgroundColor: '#4F46E5' }}>
+          style={{ backgroundColor: '#F97316' }}>
           <Send size={15} className="text-white" />
         </button>
       </form>
@@ -135,7 +135,7 @@ export default function Messages() {
                 }}>
                 <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                    style={{ backgroundColor: isActive ? '#4F46E5' : '#1e2130' }}>
+                    style={{ backgroundColor: isActive ? '#F97316' : '#1e2130' }}>
                     {other[0].toUpperCase()}
                   </div>
                   <div className="min-w-0">

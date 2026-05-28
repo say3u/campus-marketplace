@@ -38,7 +38,7 @@ export default function Home() {
             placeholder="Search listings..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-md pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+            className="w-full rounded-md pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40"
             style={{ backgroundColor: '#16181f', border: '1px solid #2a2d3e', color: '#f1f5f9' }}
           />
         </div>
@@ -47,13 +47,13 @@ export default function Home() {
           className="flex items-center gap-1.5 px-3 py-2 rounded-md border text-sm font-medium transition-colors"
           style={{
             backgroundColor: showFilters || hasFilters ? 'rgba(79,70,229,0.1)' : '#16181f',
-            borderColor: showFilters || hasFilters ? '#4F46E5' : '#2a2d3e',
-            color: showFilters || hasFilters ? '#4F46E5' : '#94a3b8',
+            borderColor: showFilters || hasFilters ? '#F97316' : '#2a2d3e',
+            color: showFilters || hasFilters ? '#F97316' : '#94a3b8',
           }}
         >
           <SlidersHorizontal size={14} />
           Filters
-          {hasFilters && <span className="w-1.5 h-1.5 rounded-full ml-0.5" style={{ backgroundColor: '#4F46E5' }} />}
+          {hasFilters && <span className="w-1.5 h-1.5 rounded-full ml-0.5" style={{ backgroundColor: '#F97316' }} />}
         </button>
       </div>
 
@@ -88,8 +88,8 @@ export default function Home() {
             <button key={cat} onClick={() => setCategory(cat === 'All' ? '' : cat)}
               className="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px"
               style={{
-                borderBottomColor: active ? '#4F46E5' : 'transparent',
-                color: active ? '#4F46E5' : '#64748b',
+                borderBottomColor: active ? '#F97316' : 'transparent',
+                color: active ? '#F97316' : '#64748b',
               }}
             >
               {cat}

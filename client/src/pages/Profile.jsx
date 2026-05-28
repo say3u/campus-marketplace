@@ -27,7 +27,7 @@ function RateModal({ sellerId, listingId, onClose }) {
           <div className="flex gap-1.5">
             {[1,2,3,4,5].map(n => (
               <button key={n} type="button" onClick={() => setScore(n)}>
-                <Star size={26} fill={n <= score ? '#4F46E5' : 'none'} style={{ color: '#4F46E5' }} />
+                <Star size={26} fill={n <= score ? '#F97316' : 'none'} style={{ color: '#F97316' }} />
               </button>
             ))}
           </div>
@@ -48,7 +48,7 @@ function RateModal({ sellerId, listingId, onClose }) {
           </button>
           <button onClick={() => mutation.mutate()} disabled={!score || mutation.isPending}
             className="flex-1 text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85"
-            style={{ backgroundColor: '#4F46E5' }}>
+            style={{ backgroundColor: '#F97316' }}>
             {mutation.isPending ? 'Submitting...' : 'Submit'}
           </button>
         </div>
@@ -92,7 +92,7 @@ export default function Profile() {
       <div className="rounded-2xl border p-6 mb-8" style={{ backgroundColor: '#16181f', borderColor: '#2a2d3e' }}>
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
           <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold text-white flex-shrink-0"
-            style={{ backgroundColor: '#4F46E5' }}>
+            style={{ backgroundColor: '#F97316' }}>
             {data.username[0].toUpperCase()}
           </div>
           <div className="flex-1 text-center sm:text-left">
@@ -109,7 +109,7 @@ export default function Profile() {
                 { label: 'Reviews',    value: data.ratings.length },
               ].map(({ label, value }) => (
                 <div key={label} className="text-center">
-                  <p className="text-xl font-bold" style={{ color: '#4F46E5' }}>{value}</p>
+                  <p className="text-xl font-bold" style={{ color: '#F97316' }}>{value}</p>
                   <p className="text-xs mt-0.5" style={{ color: '#64748b' }}>{label}</p>
                 </div>
               ))}
@@ -122,11 +122,11 @@ export default function Profile() {
       <div className="mb-10">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-bold text-white flex items-center gap-2">
-            <Package size={16} style={{ color: '#4F46E5' }} /> My Listings
+            <Package size={16} style={{ color: '#F97316' }} /> My Listings
           </h2>
           <Link to="/listings/new"
             className="flex items-center gap-1.5 text-xs font-semibold text-white px-3 py-1.5 rounded-lg hover:opacity-85"
-            style={{ backgroundColor: '#4F46E5' }}>
+            style={{ backgroundColor: '#F97316' }}>
             <Plus size={12} /> Post New
           </Link>
         </div>
@@ -134,7 +134,7 @@ export default function Profile() {
         {data.listings.length === 0 ? (
           <div className="text-center py-12 rounded-xl border border-dashed" style={{ borderColor: '#2a2d3e' }}>
             <p className="text-sm" style={{ color: '#475569' }}>No listings yet.</p>
-            <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: '#4F46E5' }}>
+            <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: '#F97316' }}>
               Post your first item
             </Link>
           </div>
@@ -154,7 +154,7 @@ export default function Profile() {
                 </div>
                 <div className="p-3">
                   <p className="font-semibold text-white truncate text-sm">{l.title}</p>
-                  <p className="font-bold text-base mt-0.5" style={{ color: '#4F46E5' }}>${Number(l.price).toFixed(2)}</p>
+                  <p className="font-bold text-base mt-0.5" style={{ color: '#F97316' }}>${Number(l.price).toFixed(2)}</p>
                   <div className="flex gap-2 mt-3">
                     <Link to={`/listings/${l.id}/edit`}
                       className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-white/5"
@@ -177,7 +177,7 @@ export default function Profile() {
       {/* Reviews */}
       <div>
         <h2 className="text-base font-bold text-white flex items-center gap-2 mb-5">
-          <Star size={16} style={{ color: '#4F46E5' }} /> Reviews ({data.ratings.length})
+          <Star size={16} style={{ color: '#F97316' }} /> Reviews ({data.ratings.length})
         </h2>
         {data.ratings.length === 0 ? (
           <div className="text-center py-12 rounded-xl border border-dashed" style={{ borderColor: '#2a2d3e' }}>
@@ -191,7 +191,7 @@ export default function Profile() {
                   <span className="text-sm font-semibold text-white">{r.rater_username}</span>
                   <div className="flex gap-0.5">
                     {[1,2,3,4,5].map(n => (
-                      <Star key={n} size={13} fill={n <= r.score ? '#4F46E5' : 'none'} style={{ color: '#4F46E5' }} />
+                      <Star key={n} size={13} fill={n <= r.score ? '#F97316' : 'none'} style={{ color: '#F97316' }} />
                     ))}
                   </div>
                 </div>

@@ -19,7 +19,7 @@ body {
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  border-color: #4F46E5 !important;
+  border-color: #F97316 !important;
 }
 
 /* Dark input base */
@@ -35,7 +35,7 @@ body {
   transition: border-color 0.15s ease;
 }
 .input-dark:focus {
-  border-color: #4F46E5;
+  border-color: #F97316;
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
 }
 .input-dark::placeholder {
