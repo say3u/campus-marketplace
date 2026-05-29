@@ -126,9 +126,9 @@ export default function Home() {
         {/* Toggle pill — always visible on sidebar's right edge */}
         <button
           onClick={() => setSidebarOpen(s => !s)}
-          className="absolute top-6 -right-3 w-6 h-6 flex items-center justify-center rounded-full border shadow-sm z-10 transition-colors hover:bg-white"
+          className="absolute top-6 -right-4 w-8 h-8 flex items-center justify-center rounded-full border shadow-sm z-10 transition-colors hover:bg-white"
           style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text3)' }}>
-          {sidebarOpen ? <ChevronLeft size={12} /> : <ChevronRight size={12} />}
+          {sidebarOpen ? <ChevronLeft size={15} /> : <ChevronRight size={15} />}
         </button>
       </div>
 
