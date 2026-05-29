@@ -20,7 +20,7 @@ export default function Navbar() {
         borderColor: dark ? '#1F1F1F' : '#E5E7EB',
       }}>
       <div className="flex items-center gap-8">
-        <Link to="/" className="text-2xl font-black tracking-tight" style={{ color: '#16A34A' }}>
+        <Link to="/" className="text-xl font-black tracking-tight" style={{ color: '#16A34A' }}>
           doormly
         </Link>
 

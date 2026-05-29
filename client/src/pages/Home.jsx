@@ -7,7 +7,7 @@ import { useFeed } from '../hooks/useFeed';
 import ListingCard from '../components/ListingCard';
 
 const CATEGORIES = [
-  { name: 'Electronics', Icon: Laptop,   color: '#16A34A', bg: '#F0FDF4' },
+  { name: 'Electronics', Icon: Laptop,   color: '#0D9488', bg: '#F0FDFA' },
   { name: 'Textbooks',   Icon: BookOpen, color: '#D97706', bg: '#FFFBEB' },
   { name: 'Furniture',   Icon: Sofa,     color: '#B45309', bg: '#FEF9EE' },
   { name: 'Clothing',    Icon: Shirt,    color: '#A21CAF', bg: '#FDF4FF' },
@@ -47,79 +47,90 @@ export default function Home() {
     <div className="flex min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
 
       {/* ── Sidebar ──────────────────────────────────────── */}
-      <aside
-        className="flex-shrink-0 border-r transition-all duration-300 overflow-hidden"
-        style={{
-          width: sidebarOpen ? '220px' : '0px',
-          borderColor: 'var(--border)',
-          backgroundColor: 'var(--surface)',
-        }}>
-        <div style={{ width: '220px' }} className="p-5 pt-6">
+      <div className="relative flex-shrink-0">
+        {/* Sliding content */}
+        <aside
+          className="overflow-hidden border-r transition-all duration-300 h-full"
+          style={{
+            width: sidebarOpen ? '220px' : '0px',
+            borderColor: 'var(--border)',
+            backgroundColor: 'var(--surface)',
+          }}>
+          <div style={{ width: '220px' }} className="p-5 pt-6">
 
-          {/* Search */}
-          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Search</p>
-          <div className="relative mb-5">
-            <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--muted)' }} />
-            <input
-              type="text"
-              placeholder="Search..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="w-full rounded-lg pl-8 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-green-400/40"
-              style={inputStyle}
-            />
-            {search && (
-              <button onClick={() => setSearch('')} className="absolute right-2.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--muted)' }}>
-                <X size={11} />
+            {/* Search */}
+            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Search</p>
+            <div className="relative mb-5">
+              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--muted)' }} />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="w-full rounded-lg pl-8 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                style={inputStyle}
+              />
+              {search && (
+                <button onClick={() => setSearch('')} className="absolute right-2.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--muted)' }}>
+                  <X size={11} />
+                </button>
+              )}
+            </div>
+
+            {/* Categories */}
+            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Category</p>
+            <div className="space-y-0.5 mb-5">
+              <button
+                onClick={() => setCategory('')}
+                className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                style={{
+                  backgroundColor: !category ? '#F0FDFA' : 'transparent',
+                  color: !category ? '#0D9488' : 'var(--text3)',
+                }}>
+                All categories
+              </button>
+              {CATEGORIES.map(({ name, Icon, color, bg }) => (
+                <button key={name}
+                  onClick={() => setCategory(category === name ? '' : name)}
+                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                  style={{
+                    backgroundColor: category === name ? bg : 'transparent',
+                    color: category === name ? color : 'var(--text3)',
+                  }}>
+                  <Icon size={13} strokeWidth={2} />
+                  {name}
+                </button>
+              ))}
+            </div>
+
+            {/* Price range */}
+            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Price</p>
+            <div className="flex items-center gap-1.5 mb-1">
+              <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
+                className="w-full rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                style={inputStyle} />
+              <span className="text-xs flex-shrink-0" style={{ color: 'var(--muted)' }}>to</span>
+              <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
+                className="w-full rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                style={inputStyle} />
+            </div>
+            {(minPrice || maxPrice) && (
+              <button onClick={() => { setMinPrice(''); setMaxPrice(''); }}
+                className="flex items-center gap-1 text-xs mt-1" style={{ color: 'var(--muted)' }}>
+                <X size={10} /> Clear price
               </button>
             )}
           </div>
+        </aside>
 
-          {/* Categories */}
-          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Category</p>
-          <div className="space-y-0.5 mb-5">
-            <button
-              onClick={() => setCategory('')}
-              className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors"
-              style={{
-                backgroundColor: !category ? '#F0FDF4' : 'transparent',
-                color: !category ? '#15803D' : 'var(--text3)',
-              }}>
-              All categories
-            </button>
-            {CATEGORIES.map(({ name, Icon, color, bg }) => (
-              <button key={name}
-                onClick={() => setCategory(category === name ? '' : name)}
-                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors"
-                style={{
-                  backgroundColor: category === name ? bg : 'transparent',
-                  color: category === name ? color : 'var(--text3)',
-                }}>
-                <Icon size={13} strokeWidth={2} />
-                {name}
-              </button>
-            ))}
-          </div>
-
-          {/* Price range */}
-          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Price</p>
-          <div className="flex items-center gap-1.5 mb-1">
-            <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
-              className="w-full rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-green-400/40"
-              style={inputStyle} />
-            <span className="text-xs flex-shrink-0" style={{ color: 'var(--muted)' }}>to</span>
-            <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
-              className="w-full rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-green-400/40"
-              style={inputStyle} />
-          </div>
-          {(minPrice || maxPrice) && (
-            <button onClick={() => { setMinPrice(''); setMaxPrice(''); }}
-              className="flex items-center gap-1 text-xs mt-1" style={{ color: 'var(--muted)' }}>
-              <X size={10} /> Clear price
-            </button>
-          )}
-        </div>
-      </aside>
+        {/* Toggle pill — always visible on sidebar's right edge */}
+        <button
+          onClick={() => setSidebarOpen(s => !s)}
+          className="absolute top-6 -right-3 w-6 h-6 flex items-center justify-center rounded-full border shadow-sm z-10 transition-colors hover:bg-white"
+          style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text3)' }}>
+          {sidebarOpen ? <ChevronLeft size={12} /> : <ChevronRight size={12} />}
+        </button>
+      </div>
 
       {/* ── Main ─────────────────────────────────────────── */}
       <div className="flex-1 min-w-0 flex flex-col">
@@ -127,30 +138,21 @@ export default function Home() {
         {/* Header banner */}
         <div className="px-6 pt-8 pb-6"
           style={{
-            background: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #F0FDF4 100%)',
+            background: 'linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 50%, #F0FDFA 100%)',
             borderBottom: '1px solid var(--border)',
           }}>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              {/* Sidebar toggle */}
-              <button
-                onClick={() => setSidebarOpen(s => !s)}
-                className="w-8 h-8 flex items-center justify-center rounded-lg border transition-colors hover:bg-white"
-                style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>
-                {sidebarOpen ? <ChevronLeft size={15} /> : <ChevronRight size={15} />}
-              </button>
-              <div>
-                <p className="text-xs font-medium" style={{ color: '#15803D' }}>{user?.school}</p>
-                <h1 className="text-lg font-bold leading-tight" style={{ color: '#14532D' }}>
-                  {greeting}, {user?.username} 👋
-                </h1>
-              </div>
+            <div>
+              <p className="text-xs font-medium" style={{ color: '#0D9488' }}>{user?.school}</p>
+              <h1 className="text-lg font-bold leading-tight" style={{ color: '#134E4A' }}>
+                {greeting}, {user?.username}.
+              </h1>
             </div>
             {hasFilters && (
               <button
                 onClick={() => { setCategory(''); setMinPrice(''); setMaxPrice(''); setSearch(''); }}
                 className="flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg border"
-                style={{ borderColor: '#86EFAC', backgroundColor: '#F0FDF4', color: '#15803D' }}>
+                style={{ borderColor: '#99F6E4', backgroundColor: '#F0FDFA', color: '#0D9488' }}>
                 <X size={11} /> Clear all filters
               </button>
             )}
