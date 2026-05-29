@@ -16,8 +16,8 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 h-14 flex items-center justify-between px-6 border-b"
       style={{
-        backgroundColor: dark ? '#0F0F0F' : '#ffffff',
-        borderColor: dark ? '#1F1F1F' : '#E5E7EB',
+        backgroundColor: dark ? '#0F0F0F' : 'var(--surface)',
+        borderColor: dark ? '#1F1F1F' : 'var(--border)',
       }}>
       <div className="flex items-center gap-8">
         <Link to="/" className="text-xl font-black tracking-tight" style={{ color: '#14B8A6' }}>

@@ -47,12 +47,15 @@ body {
 .dark .bg-white            { background-color: var(--surface)  !important; }
 .dark .bg-slate-50,
 .dark .hover\:bg-slate-50:hover  { background-color: var(--surface2) !important; }
-.dark .hover\:bg-green-50:hover  { background-color: rgba(22,163,74,0.1) !important; }
+.dark .hover\:bg-green-50:hover,
+.dark .hover\:bg-teal-50:hover   { background-color: rgba(20,184,166,0.1) !important; }
 .dark .hover\:bg-red-50:hover    { background-color: rgba(239,68,68,0.1)  !important; }
-.dark .bg-green-50          { background-color: rgba(22,163,74,0.1) !important; color: #4ade80 !important; }
+.dark .bg-green-50,
+.dark .bg-teal-50           { background-color: rgba(20,184,166,0.1) !important; color: #2DD4BF !important; }
 .dark .bg-slate-100         { background-color: var(--surface2) !important; color: var(--muted) !important; }
 .dark .bg-red-50            { background-color: rgba(239,68,68,0.1) !important; color: #f87171 !important; }
-.dark .text-green-700       { color: #4ade80 !important; }
+.dark .text-green-700,
+.dark .text-teal-700        { color: #2DD4BF !important; }
 .dark .text-slate-500       { color: var(--muted) !important; }
 .dark .text-red-500         { color: #f87171 !important; }
 .dark .border-dashed        { border-color: var(--border) !important; }

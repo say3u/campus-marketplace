@@ -6,9 +6,9 @@ import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: '#F0FDF4', color: '#15803D' },
+  Electronics: { bg: '#F0FDFA', color: '#0D9488' },
   Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
-  Furniture:   { bg: '#F0FDF4', color: '#16A34A' },
+  Furniture:   { bg: '#F0FDFA', color: '#14B8A6' },
   Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
   Services:    { bg: '#F5F3FF', color: '#7C3AED' },
   Other:       { bg: 'var(--bg)', color: 'var(--text3)' },
@@ -71,7 +71,7 @@ export default function ListingDetail() {
         <div className="p-6">
           <div className="flex items-center gap-2 mb-4">
             <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-              listing.status === 'active' ? 'bg-green-50 text-green-700' :
+              listing.status === 'active' ? 'bg-teal-50 text-teal-700' :
               listing.status === 'sold'   ? 'bg-slate-100 text-slate-500' : 'bg-red-50 text-red-500'
             }`}>{listing.status}</span>
             <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ backgroundColor: cat.bg, color: cat.color }}>
@@ -80,7 +80,7 @@ export default function ListingDetail() {
           </div>
 
           <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>{listing.title}</h1>
-          <p className="text-3xl font-bold mb-5" style={{ color: '#16A34A' }}>${Number(listing.price).toFixed(2)}</p>
+          <p className="text-3xl font-bold mb-5" style={{ color: '#14B8A6' }}>${Number(listing.price).toFixed(2)}</p>
 
           {listing.description && (
             <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text3)' }}>{listing.description}</p>
@@ -88,7 +88,7 @@ export default function ListingDetail() {
 
           <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--surface2)' }}>
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-              style={{ backgroundColor: '#16A34A' }}>
+              style={{ backgroundColor: '#14B8A6' }}>
               {listing.username[0].toUpperCase()}
             </div>
             <div>
@@ -107,8 +107,8 @@ export default function ListingDetail() {
                 </Link>
                 {listing.status === 'active' && (
                   <button onClick={() => markSold.mutate()} disabled={markSold.isPending}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-green-50 disabled:opacity-50"
-                    style={{ borderColor: 'var(--border)', color: '#16A34A' }}>
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-teal-50 disabled:opacity-50"
+                    style={{ borderColor: 'var(--border)', color: '#14B8A6' }}>
                     <CheckCircle size={13} /> Mark Sold
                   </button>
                 )}
@@ -122,7 +122,7 @@ export default function ListingDetail() {
               <>
                 <button onClick={() => startConvo.mutate()} disabled={startConvo.isPending}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-50 hover:opacity-85 transition-opacity"
-                  style={{ backgroundColor: '#16A34A' }}>
+                  style={{ backgroundColor: '#14B8A6' }}>
                   <MessageCircle size={14} />
                   {startConvo.isPending ? 'Opening...' : 'Message Seller'}
                 </button>
@@ -142,7 +142,7 @@ export default function ListingDetail() {
                 </p>
                 <Link to="/register"
                   className="inline-flex items-center gap-2 font-semibold text-white px-5 py-2 rounded-lg text-sm transition-opacity hover:opacity-85"
-                  style={{ backgroundColor: '#16A34A' }}>
+                  style={{ backgroundColor: '#14B8A6' }}>
                   Start for free
                 </Link>
               </div>
