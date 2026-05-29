@@ -2,9 +2,9 @@
 import { Zap } from 'lucide-react';
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: '#F0FDF4', color: '#15803D' },
+  Electronics: { bg: '#F0FDF4', color: '#0D9488' },
   Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
-  Furniture:   { bg: '#F0FDF4', color: '#16A34A' },
+  Furniture:   { bg: '#F0FDF4', color: '#14B8A6' },
   Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
   Services:    { bg: '#F5F3FF', color: '#7C3AED' },
   Other:       { bg: 'var(--bg)', color: 'var(--text3)' },
@@ -32,7 +32,7 @@ export default function ListingCard({ listing }) {
       </div>
       <div className="p-3">
         <p className="text-sm font-semibold truncate" style={{ color: 'var(--text)' }}>{listing.title}</p>
-        <p className="text-base font-bold mt-0.5" style={{ color: '#16A34A' }}>
+        <p className="text-base font-bold mt-0.5" style={{ color: '#14B8A6' }}>
           ${Number(listing.price).toFixed(2)}
         </p>
         <div className="flex items-center justify-between mt-2">

@@ -20,7 +20,7 @@ export default function Navbar() {
         borderColor: dark ? '#1F1F1F' : '#E5E7EB',
       }}>
       <div className="flex items-center gap-8">
-        <Link to="/" className="text-xl font-black tracking-tight" style={{ color: '#16A34A' }}>
+        <Link to="/" className="text-xl font-black tracking-tight" style={{ color: '#14B8A6' }}>
           doormly
         </Link>
 
@@ -50,7 +50,7 @@ export default function Navbar() {
           <>
             <Link to="/listings/new"
               className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#16A34A' }}>
+              style={{ backgroundColor: '#14B8A6' }}>
               + Sell
             </Link>
             <Link to="/profile" className="text-sm font-medium transition-colors"
@@ -70,7 +70,7 @@ export default function Navbar() {
             </Link>
             <Link to="/register"
               className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#16A34A' }}>
+              style={{ backgroundColor: '#14B8A6' }}>
               Sign up
             </Link>
           </>
