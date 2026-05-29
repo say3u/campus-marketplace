@@ -1,143 +1,200 @@
-﻿import { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search, SlidersHorizontal, X } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, Laptop, BookOpen, Sofa, Shirt, Wrench, Package } from 'lucide-react';
 import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import { useFeed } from '../hooks/useFeed';
 import ListingCard from '../components/ListingCard';
 
-const CATEGORIES = ['All', 'Electronics', 'Textbooks', 'Furniture', 'Clothing', 'Services', 'Other'];
+const CATEGORIES = [
+  { name: 'Electronics', Icon: Laptop,   color: '#16A34A', bg: '#F0FDF4' },
+  { name: 'Textbooks',   Icon: BookOpen, color: '#D97706', bg: '#FFFBEB' },
+  { name: 'Furniture',   Icon: Sofa,     color: '#B45309', bg: '#FEF9EE' },
+  { name: 'Clothing',    Icon: Shirt,    color: '#A21CAF', bg: '#FDF4FF' },
+  { name: 'Services',    Icon: Wrench,   color: '#7C3AED', bg: '#F5F3FF' },
+  { name: 'Other',       Icon: Package,  color: '#EA580C', bg: '#FFF7ED' },
+];
 
 export default function Home() {
   const { user } = useAuth();
   const [category, setCategory] = useState('');
-  const [search, setSearch] = useState('');
+  const [search, setSearch]     = useState('');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
-  const [showFilters, setShowFilters] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useFeed(user?.school);
 
   const { data: listings = [], isLoading } = useQuery({
     queryKey: ['listings', { category, search, minPrice, maxPrice }],
     queryFn: () => api.get('/listings', {
-      params: { category: category || undefined, search: search || undefined, minPrice: minPrice || undefined, maxPrice: maxPrice || undefined }
+      params: {
+        category:  category  || undefined,
+        search:    search    || undefined,
+        minPrice:  minPrice  || undefined,
+        maxPrice:  maxPrice  || undefined,
+      },
     }).then(r => r.data),
   });
 
   const hasFilters = category || minPrice || maxPrice;
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
 
-  const inputStyle = {
-    backgroundColor: 'var(--surface)',
-    border: '1px solid var(--border)',
-    color: 'var(--text)',
-  };
+  const inputStyle = { backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' };
 
   return (
-    <div className="w-full px-6 py-6">
-      {/* Search row */}
-      <div className="flex gap-2 mb-4">
-        <div className="relative flex-1">
-          <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--muted)' }} />
-          <input
-            type="text"
-            placeholder="Search listings..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400/40"
-            style={inputStyle}
-          />
-        </div>
-        <button
-          onClick={() => setShowFilters(f => !f)}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm font-medium transition-colors"
-          style={{
-            backgroundColor: showFilters || hasFilters ? '#F0FDF4' : 'var(--surface)',
-            borderColor: showFilters || hasFilters ? '#86EFAC' : 'var(--border)',
-            color: showFilters || hasFilters ? '#15803D' : '#64748B',
-          }}
-        >
-          <SlidersHorizontal size={14} />
-          Filters
-          {hasFilters && <span className="w-1.5 h-1.5 rounded-full ml-0.5" style={{ backgroundColor: '#16A34A' }} />}
-        </button>
-      </div>
+    <div className="flex min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
 
-      {/* Filters panel */}
-      {showFilters && (
-        <div className="rounded-lg p-4 mb-4 flex flex-wrap items-center gap-4 border bg-white"
-          style={{ borderColor: 'var(--border)' }}>
-          <span className="text-xs font-medium" style={{ color: 'var(--muted)' }}>Price range</span>
-          <div className="flex items-center gap-2">
-            <input type="number" placeholder="Min $" value={minPrice} onChange={e => setMinPrice(e.target.value)}
-              className="w-20 rounded px-2 py-1 text-xs focus:outline-none border"
-              style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
-            <span style={{ color: 'var(--very-muted)' }} className="text-xs">â€”</span>
-            <input type="number" placeholder="Max $" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
-              className="w-20 rounded px-2 py-1 text-xs focus:outline-none border"
-              style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
+      {/* ── Sidebar ──────────────────────────────────────── */}
+      <aside
+        className="flex-shrink-0 border-r transition-all duration-300 overflow-hidden"
+        style={{
+          width: sidebarOpen ? '220px' : '0px',
+          borderColor: 'var(--border)',
+          backgroundColor: 'var(--surface)',
+        }}>
+        <div style={{ width: '220px' }} className="p-5 pt-6">
+
+          {/* Search */}
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Search</p>
+          <div className="relative mb-5">
+            <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--muted)' }} />
+            <input
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="w-full rounded-lg pl-8 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-green-400/40"
+              style={inputStyle}
+            />
+            {search && (
+              <button onClick={() => setSearch('')} className="absolute right-2.5 top-1/2 -translate-y-1/2" style={{ color: 'var(--muted)' }}>
+                <X size={11} />
+              </button>
+            )}
+          </div>
+
+          {/* Categories */}
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Category</p>
+          <div className="space-y-0.5 mb-5">
+            <button
+              onClick={() => setCategory('')}
+              className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors"
+              style={{
+                backgroundColor: !category ? '#F0FDF4' : 'transparent',
+                color: !category ? '#15803D' : 'var(--text3)',
+              }}>
+              All categories
+            </button>
+            {CATEGORIES.map(({ name, Icon, color, bg }) => (
+              <button key={name}
+                onClick={() => setCategory(category === name ? '' : name)}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                style={{
+                  backgroundColor: category === name ? bg : 'transparent',
+                  color: category === name ? color : 'var(--text3)',
+                }}>
+                <Icon size={13} strokeWidth={2} />
+                {name}
+              </button>
+            ))}
+          </div>
+
+          {/* Price range */}
+          <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Price</p>
+          <div className="flex items-center gap-1.5 mb-1">
+            <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
+              className="w-full rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-green-400/40"
+              style={inputStyle} />
+            <span className="text-xs flex-shrink-0" style={{ color: 'var(--muted)' }}>to</span>
+            <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
+              className="w-full rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-green-400/40"
+              style={inputStyle} />
           </div>
           {(minPrice || maxPrice) && (
             <button onClick={() => { setMinPrice(''); setMaxPrice(''); }}
-              className="flex items-center gap-1 text-xs transition-colors hover:text-slate-500" style={{ color: 'var(--muted)' }}>
-              <X size={12} /> Clear
+              className="flex items-center gap-1 text-xs mt-1" style={{ color: 'var(--muted)' }}>
+              <X size={10} /> Clear price
             </button>
           )}
         </div>
-      )}
+      </aside>
 
-      {/* Category tabs */}
-      <div className="flex gap-0 flex-wrap mb-6 border-b" style={{ borderColor: 'var(--border)' }}>
-        {CATEGORIES.map(cat => {
-          const active = (cat === 'All' && !category) || category === cat;
-          return (
-            <button key={cat} onClick={() => setCategory(cat === 'All' ? '' : cat)}
-              className="px-4 py-2.5 text-sm font-medium transition-colors border-b-2 -mb-px"
-              style={{
-                borderBottomColor: active ? '#16A34A' : 'transparent',
-                color: active ? '#15803D' : '#94A3B8',
-              }}
-            >
-              {cat}
-            </button>
-          );
-        })}
-      </div>
+      {/* ── Main ─────────────────────────────────────────── */}
+      <div className="flex-1 min-w-0 flex flex-col">
 
-      {/* Count */}
-      {!isLoading && (
-        <p className="text-xs mb-4" style={{ color: 'var(--very-muted)' }}>
-          {listings.length} {listings.length === 1 ? 'listing' : 'listings'}
-          {category ? ` in ${category}` : ''}
-          {search ? ` for "${search}"` : ''}
-        </p>
-      )}
-
-      {/* Grid */}
-      {isLoading ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <div key={i} className="rounded-xl border bg-white animate-pulse" style={{ borderColor: 'var(--border)' }}>
-              <div className="aspect-square rounded-t-xl" style={{ backgroundColor: 'var(--surface2)' }} />
-              <div className="p-3 space-y-2">
-                <div className="h-3 rounded w-3/4" style={{ backgroundColor: 'var(--surface2)' }} />
-                <div className="h-3 rounded w-1/2" style={{ backgroundColor: 'var(--surface2)' }} />
+        {/* Header banner */}
+        <div className="px-6 pt-8 pb-6"
+          style={{
+            background: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #F0FDF4 100%)',
+            borderBottom: '1px solid var(--border)',
+          }}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {/* Sidebar toggle */}
+              <button
+                onClick={() => setSidebarOpen(s => !s)}
+                className="w-8 h-8 flex items-center justify-center rounded-lg border transition-colors hover:bg-white"
+                style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>
+                {sidebarOpen ? <ChevronLeft size={15} /> : <ChevronRight size={15} />}
+              </button>
+              <div>
+                <p className="text-xs font-medium" style={{ color: '#15803D' }}>{user?.school}</p>
+                <h1 className="text-lg font-bold leading-tight" style={{ color: '#14532D' }}>
+                  {greeting}, {user?.username} 👋
+                </h1>
               </div>
             </div>
-          ))}
+            {hasFilters && (
+              <button
+                onClick={() => { setCategory(''); setMinPrice(''); setMaxPrice(''); setSearch(''); }}
+                className="flex items-center gap-1 text-xs font-medium px-3 py-1.5 rounded-lg border"
+                style={{ borderColor: '#86EFAC', backgroundColor: '#F0FDF4', color: '#15803D' }}>
+                <X size={11} /> Clear all filters
+              </button>
+            )}
+          </div>
         </div>
-      ) : listings.length === 0 ? (
-        <div className="text-center py-20 rounded-xl border bg-white" style={{ borderColor: 'var(--border)', borderStyle: 'dashed' }}>
-          <p className="font-semibold mb-1" style={{ color: 'var(--text)' }}>No listings found</p>
-          <p className="text-sm" style={{ color: 'var(--muted)' }}>
-            {search || category ? 'Try adjusting your filters.' : 'Be the first to post something.'}
-          </p>
+
+        {/* Listings area */}
+        <div className="flex-1 p-6">
+          {/* Count */}
+          {!isLoading && (
+            <p className="text-xs mb-4" style={{ color: 'var(--very-muted)' }}>
+              {listings.length} {listings.length === 1 ? 'listing' : 'listings'}
+              {category ? ` in ${category}` : ''}
+              {search ? ` matching "${search}"` : ''}
+            </p>
+          )}
+
+          {/* Grid */}
+          {isLoading ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="rounded-xl border bg-white animate-pulse" style={{ borderColor: 'var(--border)' }}>
+                  <div className="aspect-square rounded-t-xl" style={{ backgroundColor: 'var(--surface2)' }} />
+                  <div className="p-3 space-y-2">
+                    <div className="h-3 rounded w-3/4" style={{ backgroundColor: 'var(--surface2)' }} />
+                    <div className="h-3 rounded w-1/2" style={{ backgroundColor: 'var(--surface2)' }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : listings.length === 0 ? (
+            <div className="text-center py-24 rounded-2xl border bg-white" style={{ borderColor: 'var(--border)', borderStyle: 'dashed' }}>
+              <p className="font-semibold mb-1" style={{ color: 'var(--text)' }}>No listings found</p>
+              <p className="text-sm" style={{ color: 'var(--muted)' }}>
+                {search || category || minPrice || maxPrice ? 'Try adjusting your filters.' : 'Be the first to post something.'}
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
+              {listings.map(l => <ListingCard key={l.id} listing={l} />)}
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
-          {listings.map(l => <ListingCard key={l.id} listing={l} />)}
-        </div>
-      )}
+      </div>
     </div>
   );
 }

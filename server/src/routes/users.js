@@ -1,6 +1,14 @@
 const router = require('express').Router();
+const multer = require('multer');
+const path = require('path');
 const db = require('../db');
 const auth = require('../middleware/auth');
+
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (_, file, cb) => cb(null, `avatar_${Date.now()}${path.extname(file.originalname)}`),
+});
+const upload = multer({ storage, limits: { fileSize: 3 * 1024 * 1024 } });
 
 // GET /api/users/:id — public profile
 router.get('/:id', async (req, res) => {
@@ -30,6 +38,19 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// PATCH /api/users/me/avatar — upload profile picture
+router.patch('/me/avatar', auth, upload.single('avatar'), async (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+  const avatar_url = `/uploads/${req.file.filename}`;
+  try {
+    await db.query('UPDATE users SET avatar_url=$1 WHERE id=$2', [avatar_url, req.user.id]);
+    res.json({ avatar_url });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // POST /api/users/:id/rate — rate a user
 router.post('/:id/rate', auth, async (req, res) => {
   const { score, comment, listing_id } = req.body;
@@ -43,14 +64,11 @@ router.post('/:id/rate', auth, async (req, res) => {
        ON CONFLICT (rater_id, listing_id) DO UPDATE SET score=$4, comment=$5`,
       [req.user.id, req.params.id, listing_id, score, comment]
     );
-
-    // Recalculate rep score
     const avg = await db.query(
       'SELECT ROUND(AVG(score)) as avg FROM ratings WHERE ratee_id=$1',
       [req.params.id]
     );
     await db.query('UPDATE users SET rep_score=$1 WHERE id=$2', [avg.rows[0].avg || 0, req.params.id]);
-
     res.status(201).json({ message: 'Rating submitted' });
   } catch (err) {
     console.error(err);
@@ -58,7 +76,7 @@ router.post('/:id/rate', auth, async (req, res) => {
   }
 });
 
-// GET /api/users/me/listings — current user's listings
+// GET /api/users/me/listings
 router.get('/me/listings', auth, async (req, res) => {
   try {
     const { rows } = await db.query(

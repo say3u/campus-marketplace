@@ -26,5 +26,12 @@ app.use('/api', require('./routes/messages'));
 
 require('./socket')(io);
 
+// Migrations
+const db = require('./db');
+db.query(`
+  ALTER TABLE listings ADD COLUMN IF NOT EXISTS boosted BOOLEAN DEFAULT FALSE;
+  ALTER TABLE listings ADD COLUMN IF NOT EXISTS boosted_until TIMESTAMP;
+`).catch(e => console.error('Migration:', e.message));
+
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

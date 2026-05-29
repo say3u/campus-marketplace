@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Sun, Moon, ShoppingBag } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
 
@@ -20,13 +20,8 @@ export default function Navbar() {
         borderColor: dark ? '#1F1F1F' : '#E5E7EB',
       }}>
       <div className="flex items-center gap-8">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ backgroundColor: '#16A34A' }}>
-            <ShoppingBag size={13} className="text-white" />
-          </div>
-          <span className="text-base font-bold tracking-tight" style={{ color: dark ? '#F5F5F5' : '#111111' }}>
-            doormly
-          </span>
+        <Link to="/" className="text-2xl font-black tracking-tight" style={{ color: '#16A34A' }}>
+          doormly
         </Link>
 
         {user && (

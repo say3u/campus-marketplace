@@ -1,7 +1,7 @@
-﻿import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
-import { Star, Package, Calendar, Pencil, Trash2, Plus } from 'lucide-react';
+import { Star, Package, Calendar, Pencil, Trash2, Plus, Camera, Zap } from 'lucide-react';
 import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 
@@ -52,10 +52,44 @@ function RateModal({ sellerId, listingId, onClose }) {
   );
 }
 
+function BoostModal({ listingId, onClose, onBoost }) {
+  const [loading, setLoading] = useState(false);
+
+  async function handleBoost() {
+    setLoading(true);
+    await onBoost(listingId);
+    setLoading(false);
+    onClose();
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+      <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center" style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.2)' }}>
+        <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: '#FFF7ED' }}>
+          <Zap size={22} style={{ color: '#EA580C' }} />
+        </div>
+        <h2 className="text-lg font-bold mb-1" style={{ color: 'var(--text)' }}>Boost this listing</h2>
+        <p className="text-sm mb-2" style={{ color: 'var(--text3)' }}>
+          Your listing will appear at the top of search results for 7 days.
+        </p>
+        <p className="text-2xl font-black mb-5" style={{ color: '#EA580C' }}>$2.99</p>
+        <button onClick={handleBoost} disabled={loading}
+          className="w-full text-white py-2.5 rounded-xl font-semibold text-sm mb-3 disabled:opacity-50"
+          style={{ backgroundColor: '#EA580C' }}>
+          {loading ? 'Boosting...' : 'Boost for $2.99'}
+        </button>
+        <button onClick={onClose} className="text-sm" style={{ color: 'var(--muted)' }}>Cancel</button>
+      </div>
+    </div>
+  );
+}
+
 export default function Profile() {
   const { user: me } = useAuth();
   const queryClient = useQueryClient();
   const [rateModal, setRateModal] = useState(null);
+  const [boostModal, setBoostModal] = useState(null);
+  const avatarInputRef = useRef(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ['profile', me?.id],
@@ -68,27 +102,62 @@ export default function Profile() {
     onSuccess: () => queryClient.invalidateQueries(['profile', me?.id]),
   });
 
+  const avatarMutation = useMutation({
+    mutationFn: (file) => {
+      const fd = new FormData();
+      fd.append('avatar', file);
+      return api.patch('/users/me/avatar', fd);
+    },
+    onSuccess: () => queryClient.invalidateQueries(['profile', me?.id]),
+  });
+
+  async function boostListing(id) {
+    await api.post(`/listings/${id}/boost`);
+    queryClient.invalidateQueries(['profile', me?.id]);
+    queryClient.invalidateQueries(['listings']);
+  }
+
   if (!me) return <div className="text-center py-20 text-sm" style={{ color: 'var(--muted)' }}>Please log in.</div>;
   if (isLoading) return <div className="text-center py-20 text-sm" style={{ color: 'var(--muted)' }}>Loading...</div>;
   if (!data) return null;
 
   const avgScore = data.ratings.length
     ? (data.ratings.reduce((s, r) => s + r.score, 0) / data.ratings.length).toFixed(1)
-    : 'â€”';
+    : '—';
   const activeListings = data.listings.filter(l => l.status === 'active');
-  const soldListings = data.listings.filter(l => l.status === 'sold');
+  const soldListings   = data.listings.filter(l => l.status === 'sold');
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10">
       {rateModal && <RateModal sellerId={me.id} listingId={rateModal} onClose={() => setRateModal(null)} />}
+      {boostModal && <BoostModal listingId={boostModal} onClose={() => setBoostModal(null)} onBoost={boostListing} />}
+
+      {/* Hidden avatar input */}
+      <input ref={avatarInputRef} type="file" accept="image/*" className="hidden"
+        onChange={e => e.target.files[0] && avatarMutation.mutate(e.target.files[0])} />
 
       {/* Profile header */}
       <div className="rounded-2xl border bg-white p-6 mb-8" style={{ borderColor: 'var(--border)', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
-          <div className="w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold text-white flex-shrink-0"
-            style={{ backgroundColor: '#16A34A' }}>
-            {data.username[0].toUpperCase()}
+
+          {/* Avatar with upload button */}
+          <div className="relative flex-shrink-0">
+            <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center text-2xl font-bold text-white"
+              style={{ backgroundColor: '#16A34A' }}>
+              {data.avatar_url
+                ? <img src={data.avatar_url} alt="avatar" className="w-full h-full object-cover" />
+                : data.username[0].toUpperCase()
+              }
+            </div>
+            <button
+              onClick={() => avatarInputRef.current.click()}
+              className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-white shadow-md"
+              style={{ backgroundColor: '#16A34A' }}
+              title="Change profile picture">
+              <Camera size={11} />
+            </button>
           </div>
+
           <div className="flex-1 text-center sm:text-left">
             <h1 className="text-xl font-bold" style={{ color: 'var(--text)' }}>{data.username}</h1>
             <p className="text-sm mt-0.5" style={{ color: 'var(--text3)' }}>{data.school}</p>
@@ -134,36 +203,52 @@ export default function Profile() {
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.listings.map(l => (
-              <div key={l.id} className="rounded-xl border bg-white overflow-hidden" style={{ borderColor: 'var(--border)' }}>
-                <div className="aspect-video relative overflow-hidden" style={{ backgroundColor: 'var(--surface2)' }}>
-                  {l.image_url
-                    ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover" />
-                    : <div className="w-full h-full flex items-center justify-center text-2xl font-bold" style={{ color: 'var(--border)' }}>?</div>
-                  }
-                  <span className={`absolute top-2 left-2 text-xs font-semibold px-2 py-0.5 rounded-full ${
-                    l.status === 'active' ? 'bg-green-50 text-green-700' :
-                    l.status === 'sold'   ? 'bg-slate-100 text-slate-500' : 'bg-red-50 text-red-500'
-                  }`}>{l.status}</span>
-                </div>
-                <div className="p-3">
-                  <p className="font-semibold truncate text-sm" style={{ color: 'var(--text)' }}>{l.title}</p>
-                  <p className="font-bold text-base mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
-                  <div className="flex gap-2 mt-3">
-                    <Link to={`/listings/${l.id}/edit`}
-                      className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-slate-50"
-                      style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>
-                      <Pencil size={10} /> Edit
-                    </Link>
-                    <button onClick={() => deleteListing.mutate(l.id)}
-                      className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-red-50"
-                      style={{ borderColor: 'var(--border)', color: '#DC2626' }}>
-                      <Trash2 size={10} /> Delete
-                    </button>
+            {data.listings.map(l => {
+              const isBoosted = l.boosted && new Date(l.boosted_until) > new Date();
+              return (
+                <div key={l.id} className="rounded-xl border bg-white overflow-hidden" style={{ borderColor: 'var(--border)' }}>
+                  <div className="aspect-video relative overflow-hidden" style={{ backgroundColor: 'var(--surface2)' }}>
+                    {l.image_url
+                      ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover" />
+                      : <div className="w-full h-full flex items-center justify-center text-2xl font-bold" style={{ color: 'var(--border)' }}>?</div>
+                    }
+                    <span className={`absolute top-2 left-2 text-xs font-semibold px-2 py-0.5 rounded-full ${
+                      l.status === 'active' ? 'bg-green-50 text-green-700' :
+                      l.status === 'sold'   ? 'bg-slate-100 text-slate-500' : 'bg-red-50 text-red-500'
+                    }`}>{l.status}</span>
+                    {isBoosted && (
+                      <span className="absolute top-2 right-2 flex items-center gap-0.5 text-xs font-bold px-2 py-0.5 rounded-full text-white"
+                        style={{ backgroundColor: '#EA580C' }}>
+                        <Zap size={10} /> Boosted
+                      </span>
+                    )}
+                  </div>
+                  <div className="p-3">
+                    <p className="font-semibold truncate text-sm" style={{ color: 'var(--text)' }}>{l.title}</p>
+                    <p className="font-bold text-base mt-0.5" style={{ color: '#16A34A' }}>${Number(l.price).toFixed(2)}</p>
+                    <div className="flex gap-2 mt-3">
+                      <Link to={`/listings/${l.id}/edit`}
+                        className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-slate-50"
+                        style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>
+                        <Pencil size={10} /> Edit
+                      </Link>
+                      {!isBoosted && l.status === 'active' && (
+                        <button onClick={() => setBoostModal(l.id)}
+                          className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors"
+                          style={{ borderColor: '#FED7AA', color: '#EA580C', backgroundColor: '#FFF7ED' }}>
+                          <Zap size={10} /> Boost
+                        </button>
+                      )}
+                      <button onClick={() => deleteListing.mutate(l.id)}
+                        className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-red-50"
+                        style={{ borderColor: 'var(--border)', color: '#DC2626' }}>
+                        <Trash2 size={10} /> Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

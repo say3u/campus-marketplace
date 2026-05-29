@@ -122,7 +122,7 @@ export default function Landing() {
         <div className="max-w-2xl mx-auto px-8 py-14 text-center">
           <h2 className="text-3xl font-extrabold text-white mb-2">Ready to find a deal?</h2>
           <p className="text-green-100 mb-7 text-sm">
-            Join thousands of students already buying and selling on doormly.
+            Buy and sell with verified students at your school.
           </p>
           <Link to="/register"
             className="inline-flex items-center gap-2 font-semibold bg-white px-7 py-2.5 rounded-xl text-sm transition-opacity hover:opacity-90"

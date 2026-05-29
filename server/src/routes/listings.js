@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
       `SELECT l.*, u.username, u.rep_score, u.school
        FROM listings l JOIN users u ON u.id = l.seller_id
        WHERE ${where}
-       ORDER BY l.created_at DESC
+       ORDER BY (l.boosted = TRUE AND l.boosted_until > NOW()) DESC, l.created_at DESC
        LIMIT $${params.length - 1} OFFSET $${params.length}`,
       params
     );
@@ -112,6 +112,23 @@ router.patch('/:id/status', auth, async (req, res) => {
     if (!rows.length) return res.status(403).json({ error: 'Not found or not authorized' });
     res.json(rows[0]);
   } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// POST /api/listings/:id/boost
+router.post('/:id/boost', auth, async (req, res) => {
+  const boosted_until = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  try {
+    const { rows } = await db.query(
+      `UPDATE listings SET boosted=TRUE, boosted_until=$1
+       WHERE id=$2 AND seller_id=$3 RETURNING *`,
+      [boosted_until, req.params.id, req.user.id]
+    );
+    if (!rows.length) return res.status(403).json({ error: 'Not found or not authorized' });
+    res.json(rows[0]);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Server error' });
   }
 });
