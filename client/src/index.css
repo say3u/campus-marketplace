@@ -4,10 +4,10 @@
 
 /* ── Light theme (default) ─────────────────────────────── */
 :root {
-  --bg:         #FAF8F5;
-  --surface:    #FFFEFB;
-  --surface2:   #F3F0EA;
-  --border:     #E6E0D6;
+  --bg:         #F2EDE4;
+  --surface:    #FAF6EF;
+  --surface2:   #EDE6DA;
+  --border:     #D9CEBD;
   --text:       #0F172A;
   --text2:      #475569;
   --text3:      #64748B;
@@ -40,6 +40,9 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+/* ── bg-white → cream surface in both modes ─────────────── */
+.bg-white                  { background-color: var(--surface)  !important; }
+
 /* ── Tailwind class overrides for dark mode ─────────────── */
 .dark .bg-white            { background-color: var(--surface)  !important; }
 .dark .bg-slate-50,
@@ -61,7 +64,7 @@ body {
 .card-hover:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-  border-color: #16A34A !important;
+  border-color: #14B8A6 !important;
 }
 .dark .card-hover:hover {
   box-shadow: 0 8px 32px rgba(0,0,0,0.5);
