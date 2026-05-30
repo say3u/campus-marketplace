@@ -46,13 +46,15 @@ export default function Navbar() {
           {dark ? <Sun size={15} /> : <Moon size={15} />}
         </button>
 
+        {/* Sell Now — always visible */}
+        <Link to={user ? '/listings/new' : '/register'}
+          className="text-sm font-bold text-white px-5 py-2 rounded-lg transition-opacity hover:opacity-85"
+          style={{ backgroundColor: '#14B8A6', boxShadow: '0 2px 8px rgba(20,184,166,0.35)' }}>
+          + Sell Now
+        </Link>
+
         {user ? (
           <>
-            <Link to="/listings/new"
-              className="text-sm font-bold text-white px-5 py-2 rounded-lg transition-opacity hover:opacity-85 shadow-sm"
-              style={{ backgroundColor: '#14B8A6', boxShadow: '0 2px 8px rgba(20,184,166,0.35)' }}>
-              + Sell Now
-            </Link>
             <Link to="/profile" className="text-sm font-medium transition-colors"
               style={{ color: dark ? '#D4D4D4' : '#374151' }}>
               {user.username}
@@ -68,9 +70,8 @@ export default function Navbar() {
               style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>
               Log in
             </Link>
-            <Link to="/register"
-              className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#14B8A6' }}>
+            <Link to="/register" className="text-sm font-medium transition-colors"
+              style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>
               Sign up
             </Link>
           </>
