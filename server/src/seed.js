@@ -7,16 +7,17 @@
  */
 
 require('dotenv').config();
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const db = require('./db');
 
 const SCHOOL = 'State University';
 const PASSWORD = 'password123';
 
+// Use a real .edu domain so the school field parses correctly
 const USERS = [
-  { email: 'alex@stateuniversity.edu',  username: 'alex_m'   },
-  { email: 'priya@stateuniversity.edu', username: 'priya_k'  },
-  { email: 'jordan@stateuniversity.edu',username: 'jordan_t' },
+  { email: 'alex@mit.edu',    username: 'alex_m'   },
+  { email: 'priya@mit.edu',   username: 'priya_k'  },
+  { email: 'jordan@mit.edu',  username: 'jordan_t' },
 ];
 
 const LISTINGS = [
@@ -58,12 +59,13 @@ async function seed() {
   // Create users
   const userMap = {};
   for (const u of USERS) {
+    const school = u.email.split('@')[1];
     const { rows } = await db.query(
-      `INSERT INTO users (email, username, password_hash, school)
+      `INSERT INTO users (email, username, password, school)
        VALUES ($1, $2, $3, $4)
        ON CONFLICT (email) DO UPDATE SET username=EXCLUDED.username
        RETURNING id, username`,
-      [u.email, u.username, hash, SCHOOL]
+      [u.email, u.username, hash, school]
     );
     userMap[u.username] = rows[0].id;
     console.log(`  user: ${u.username} (id ${rows[0].id})`);
