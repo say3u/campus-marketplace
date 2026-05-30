@@ -52,14 +52,14 @@ export default function Home() {
         <aside
           className="overflow-hidden border-r transition-all duration-300 h-full"
           style={{
-            width: sidebarOpen ? '220px' : '0px',
+            width: sidebarOpen ? '260px' : '0px',
             borderColor: 'var(--border)',
             backgroundColor: 'var(--surface)',
           }}>
-          <div style={{ width: '220px' }} className="p-5 pt-6">
+          <div style={{ width: '260px' }} className="p-5 pt-6">
 
             {/* Search */}
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Search</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-2.5" style={{ color: 'var(--muted)' }}>Search</p>
             <div className="relative mb-5">
               <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: 'var(--muted)' }} />
               <input
@@ -67,7 +67,7 @@ export default function Home() {
                 placeholder="Search..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full rounded-lg pl-8 pr-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                className="w-full rounded-lg pl-8 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
                 style={inputStyle}
               />
               {search && (
@@ -82,7 +82,7 @@ export default function Home() {
             <div className="space-y-0.5 mb-5">
               <button
                 onClick={() => setCategory('')}
-                className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 style={{
                   backgroundColor: !category ? '#F0FDFA' : 'transparent',
                   color: !category ? '#0D9488' : 'var(--text3)',
@@ -92,7 +92,7 @@ export default function Home() {
               {CATEGORIES.map(({ name, Icon, color, bg }) => (
                 <button key={name}
                   onClick={() => setCategory(category === name ? '' : name)}
-                  className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors"
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                   style={{
                     backgroundColor: category === name ? bg : 'transparent',
                     color: category === name ? color : 'var(--text3)',
@@ -107,11 +107,11 @@ export default function Home() {
             <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Price</p>
             <div className="flex items-center gap-1.5 mb-1">
               <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
-                className="w-full rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
                 style={inputStyle} />
               <span className="text-xs flex-shrink-0" style={{ color: 'var(--muted)' }}>to</span>
               <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
-                className="w-full rounded-lg px-2 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
                 style={inputStyle} />
             </div>
             {(minPrice || maxPrice) && (
@@ -126,7 +126,7 @@ export default function Home() {
         {/* Toggle pill — always visible on sidebar's right edge */}
         <button
           onClick={() => setSidebarOpen(s => !s)}
-          className="absolute top-6 -right-4 w-8 h-8 flex items-center justify-center rounded-full border shadow-sm z-10 transition-colors hover:bg-white"
+          className="absolute top-6 -right-4 w-8 h-8 flex items-center justify-center rounded-md border shadow-sm z-10 transition-colors hover:bg-white"
           style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text3)' }}>
           {sidebarOpen ? <ChevronLeft size={15} /> : <ChevronRight size={15} />}
         </button>
