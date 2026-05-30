@@ -26,11 +26,19 @@ const CATEGORY_COLORS = {
 };
 
 export default function Landing() {
-  const [showModal, setShowModal]       = useState(false);
-  const [activeCategory, setActive]     = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [activeCategory, setActive] = useState(null);
 
   const activeMeta = CATEGORIES.find(c => c.name === activeCategory);
 
+  // Hero preview listings
+  const { data: previewListings = [] } = useQuery({
+    queryKey: ['hero-preview'],
+    queryFn: () => api.get('/listings', { params: { limit: 10 } }).then(r => r.data),
+    staleTime: 60_000,
+  });
+
+  // Modal listings
   const { data: listings = [] } = useQuery({
     queryKey: ['modal-listings', activeCategory],
     queryFn: () =>
@@ -50,41 +58,73 @@ export default function Landing() {
     <div style={{ backgroundColor: 'var(--bg)' }}>
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <div className="max-w-2xl mx-auto px-6 pt-20 pb-12 text-center">
-        <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.1] mb-4 tracking-tight"
-          style={{ color: 'var(--text)' }}>
-          Buy &amp; sell anything<br />
-          <span style={{ color: '#14B8A6' }}>on your campus.</span>
-        </h1>
-        <p className="text-lg leading-relaxed max-w-md mx-auto mb-8"
-          style={{ color: 'var(--text3)' }}>
-          Textbooks, furniture, electronics and more &mdash; verified students only. Zero fees.
-        </p>
+      <div className="pt-16 pb-10 text-center">
+        <div className="max-w-2xl mx-auto px-6">
+          <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.1] mb-4 tracking-tight"
+            style={{ color: 'var(--text)' }}>
+            Buy &amp; sell anything<br />
+            <span style={{ color: '#14B8A6' }}>on your campus.</span>
+          </h1>
+          <p className="text-lg leading-relaxed max-w-md mx-auto mb-8"
+            style={{ color: 'var(--text3)' }}>
+            Textbooks, furniture, electronics and more &mdash; verified students only. Zero fees.
+          </p>
 
-        <form action="/register" className="flex gap-2 max-w-md mx-auto mb-4">
-          <div className="relative flex-1">
-            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-              style={{ color: 'var(--muted)' }} />
-            <input
-              type="text"
-              name="q"
-              placeholder="Search for anything..."
-              className="w-full rounded-xl pl-10 pr-4 py-3 text-sm border focus:outline-none focus:ring-2 focus:ring-teal-400/40"
-              style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
-            />
+          <form action="/register" className="flex gap-2 max-w-md mx-auto">
+            <div className="relative flex-1">
+              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
+                style={{ color: 'var(--muted)' }} />
+              <input
+                type="text"
+                name="q"
+                placeholder="Search for anything..."
+                className="w-full rounded-xl pl-10 pr-4 py-3 text-sm border focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
+              />
+            </div>
+            <button type="submit"
+              className="font-semibold text-white px-5 py-3 rounded-xl text-sm transition-opacity hover:opacity-85 whitespace-nowrap"
+              style={{ backgroundColor: '#14B8A6' }}>
+              Search
+            </button>
+          </form>
+        </div>
+
+        {/* ── Live listing preview strip ── */}
+        {previewListings.length > 0 && (
+          <div className="mt-10 px-6 overflow-x-auto scrollbar-hide">
+            <div className="flex gap-3 w-max mx-auto pb-1">
+              {previewListings.map(l => {
+                const cat = CATEGORY_COLORS[l.category] || { bg: '#F3F4F6', color: '#6B7280' };
+                return (
+                  <Link to="/register" key={l.id}
+                    className="flex-shrink-0 w-36 rounded-xl border overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5"
+                    style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
+                    <div className="w-full h-24 overflow-hidden"
+                      style={{ backgroundColor: 'var(--surface2)' }}>
+                      {l.image_url
+                        ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover" />
+                        : <div className="w-full h-full flex items-center justify-center text-2xl font-bold"
+                            style={{ color: 'var(--border)' }}>?</div>
+                      }
+                    </div>
+                    <div className="p-2">
+                      <p className="text-xs font-semibold truncate" style={{ color: 'var(--text)' }}>{l.title}</p>
+                      <p className="text-xs font-bold mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
+                      <span className="inline-block text-xs px-1.5 py-0.5 rounded-full mt-1"
+                        style={{ backgroundColor: cat.bg, color: cat.color, fontSize: '10px' }}>
+                        {l.category}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+            <p className="text-xs mt-3" style={{ color: 'var(--muted)' }}>
+              Sign up to see all listings from students at your school
+            </p>
           </div>
-          <button type="submit"
-            className="font-semibold text-white px-5 py-3 rounded-xl text-sm transition-opacity hover:opacity-85 whitespace-nowrap"
-            style={{ backgroundColor: '#14B8A6' }}>
-            Search
-          </button>
-        </form>
-
-        <Link to="/register"
-          className="inline-flex items-center gap-2 font-bold text-white px-8 py-3 rounded-xl text-sm transition-opacity hover:opacity-85"
-          style={{ backgroundColor: '#14B8A6', boxShadow: '0 4px 16px rgba(20,184,166,0.4)' }}>
-          + Sell Now <ArrowRight size={15} />
-        </Link>
+        )}
       </div>
 
       {/* ── Categories ───────────────────────────────────── */}
@@ -153,7 +193,6 @@ export default function Landing() {
           style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
           onClick={() => setShowModal(false)}>
 
-          {/* Listings grid — dimmed backdrop */}
           <div className="absolute inset-0 overflow-hidden p-4 pt-16 pointer-events-none select-none"
             style={{ opacity: 0.18 }}>
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-6 gap-2">
@@ -177,34 +216,27 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* Modal card */}
           <div
             className="relative bg-white rounded-2xl p-8 max-w-xs w-full text-center shadow-2xl"
             onClick={e => e.stopPropagation()}>
-
-            {/* Close */}
             <button
               onClick={() => setShowModal(false)}
               className="absolute top-4 right-4 w-7 h-7 flex items-center justify-center rounded-full transition-colors"
               style={{ color: 'var(--muted)', backgroundColor: 'var(--surface2)' }}>
               <X size={14} />
             </button>
-
-            {/* Icon */}
             {activeMeta && (
               <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
                 style={{ backgroundColor: activeMeta.bg }}>
                 <activeMeta.Icon size={28} style={{ color: activeMeta.color }} strokeWidth={1.75} />
               </div>
             )}
-
             <h2 className="text-lg font-bold mb-1" style={{ color: '#111111' }}>
               Browse {activeCategory}
             </h2>
             <p className="text-sm mb-6" style={{ color: '#6B7280' }}>
               Create a free account to see listings from students at your school.
             </p>
-
             <Link to="/register"
               className="flex items-center justify-center gap-2 w-full font-semibold text-white py-2.5 rounded-xl text-sm transition-opacity hover:opacity-85 mb-3"
               style={{ backgroundColor: '#14B8A6' }}>
