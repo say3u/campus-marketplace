@@ -49,9 +49,9 @@ export default function Navbar() {
         {user ? (
           <>
             <Link to="/listings/new"
-              className="text-sm font-semibold text-white px-4 py-1.5 rounded-md transition-opacity hover:opacity-80"
-              style={{ backgroundColor: '#14B8A6' }}>
-              + Sell
+              className="text-sm font-bold text-white px-5 py-2 rounded-lg transition-opacity hover:opacity-85 shadow-sm"
+              style={{ backgroundColor: '#14B8A6', boxShadow: '0 2px 8px rgba(20,184,166,0.35)' }}>
+              + Sell Now
             </Link>
             <Link to="/profile" className="text-sm font-medium transition-colors"
               style={{ color: dark ? '#D4D4D4' : '#374151' }}>
