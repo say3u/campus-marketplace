@@ -61,7 +61,7 @@ export default function Landing() {
           Textbooks, furniture, electronics and more &mdash; verified students only. Zero fees.
         </p>
 
-        <form action="/register" className="flex gap-2 max-w-md mx-auto">
+        <form action="/register" className="flex gap-2 max-w-md mx-auto mb-4">
           <div className="relative flex-1">
             <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
               style={{ color: 'var(--muted)' }} />
@@ -69,7 +69,7 @@ export default function Landing() {
               type="text"
               name="q"
               placeholder="Search for anything..."
-              className="w-full rounded-xl pl-10 pr-4 py-3 text-sm border focus:outline-none focus:ring-2 focus:ring-green-400/40"
+              className="w-full rounded-xl pl-10 pr-4 py-3 text-sm border focus:outline-none focus:ring-2 focus:ring-teal-400/40"
               style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
             />
           </div>
@@ -79,6 +79,12 @@ export default function Landing() {
             Search
           </button>
         </form>
+
+        <Link to="/register"
+          className="inline-flex items-center gap-2 font-bold text-white px-8 py-3 rounded-xl text-sm transition-opacity hover:opacity-85"
+          style={{ backgroundColor: '#14B8A6', boxShadow: '0 4px 16px rgba(20,184,166,0.4)' }}>
+          + Sell Now <ArrowRight size={15} />
+        </Link>
       </div>
 
       {/* ── Categories ───────────────────────────────────── */}
