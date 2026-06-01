@@ -11,6 +11,7 @@ export default function Navbar() {
   const { dark, toggle } = useTheme();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
+  const [bannerDismissed, setBannerDismissed] = useState(false);
 
   const { data: conversations = [] } = useQuery({
     queryKey: ['conversations'],
@@ -36,11 +37,17 @@ export default function Navbar() {
 
   return (
     <>
-    {user && !user.email_verified && (
-      <div className="text-center text-xs py-2 font-medium" style={{ backgroundColor: '#FEF9C3', color: '#854D0E' }}>
-        Please verify your email to unlock all features.{' '}
-        <button onClick={() => api.post('/auth/resend-verification', { email: user.email }).catch(() => {})}
-          className="underline font-semibold">Resend email</button>
+    {user && !user.email_verified && !bannerDismissed && (
+      <div className="sticky top-0 z-50 flex items-center justify-center gap-3 text-xs py-2 px-4 font-medium"
+        style={{ backgroundColor: '#FEF9C3', color: '#854D0E' }}>
+        <span>
+          Please verify your email to unlock all features.{' '}
+          <button onClick={() => api.post('/auth/resend-verification', { email: user.email }).catch(() => {})}
+            className="underline font-semibold">Resend email</button>
+        </span>
+        <button onClick={() => setBannerDismissed(true)}
+          className="ml-2 text-base leading-none font-bold hover:opacity-60"
+          style={{ color: '#854D0E' }}>✕</button>
       </div>
     )}
     <nav className="sticky top-0 z-50 h-16 flex items-center px-6 border-b gap-4"
