@@ -99,8 +99,8 @@ export default function Landing() {
                 {[...previewListings, ...previewListings].map((l, i) => {
                   const cat = CATEGORY_COLORS[l.category] || { bg: '#F3F4F6', color: '#6B7280' };
                   return (
-                    <Link to="/register" key={`${l.id}-${i}`}
-                      className="flex-shrink-0 w-52 rounded-lg border overflow-hidden transition-shadow hover:shadow-lg"
+                    <Link to="/login" key={`${l.id}-${i}`}
+                      className="flex-shrink-0 w-64 rounded-lg border overflow-hidden transition-shadow hover:shadow-lg"
                       style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
                       <div className="w-full h-36 overflow-hidden" style={{ backgroundColor: 'var(--surface2)' }}>
                         {l.image_url
@@ -132,11 +132,11 @@ export default function Landing() {
       {/* ── Categories ───────────────────────────────────── */}
       <div className="max-w-4xl mx-auto px-6 pb-16">
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
-          {CATEGORIES.map(({ name, color, bg }) => (
+          {CATEGORIES.map(({ name }) => (
             <button key={name} onClick={() => openCategory(name)}
-              className="py-5 px-3 rounded-lg border text-center transition-all hover:scale-105 hover:shadow-md"
-              style={{ backgroundColor: bg, borderColor: 'var(--border)' }}>
-              <span className="text-sm font-bold" style={{ color }}>{name}</span>
+              className="py-6 px-3 border text-center transition-all hover:opacity-80"
+              style={{ backgroundColor: '#CCFBF1', borderColor: '#99F6E4' }}>
+              <span className="text-base font-bold" style={{ color: '#0D9488' }}>{name}</span>
             </button>
           ))}
         </div>
