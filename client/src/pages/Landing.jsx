@@ -134,7 +134,7 @@ export default function Landing() {
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
           {CATEGORIES.map(({ name }) => (
             <button key={name} onClick={() => openCategory(name)}
-              className="py-6 px-3 border text-center transition-all hover:opacity-80"
+              className="py-6 px-4 border rounded-xl text-center transition-all hover:opacity-80"
               style={{ backgroundColor: '#CCFBF1', borderColor: '#99F6E4' }}>
               <span className="text-base font-bold" style={{ color: '#0D9488' }}>{name}</span>
             </button>
