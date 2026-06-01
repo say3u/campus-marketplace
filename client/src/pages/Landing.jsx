@@ -71,14 +71,14 @@ export default function Landing() {
       </div>
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <div className="flex flex-col items-center justify-center text-center" style={{ minHeight: '42vh' }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <h1 className="text-6xl sm:text-7xl font-extrabold leading-[1.1] mb-4 tracking-tight"
+      <div className="pt-32 pb-10 text-center">
+        <div className="max-w-2xl mx-auto px-6">
+          <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.1] mb-4 tracking-tight"
             style={{ color: 'var(--text)' }}>
             Buy &amp; sell anything<br />
             <span style={{ color: '#14B8A6' }}>on your campus.</span>
           </h1>
-          <p className="text-lg leading-relaxed max-w-md mx-auto"
+          <p className="text-lg leading-relaxed max-w-md mx-auto mb-8"
             style={{ color: 'var(--text3)' }}>
             Zero Fees. Students Only.
           </p>
@@ -86,7 +86,7 @@ export default function Landing() {
 
         {/* ── Live listing marquee ── */}
         {previewListings.length > 0 && (
-          <div className="mt-16">
+          <div className="mt-40">
             <div className="marquee-container overflow-hidden cursor-pointer">
               {/* Duplicate cards for seamless loop */}
               <div className="marquee-track flex gap-3 w-max">
