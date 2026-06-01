@@ -25,7 +25,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 h-14 flex items-center px-6 border-b gap-4"
+    <nav className="sticky top-0 z-50 h-16 flex items-center px-6 border-b gap-4"
       style={{
         backgroundColor: dark ? '#0F0F0F' : 'var(--surface)',
         borderColor: dark ? '#1F1F1F' : 'var(--border)',
@@ -47,7 +47,7 @@ export default function Navbar() {
       </div>
 
       {/* Center search */}
-      <form onSubmit={handleSearch} className="flex-1 max-w-lg mx-auto">
+      <form onSubmit={handleSearch} className="flex-1 max-w-2xl mx-auto">
         <div className="relative">
           <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
             style={{ color: 'var(--muted)' }} />
@@ -56,7 +56,7 @@ export default function Navbar() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search listings..."
-            className="w-full rounded-lg pl-8 pr-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+            className="w-full rounded-lg pl-9 pr-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-teal-400/40"
             style={{ backgroundColor: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--text)' }}
           />
         </div>

@@ -86,7 +86,7 @@ export default function Landing() {
 
         {/* ── Live listing marquee ── */}
         {previewListings.length > 0 && (
-          <div className="mt-24">
+          <div className="mt-40">
             <div className="marquee-container overflow-hidden cursor-pointer">
               {/* Duplicate cards for seamless loop */}
               <div className="marquee-track flex gap-3 w-max">
