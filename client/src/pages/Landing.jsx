@@ -59,10 +59,10 @@ export default function Landing() {
 
       {/* ── Category sub-bar ─────────────────────────────── */}
       <div className="border-b" style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
-        <div className="flex">
+        <div className="flex w-max">
           {CATEGORIES.map(({ name }) => (
             <button key={name} onClick={() => openCategory(name)}
-              className="flex-1 py-3 text-sm font-semibold text-center transition-colors hover:opacity-70 border-r last:border-r-0"
+              className="px-6 py-3 text-sm font-semibold text-center transition-colors hover:opacity-70 border-r last:border-r-0 whitespace-nowrap"
               style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text3)' }}>
               {name}
             </button>
@@ -86,7 +86,7 @@ export default function Landing() {
 
         {/* ── Live listing marquee ── */}
         {previewListings.length > 0 && (
-          <div>
+          <div className="mt-12">
             <div className="marquee-container overflow-hidden cursor-pointer">
               {/* Duplicate cards for seamless loop */}
               <div className="marquee-track flex gap-3 w-max">

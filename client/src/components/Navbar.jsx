@@ -32,7 +32,7 @@ export default function Navbar() {
       }}>
 
       {/* Left */}
-      <div className="flex items-center gap-6 flex-shrink-0">
+      <div className="flex items-center gap-6 flex-1">
         <Link to="/" className="text-xl font-black tracking-tight" style={{ color: '#14B8A6' }}>
           doormly
         </Link>
@@ -63,7 +63,7 @@ export default function Navbar() {
       </form>
 
       {/* Right */}
-      <div className="flex items-center gap-3 flex-shrink-0">
+      <div className="flex items-center gap-3 flex-1 justify-end">
         <button onClick={toggle}
           className="w-8 h-8 flex items-center justify-center rounded-md transition-colors"
           style={{ color: dark ? '#A3A3A3' : '#6B7280' }}
