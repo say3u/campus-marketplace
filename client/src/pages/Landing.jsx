@@ -67,7 +67,7 @@ export default function Landing() {
           </h1>
           <p className="text-lg leading-relaxed max-w-md mx-auto mb-8"
             style={{ color: 'var(--text3)' }}>
-            Textbooks, furniture, electronics and more &mdash; verified students only. Zero fees.
+            Students Only. Zero Fees.
           </p>
 
           <form action="/register" className="flex gap-2 max-w-md mx-auto">
