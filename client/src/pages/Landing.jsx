@@ -89,12 +89,12 @@ export default function Landing() {
             </button>
           </form>
           {/* ── Categories ── */}
-          <div className="grid grid-cols-6 gap-2 mt-6">
+          <div className="flex border rounded-lg overflow-hidden mt-6" style={{ borderColor: 'var(--border)' }}>
             {CATEGORIES.map(({ name }) => (
               <button key={name} onClick={() => openCategory(name)}
-                className="py-2.5 border rounded-xl transition-all hover:opacity-80 flex items-center justify-center"
-                style={{ backgroundColor: '#CCFBF1', borderColor: '#99F6E4' }}>
-                <span className="text-sm font-bold text-center" style={{ color: '#0D9488' }}>{name}</span>
+                className="flex-1 py-2.5 text-sm font-semibold text-center transition-colors hover:opacity-75 border-r last:border-r-0"
+                style={{ backgroundColor: 'var(--surface2)', borderColor: 'var(--border)', color: 'var(--text3)' }}>
+                {name}
               </button>
             ))}
           </div>
