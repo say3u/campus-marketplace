@@ -130,11 +130,11 @@ export default function Landing() {
       </div>
 
       {/* ── Categories ───────────────────────────────────── */}
-      <div className="max-w-4xl mx-auto px-6 pb-16">
+      <div className="max-w-5xl mx-auto px-6 pb-16">
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
           {CATEGORIES.map(({ name }) => (
             <button key={name} onClick={() => openCategory(name)}
-              className="py-6 px-4 border rounded-xl text-center transition-all hover:opacity-80"
+              className="py-4 px-4 border rounded-xl text-center transition-all hover:opacity-80"
               style={{ backgroundColor: '#CCFBF1', borderColor: '#99F6E4' }}>
               <span className="text-base font-bold" style={{ color: '#0D9488' }}>{name}</span>
             </button>
@@ -191,29 +191,6 @@ export default function Landing() {
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
           onClick={() => setShowModal(false)}>
-
-          <div className="absolute inset-0 overflow-hidden p-4 pt-16 pointer-events-none select-none"
-            style={{ opacity: 0.18 }}>
-            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-6 gap-2">
-              {listings.map(l => {
-                const cat = CATEGORY_COLORS[l.category] || { bg: '#F3F4F6', color: '#6B7280' };
-                return (
-                  <div key={l.id} className="rounded-xl overflow-hidden bg-white">
-                    <div className="aspect-square overflow-hidden" style={{ backgroundColor: '#E5E7EB' }}>
-                      {l.image_url
-                        ? <img src={l.image_url} alt="" className="w-full h-full object-cover" />
-                        : <div className="w-full h-full" style={{ backgroundColor: '#D1D5DB' }} />
-                      }
-                    </div>
-                    <div className="p-2">
-                      <div className="h-2.5 rounded w-3/4 mb-1.5" style={{ backgroundColor: '#D1D5DB' }} />
-                      <div className="h-2.5 rounded w-1/2" style={{ backgroundColor: '#E5E7EB' }} />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
 
           <div
             className="relative bg-white rounded-2xl p-8 max-w-xs w-full text-center shadow-2xl"
