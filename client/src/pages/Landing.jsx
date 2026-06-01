@@ -100,20 +100,20 @@ export default function Landing() {
                   const cat = CATEGORY_COLORS[l.category] || { bg: '#F3F4F6', color: '#6B7280' };
                   return (
                     <Link to="/register" key={`${l.id}-${i}`}
-                      className="flex-shrink-0 w-40 rounded-xl border overflow-hidden transition-shadow hover:shadow-lg"
+                      className="flex-shrink-0 w-52 rounded-lg border overflow-hidden transition-shadow hover:shadow-lg"
                       style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
-                      <div className="w-full h-28 overflow-hidden" style={{ backgroundColor: 'var(--surface2)' }}>
+                      <div className="w-full h-36 overflow-hidden" style={{ backgroundColor: 'var(--surface2)' }}>
                         {l.image_url
                           ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover" />
                           : <div className="w-full h-full flex items-center justify-center text-2xl font-bold"
                               style={{ color: 'var(--border)' }}>?</div>
                         }
                       </div>
-                      <div className="p-2.5">
-                        <p className="text-xs font-semibold truncate" style={{ color: 'var(--text)' }}>{l.title}</p>
-                        <p className="text-sm font-bold mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
-                        <span className="inline-block px-1.5 py-0.5 rounded-full mt-1"
-                          style={{ backgroundColor: cat.bg, color: cat.color, fontSize: '10px', fontWeight: 600 }}>
+                      <div className="p-3">
+                        <p className="text-sm font-semibold truncate" style={{ color: 'var(--text)' }}>{l.title}</p>
+                        <p className="text-base font-bold mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
+                        <span className="inline-block px-2 py-0.5 rounded mt-1.5 text-xs font-semibold"
+                          style={{ backgroundColor: cat.bg, color: cat.color }}>
                           {l.category}
                         </span>
                       </div>
@@ -131,15 +131,12 @@ export default function Landing() {
 
       {/* ── Categories ───────────────────────────────────── */}
       <div className="max-w-4xl mx-auto px-6 pb-16">
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
-          {CATEGORIES.map(({ name, Icon, bg, color }) => (
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+          {CATEGORIES.map(({ name, color, bg }) => (
             <button key={name} onClick={() => openCategory(name)}
-              className="flex flex-col items-center gap-2 py-4 px-2 rounded-xl border text-center transition-all hover:scale-105 hover:shadow-md"
-              style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: bg }}>
-                <Icon size={20} style={{ color }} strokeWidth={1.75} />
-              </div>
-              <span className="text-xs font-semibold leading-tight" style={{ color: 'var(--text2)' }}>{name}</span>
+              className="py-5 px-3 rounded-lg border text-center transition-all hover:scale-105 hover:shadow-md"
+              style={{ backgroundColor: bg, borderColor: 'var(--border)' }}>
+              <span className="text-sm font-bold" style={{ color }}>{name}</span>
             </button>
           ))}
         </div>
