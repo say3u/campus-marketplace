@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
-import { Search, X, ChevronLeft, ChevronRight, Laptop, BookOpen, Sofa, Shirt, Wrench, Package } from 'lucide-react';
+import { Search, X, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Laptop, BookOpen, Sofa, Shirt, Wrench, Package } from 'lucide-react';
 import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 import { useFeed } from '../hooks/useFeed';
@@ -24,6 +24,8 @@ export default function Home() {
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [priceOpen, setPriceOpen] = useState(true);
+  const [catOpen, setCatOpen] = useState(true);
 
   useEffect(() => {
     const q = searchParams.get('search');
@@ -84,77 +86,87 @@ export default function Home() {
               )}
             </div>
 
-            {/* Price range */}
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Price</p>
-
-            {/* Budget presets */}
-            <div className="grid grid-cols-2 gap-1.5 mb-3">
-              {[
-                { label: 'Under $10',  min: '',   max: '10'  },
-                { label: 'Under $25',  min: '',   max: '25'  },
-                { label: 'Under $50',  min: '',   max: '50'  },
-                { label: 'Under $100', min: '',   max: '100' },
-                { label: '$100+',      min: '100',max: ''    },
-                { label: 'Free',       min: '',   max: '0'   },
-              ].map(({ label, min, max }) => {
-                const active = minPrice === min && maxPrice === max;
-                return (
-                  <button key={label}
-                    onClick={() => { setMinPrice(min); setMaxPrice(max); }}
-                    className="text-xs font-medium py-1.5 px-2 rounded-lg border transition-colors"
-                    style={{
-                      backgroundColor: active ? 'var(--brand-bg)' : 'var(--surface2)',
-                      borderColor: active ? 'var(--brand)' : 'var(--border)',
-                      color: active ? 'var(--brand-dark)' : 'var(--text3)',
-                    }}>
-                    {label}
+            {/* Price section */}
+            <button onClick={() => setPriceOpen(o => !o)}
+              className="w-full flex items-center justify-between mb-2 hover:opacity-70 transition-opacity">
+              <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--muted)' }}>Price</p>
+              {priceOpen ? <ChevronUp size={12} style={{ color: 'var(--muted)' }} /> : <ChevronDown size={12} style={{ color: 'var(--muted)' }} />}
+            </button>
+            {priceOpen && (
+              <>
+                {/* Custom range */}
+                <div className="flex items-center gap-1.5 mb-2">
+                  <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
+                    className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                    style={inputStyle} />
+                  <span className="text-xs flex-shrink-0" style={{ color: 'var(--muted)' }}>–</span>
+                  <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
+                    className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                    style={inputStyle} />
+                </div>
+                {/* Budget presets */}
+                <div className="grid grid-cols-2 gap-1 mb-1">
+                  {[
+                    { label: 'Under $25',  min: '',    max: '25'  },
+                    { label: 'Under $50',  min: '',    max: '50'  },
+                    { label: 'Under $100', min: '',    max: '100' },
+                    { label: '$100+',      min: '100', max: ''    },
+                  ].map(({ label, min, max }) => {
+                    const active = minPrice === min && maxPrice === max;
+                    return (
+                      <button key={label}
+                        onClick={() => { setMinPrice(active ? '' : min); setMaxPrice(active ? '' : max); }}
+                        className="text-xs font-medium py-1 px-1.5 rounded border transition-colors"
+                        style={{
+                          backgroundColor: active ? 'var(--brand-bg)' : 'transparent',
+                          borderColor: active ? 'var(--brand)' : 'var(--border)',
+                          color: active ? 'var(--brand-dark)' : 'var(--muted)',
+                        }}>
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+                {(minPrice || maxPrice) && (
+                  <button onClick={() => { setMinPrice(''); setMaxPrice(''); }}
+                    className="flex items-center gap-1 text-xs mt-0.5 mb-1" style={{ color: 'var(--muted)' }}>
+                    <X size={10} /> Clear
                   </button>
-                );
-              })}
-            </div>
-
-            {/* Custom range */}
-            <div className="flex items-center gap-1.5 mb-1">
-              <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
-                className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
-                style={inputStyle} />
-              <span className="text-xs flex-shrink-0" style={{ color: 'var(--muted)' }}>to</span>
-              <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
-                className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
-                style={inputStyle} />
-            </div>
-            {(minPrice || maxPrice) && (
-              <button onClick={() => { setMinPrice(''); setMaxPrice(''); }}
-                className="flex items-center gap-1 text-xs mt-1 mb-1" style={{ color: 'var(--muted)' }}>
-                <X size={10} /> Clear price
-              </button>
+                )}
+              </>
             )}
 
-            {/* Categories */}
-            <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-5" style={{ color: 'var(--muted)' }}>Category</p>
-            <div className="space-y-0.5 mb-5">
-              <button
-                onClick={() => setCategory('')}
-                className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                style={{
-                  backgroundColor: !category ? 'var(--brand-bg)' : 'transparent',
-                  color: !category ? 'var(--brand-dark)' : 'var(--text3)',
-                }}>
-                All categories
-              </button>
-              {CATEGORIES.map(({ name, Icon, color, bg }) => (
-                <button key={name}
-                  onClick={() => setCategory(category === name ? '' : name)}
-                  className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+            {/* Categories section */}
+            <button onClick={() => setCatOpen(o => !o)}
+              className="w-full flex items-center justify-between mt-4 mb-2 hover:opacity-70 transition-opacity">
+              <p className="text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--muted)' }}>Category</p>
+              {catOpen ? <ChevronUp size={12} style={{ color: 'var(--muted)' }} /> : <ChevronDown size={12} style={{ color: 'var(--muted)' }} />}
+            </button>
+            {catOpen && (
+              <div className="space-y-0.5 mb-5">
+                <button
+                  onClick={() => setCategory('')}
+                  className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                   style={{
-                    backgroundColor: category === name ? bg : 'transparent',
-                    color: category === name ? color : 'var(--text3)',
+                    backgroundColor: !category ? 'var(--brand-bg)' : 'transparent',
+                    color: !category ? 'var(--brand-dark)' : 'var(--text3)',
                   }}>
-                  <Icon size={13} strokeWidth={2} />
-                  {name}
+                  All categories
                 </button>
-              ))}
-            </div>
+                {CATEGORIES.map(({ name, Icon, color, bg }) => (
+                  <button key={name}
+                    onClick={() => setCategory(category === name ? '' : name)}
+                    className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                    style={{
+                      backgroundColor: category === name ? bg : 'transparent',
+                      color: category === name ? color : 'var(--text3)',
+                    }}>
+                    <Icon size={13} strokeWidth={2} />
+                    {name}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </aside>
 

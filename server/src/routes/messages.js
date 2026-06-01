@@ -2,8 +2,10 @@ const router = require('express').Router();
 const db = require('../db');
 const auth = require('../middleware/auth');
 
+const { requireVerified } = require('../middleware/auth');
+
 // POST /api/conversations — start or get existing convo for a listing
-router.post('/conversations', auth, async (req, res) => {
+router.post('/conversations', requireVerified, async (req, res) => {
   const { listing_id } = req.body;
   if (!listing_id) return res.status(400).json({ error: 'listing_id required' });
 

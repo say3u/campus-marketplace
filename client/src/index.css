@@ -41,6 +41,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Prevent scrollbar-induced layout shift */
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--bg);

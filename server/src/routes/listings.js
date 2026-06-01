@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const db = require('../db');
 const auth = require('../middleware/auth');
+const { requireVerified } = require('../middleware/auth');
 
 const storage = multer.diskStorage({
   destination: 'uploads/',
@@ -96,7 +97,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST /api/listings
-router.post('/', auth, upload.single('image'), async (req, res) => {
+router.post('/', requireVerified, upload.single('image'), async (req, res) => {
   const { title, description, price, category, lat, lng } = req.body;
   if (!title || !price || !category) return res.status(400).json({ error: 'title, price, category required' });
 

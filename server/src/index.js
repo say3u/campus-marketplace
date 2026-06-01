@@ -3,6 +3,8 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
 const fs = require('fs');
 
@@ -15,14 +17,31 @@ const io = new Server(server, {
 // Ensure uploads directory exists
 if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
 
+// Security headers
+app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
-app.use(express.json());
+app.use(express.json({ limit: '2mb' }));
+
+// Rate limiting — tight on auth, relaxed on general API
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 min
+  max: 20,
+  message: { error: 'Too many attempts, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 min
+  max: 120,
+  message: { error: 'Too many requests.' },
+});
+app.use('/api/auth', authLimiter);
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/listings', require('./routes/listings'));
-app.use('/api/users', require('./routes/users'));
-app.use('/api', require('./routes/messages'));
+app.use('/api/listings', apiLimiter, require('./routes/listings'));
+app.use('/api/users', apiLimiter, require('./routes/users'));
+app.use('/api', apiLimiter, require('./routes/messages'));
 
 require('./socket')(io);
 
