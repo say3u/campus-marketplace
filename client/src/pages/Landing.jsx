@@ -71,7 +71,7 @@ export default function Landing() {
       </div>
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <div className="pt-24 pb-10 text-center">
+      <div className="pt-32 pb-10 text-center">
         <div className="max-w-2xl mx-auto px-6">
           <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.1] mb-4 tracking-tight"
             style={{ color: 'var(--text)' }}>
@@ -116,7 +116,7 @@ export default function Landing() {
                 })}
               </div>
             </div>
-            <p className="text-xs mt-3" style={{ color: 'var(--muted)' }}>
+            <p className="text-xs mt-8" style={{ color: 'var(--muted)' }}>
               Sign up to see all listings from students at your school
             </p>
           </div>
