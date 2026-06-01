@@ -47,7 +47,7 @@ export default function Navbar() {
       </div>
 
       {/* Center search */}
-      <form onSubmit={handleSearch} className="flex-1 max-w-sm mx-auto">
+      <form onSubmit={handleSearch} className="flex-1 max-w-lg mx-auto">
         <div className="relative">
           <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
             style={{ color: 'var(--muted)' }} />
