@@ -5,9 +5,9 @@ import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: '#F0FDFA', color: '#0D9488' },
+  Electronics: { bg: 'var(--brand-bg)', color: 'var(--brand-dark)' },
   Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
-  Furniture:   { bg: '#F0FDFA', color: '#14B8A6' },
+  Furniture:   { bg: 'var(--brand-bg)', color: 'var(--brand)' },
   Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
   Services:    { bg: '#F5F3FF', color: '#7C3AED' },
   Other:       { bg: 'var(--bg)', color: 'var(--text3)' },
@@ -53,7 +53,7 @@ export default function ListingCard({ listing, initialFavorited = false }) {
         )}
         {isNew(listing.created_at) && !isBoosted && (
           <span className="absolute top-2 left-2 text-xs font-bold px-2 py-0.5 rounded-full text-white"
-            style={{ backgroundColor: '#14B8A6' }}>
+            style={{ backgroundColor: 'var(--brand)' }}>
             New
           </span>
         )}
@@ -68,7 +68,7 @@ export default function ListingCard({ listing, initialFavorited = false }) {
       </div>
       <div className="p-3">
         <p className="text-sm font-semibold truncate" style={{ color: 'var(--text)' }}>{listing.title}</p>
-        <p className="text-base font-bold mt-0.5" style={{ color: '#14B8A6' }}>
+        <p className="text-base font-bold mt-0.5" style={{ color: 'var(--brand)' }}>
           ${Number(listing.price).toFixed(2)}
         </p>
         <div className="flex items-center justify-between mt-2">

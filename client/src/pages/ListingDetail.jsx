@@ -6,9 +6,9 @@ import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: '#F0FDFA', color: '#0D9488' },
+  Electronics: { bg: 'var(--brand-bg)', color: 'var(--brand-dark)' },
   Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
-  Furniture:   { bg: '#F0FDFA', color: '#14B8A6' },
+  Furniture:   { bg: 'var(--brand-bg)', color: 'var(--brand)' },
   Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
   Services:    { bg: '#F5F3FF', color: '#7C3AED' },
   Other:       { bg: 'var(--bg)', color: 'var(--text3)' },
@@ -94,7 +94,7 @@ export default function ListingDetail() {
           </div>
 
           <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--text)' }}>{listing.title}</h1>
-          <p className="text-3xl font-bold mb-5" style={{ color: '#14B8A6' }}>${Number(listing.price).toFixed(2)}</p>
+          <p className="text-3xl font-bold mb-5" style={{ color: 'var(--brand)' }}>${Number(listing.price).toFixed(2)}</p>
 
           {listing.description && (
             <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text3)' }}>{listing.description}</p>
@@ -102,7 +102,7 @@ export default function ListingDetail() {
 
           <div className="flex items-center gap-3 p-4 rounded-xl mb-6" style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--surface2)' }}>
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
-              style={{ backgroundColor: '#14B8A6' }}>
+              style={{ backgroundColor: 'var(--brand)' }}>
               {listing.username[0].toUpperCase()}
             </div>
             <div>
@@ -122,7 +122,7 @@ export default function ListingDetail() {
                 {listing.status === 'active' && (
                   <button onClick={() => markSold.mutate()} disabled={markSold.isPending}
                     className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border transition-colors hover:bg-teal-50 disabled:opacity-50"
-                    style={{ borderColor: 'var(--border)', color: '#14B8A6' }}>
+                    style={{ borderColor: 'var(--border)', color: 'var(--brand)' }}>
                     <CheckCircle size={13} /> Mark Sold
                   </button>
                 )}
@@ -136,7 +136,7 @@ export default function ListingDetail() {
               <>
                 <button onClick={() => startConvo.mutate()} disabled={startConvo.isPending}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold text-white disabled:opacity-50 hover:opacity-85 transition-opacity"
-                  style={{ backgroundColor: '#14B8A6' }}>
+                  style={{ backgroundColor: 'var(--brand)' }}>
                   <MessageCircle size={14} />
                   {startConvo.isPending ? 'Opening...' : 'Message Seller'}
                 </button>
@@ -156,7 +156,7 @@ export default function ListingDetail() {
                 </p>
                 <Link to="/register"
                   className="inline-flex items-center gap-2 font-semibold text-white px-5 py-2 rounded-lg text-sm transition-opacity hover:opacity-85"
-                  style={{ backgroundColor: '#14B8A6' }}>
+                  style={{ backgroundColor: 'var(--brand)' }}>
                   Start for free
                 </Link>
               </div>

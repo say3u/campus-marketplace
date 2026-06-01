@@ -29,7 +29,7 @@ export default function Register() {
     <div className="min-h-[90vh] flex items-center justify-center px-4" style={{ backgroundColor: 'var(--bg)' }}>
       <div className="w-full max-w-sm">
         <div className="mb-8">
-          <Link to="/" className="text-base font-bold" style={{ color: '#14B8A6' }}>doormly</Link>
+          <Link to="/" className="text-base font-bold" style={{ color: 'var(--brand)' }}>doormly</Link>
           <h1 className="text-2xl font-bold mt-6 mb-1" style={{ color: 'var(--text)' }}>Create an account</h1>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>Requires a .edu email address</p>
         </div>
@@ -64,7 +64,7 @@ export default function Register() {
             )}
             <button type="submit" disabled={loading}
               className="w-full text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-              style={{ backgroundColor: '#14B8A6' }}>
+              style={{ backgroundColor: 'var(--brand)' }}>
               {loading ? 'Creating account...' : 'Create account'}
             </button>
           </form>
@@ -72,7 +72,7 @@ export default function Register() {
 
         <p className="text-center text-sm mt-5" style={{ color: 'var(--muted)' }}>
           Already have an account?{' '}
-          <Link to="/login" className="font-semibold hover:underline" style={{ color: '#14B8A6' }}>Sign in</Link>
+          <Link to="/login" className="font-semibold hover:underline" style={{ color: 'var(--brand)' }}>Sign in</Link>
         </p>
       </div>
     </div>

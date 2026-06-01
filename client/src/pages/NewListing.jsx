@@ -103,7 +103,7 @@ export default function NewListing() {
 
         <button type="submit" disabled={loading}
           className="w-full text-white py-2.5 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-          style={{ backgroundColor: '#14B8A6' }}>
+          style={{ backgroundColor: 'var(--brand)' }}>
           {loading ? 'Posting...' : 'Post listing'}
         </button>
       </form>

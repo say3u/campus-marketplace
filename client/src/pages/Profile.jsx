@@ -24,7 +24,7 @@ function RateModal({ sellerId, listingId, onClose }) {
           <div className="flex gap-1.5">
             {[1,2,3,4,5].map(n => (
               <button key={n} type="button" onClick={() => setScore(n)}>
-                <Star size={26} fill={n <= score ? '#14B8A6' : 'none'} style={{ color: '#14B8A6' }} />
+                <Star size={26} fill={n <= score ? 'var(--brand)' : 'none'} style={{ color: 'var(--brand)' }} />
               </button>
             ))}
           </div>
@@ -43,7 +43,7 @@ function RateModal({ sellerId, listingId, onClose }) {
             style={{ borderColor: 'var(--border)', color: 'var(--text3)' }}>Cancel</button>
           <button onClick={() => mutation.mutate()} disabled={!score || mutation.isPending}
             className="flex-1 text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85"
-            style={{ backgroundColor: '#14B8A6' }}>
+            style={{ backgroundColor: 'var(--brand)' }}>
             {mutation.isPending ? 'Submitting...' : 'Submit'}
           </button>
         </div>
@@ -143,7 +143,7 @@ export default function Profile() {
           {/* Avatar with upload button */}
           <div className="relative flex-shrink-0">
             <div className="w-16 h-16 rounded-full overflow-hidden flex items-center justify-center text-2xl font-bold text-white"
-              style={{ backgroundColor: '#14B8A6' }}>
+              style={{ backgroundColor: 'var(--brand)' }}>
               {data.avatar_url
                 ? <img src={data.avatar_url} alt="avatar" className="w-full h-full object-cover" />
                 : data.username[0].toUpperCase()
@@ -152,7 +152,7 @@ export default function Profile() {
             <button
               onClick={() => avatarInputRef.current.click()}
               className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-white shadow-md"
-              style={{ backgroundColor: '#14B8A6' }}
+              style={{ backgroundColor: 'var(--brand)' }}
               title="Change profile picture">
               <Camera size={11} />
             </button>
@@ -172,7 +172,7 @@ export default function Profile() {
                 { label: 'Reviews',    value: data.ratings.length },
               ].map(({ label, value }) => (
                 <div key={label} className="text-center">
-                  <p className="text-xl font-bold" style={{ color: '#14B8A6' }}>{value}</p>
+                  <p className="text-xl font-bold" style={{ color: 'var(--brand)' }}>{value}</p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--muted)' }}>{label}</p>
                 </div>
               ))}
@@ -185,11 +185,11 @@ export default function Profile() {
       <div className="mb-10">
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-bold flex items-center gap-2" style={{ color: 'var(--text)' }}>
-            <Package size={16} style={{ color: '#14B8A6' }} /> My Listings
+            <Package size={16} style={{ color: 'var(--brand)' }} /> My Listings
           </h2>
           <Link to="/listings/new"
             className="flex items-center gap-1.5 text-xs font-semibold text-white px-3 py-1.5 rounded-lg hover:opacity-85"
-            style={{ backgroundColor: '#14B8A6' }}>
+            style={{ backgroundColor: 'var(--brand)' }}>
             <Plus size={12} /> Post New
           </Link>
         </div>
@@ -197,7 +197,7 @@ export default function Profile() {
         {data.listings.length === 0 ? (
           <div className="text-center py-12 rounded-xl border border-dashed bg-white" style={{ borderColor: 'var(--border)' }}>
             <p className="text-sm" style={{ color: 'var(--muted)' }}>No listings yet.</p>
-            <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: '#14B8A6' }}>
+            <Link to="/listings/new" className="text-xs font-semibold mt-1.5 inline-block" style={{ color: 'var(--brand)' }}>
               Post your first item
             </Link>
           </div>
@@ -225,7 +225,7 @@ export default function Profile() {
                   </div>
                   <div className="p-3">
                     <p className="font-semibold truncate text-sm" style={{ color: 'var(--text)' }}>{l.title}</p>
-                    <p className="font-bold text-base mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
+                    <p className="font-bold text-base mt-0.5" style={{ color: 'var(--brand)' }}>${Number(l.price).toFixed(2)}</p>
                     <div className="flex gap-2 mt-3">
                       <Link to={`/listings/${l.id}/edit`}
                         className="flex-1 flex items-center justify-center gap-1 text-xs font-medium py-1.5 rounded-lg border transition-colors hover:bg-slate-50"
@@ -256,7 +256,7 @@ export default function Profile() {
       {/* Reviews */}
       <div>
         <h2 className="text-base font-bold flex items-center gap-2 mb-5" style={{ color: 'var(--text)' }}>
-          <Star size={16} style={{ color: '#14B8A6' }} /> Reviews ({data.ratings.length})
+          <Star size={16} style={{ color: 'var(--brand)' }} /> Reviews ({data.ratings.length})
         </h2>
         {data.ratings.length === 0 ? (
           <div className="text-center py-12 rounded-xl border border-dashed bg-white" style={{ borderColor: 'var(--border)' }}>
@@ -270,7 +270,7 @@ export default function Profile() {
                   <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{r.rater_username}</span>
                   <div className="flex gap-0.5">
                     {[1,2,3,4,5].map(n => (
-                      <Star key={n} size={13} fill={n <= r.score ? '#14B8A6' : 'none'} style={{ color: '#14B8A6' }} />
+                      <Star key={n} size={13} fill={n <= r.score ? 'var(--brand)' : 'none'} style={{ color: 'var(--brand)' }} />
                     ))}
                   </div>
                 </div>

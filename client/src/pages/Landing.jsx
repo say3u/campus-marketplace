@@ -8,7 +8,7 @@ import {
 import api from '../lib/api';
 
 const CATEGORIES = [
-  { name: 'Electronics', Icon: Laptop,   bg: '#F0FDFA', color: '#14B8A6' },
+  { name: 'Electronics', Icon: Laptop,   bg: 'var(--brand-bg)', color: 'var(--brand)' },
   { name: 'Textbooks',   Icon: BookOpen, bg: '#FFFBEB', color: '#D97706' },
   { name: 'Furniture',   Icon: Sofa,     bg: '#FEF9EE', color: '#B45309' },
   { name: 'Clothing',    Icon: Shirt,    bg: '#FDF4FF', color: '#A21CAF' },
@@ -17,7 +17,7 @@ const CATEGORIES = [
 ];
 
 const CATEGORY_COLORS = {
-  Electronics: { bg: '#F0FDFA', color: '#14B8A6' },
+  Electronics: { bg: 'var(--brand-bg)', color: 'var(--brand)' },
   Textbooks:   { bg: '#FFFBEB', color: '#D97706' },
   Furniture:   { bg: '#FEF9EE', color: '#B45309' },
   Clothing:    { bg: '#FDF4FF', color: '#A21CAF' },
@@ -76,7 +76,7 @@ export default function Landing() {
           <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.1] mb-4 tracking-tight"
             style={{ color: 'var(--text)' }}>
             Buy &amp; sell anything<br />
-            <span style={{ color: '#14B8A6' }}>on your campus.</span>
+            <span style={{ color: 'var(--brand)' }}>on your campus.</span>
           </h1>
           <p className="text-lg leading-relaxed max-w-md mx-auto mb-8"
             style={{ color: 'var(--text3)' }}>
@@ -105,7 +105,7 @@ export default function Landing() {
                       </div>
                       <div className="p-3">
                         <p className="text-sm font-semibold truncate" style={{ color: 'var(--text)' }}>{l.title}</p>
-                        <p className="text-base font-bold mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
+                        <p className="text-base font-bold mt-0.5" style={{ color: 'var(--brand)' }}>${Number(l.price).toFixed(2)}</p>
                         <span className="inline-block px-2 py-0.5 rounded mt-1.5 text-xs font-semibold"
                           style={{ backgroundColor: cat.bg, color: cat.color }}>
                           {l.category}
@@ -133,8 +133,8 @@ export default function Landing() {
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex flex-col items-center gap-2">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-1"
-                style={{ backgroundColor: '#F0FDFA' }}>
-                <Icon size={18} style={{ color: '#14B8A6' }} />
+                style={{ backgroundColor: 'var(--brand-bg)' }}>
+                <Icon size={18} style={{ color: 'var(--brand)' }} />
               </div>
               <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>{title}</p>
               <p className="text-sm" style={{ color: 'var(--muted)' }}>{desc}</p>
@@ -144,7 +144,7 @@ export default function Landing() {
       </div>
 
       {/* ── CTA banner ───────────────────────────────────── */}
-      <div className="mx-6 my-16 rounded-3xl overflow-hidden" style={{ backgroundColor: '#14B8A6' }}>
+      <div className="mx-6 my-16 rounded-3xl overflow-hidden" style={{ backgroundColor: 'var(--brand)' }}>
         <div className="max-w-2xl mx-auto px-8 py-14 text-center">
           <h2 className="text-3xl font-extrabold text-white mb-2">Ready to find a deal?</h2>
           <p className="text-teal-100 mb-7 text-sm">
@@ -152,7 +152,7 @@ export default function Landing() {
           </p>
           <Link to="/register"
             className="inline-flex items-center gap-2 font-semibold bg-white px-7 py-2.5 rounded-xl text-sm transition-opacity hover:opacity-90"
-            style={{ color: '#0D9488' }}>
+            style={{ color: 'var(--brand-dark)' }}>
             Create a free account <ArrowRight size={14} />
           </Link>
         </div>
@@ -161,7 +161,7 @@ export default function Landing() {
       {/* ── Footer ───────────────────────────────────────── */}
       <div className="border-t px-6 py-5" style={{ borderColor: 'var(--border)' }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <span className="text-sm font-bold" style={{ color: '#14B8A6' }}>doormly</span>
+          <span className="text-sm font-bold" style={{ color: 'var(--brand)' }}>doormly</span>
           <span className="text-xs" style={{ color: 'var(--very-muted)' }}>&copy; 2025 doormly. Built for students.</span>
         </div>
       </div>
@@ -196,7 +196,7 @@ export default function Landing() {
             </p>
             <Link to="/register"
               className="flex items-center justify-center gap-2 w-full font-semibold text-white py-2.5 rounded-xl text-sm transition-opacity hover:opacity-85 mb-3"
-              style={{ backgroundColor: '#14B8A6' }}>
+              style={{ backgroundColor: 'var(--brand)' }}>
               Create free account <ArrowRight size={14} />
             </Link>
             <Link to="/login"

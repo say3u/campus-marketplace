@@ -29,7 +29,7 @@ export default function Login() {
     <div className="min-h-[90vh] flex items-center justify-center px-4" style={{ backgroundColor: 'var(--bg)' }}>
       <div className="w-full max-w-sm">
         <div className="mb-8">
-          <Link to="/" className="text-base font-bold" style={{ color: '#14B8A6' }}>doormly</Link>
+          <Link to="/" className="text-base font-bold" style={{ color: 'var(--brand)' }}>doormly</Link>
           <h1 className="text-2xl font-bold mt-6 mb-1" style={{ color: 'var(--text)' }}>Welcome back</h1>
           <p className="text-sm" style={{ color: 'var(--muted)' }}>Sign in to your account</p>
         </div>
@@ -57,7 +57,7 @@ export default function Login() {
             )}
             <button type="submit" disabled={loading}
               className="w-full text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-              style={{ backgroundColor: '#14B8A6' }}>
+              style={{ backgroundColor: 'var(--brand)' }}>
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
@@ -65,7 +65,7 @@ export default function Login() {
 
         <p className="text-center text-sm mt-5" style={{ color: 'var(--muted)' }}>
           Don't have an account?{' '}
-          <Link to="/register" className="font-semibold hover:underline" style={{ color: '#14B8A6' }}>Sign up</Link>
+          <Link to="/register" className="font-semibold hover:underline" style={{ color: 'var(--brand)' }}>Sign up</Link>
         </p>
       </div>
     </div>

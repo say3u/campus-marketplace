@@ -46,6 +46,12 @@ db.query(`
     blocked_id UUID REFERENCES users(id) ON DELETE CASCADE,
     PRIMARY KEY (blocker_id, blocked_id)
   );
+  CREATE TABLE IF NOT EXISTS school_themes (
+    domain TEXT PRIMARY KEY,
+    primary_color TEXT NOT NULL DEFAULT '#14B8A6',
+    secondary_color TEXT NOT NULL DEFAULT '#0D9488',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+  );
   CREATE TABLE IF NOT EXISTS reports (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     reporter_id UUID REFERENCES users(id),
@@ -57,6 +63,7 @@ db.query(`
 `).catch(e => console.error('Migration:', e.message));
 
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/schools', require('./routes/schools'));
 
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

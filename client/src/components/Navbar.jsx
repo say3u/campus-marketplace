@@ -58,7 +58,7 @@ export default function Navbar() {
 
       {/* Left */}
       <div className="flex items-center gap-6 flex-1">
-        <Link to="/" className="text-xl font-black tracking-tight" style={{ color: '#14B8A6' }}>
+        <Link to="/" className="text-xl font-black tracking-tight" style={{ color: 'var(--brand)' }}>
           doormly
         </Link>
         {user && (
@@ -108,7 +108,7 @@ export default function Navbar() {
 
         <Link to={user ? '/listings/new' : '/register'}
           className="text-sm font-bold text-white px-5 py-2 rounded-lg transition-opacity hover:opacity-85"
-          style={{ backgroundColor: '#14B8A6', boxShadow: '0 2px 8px rgba(20,184,166,0.35)' }}>
+          style={{ backgroundColor: 'var(--brand)', boxShadow: '0 2px 8px rgba(20,184,166,0.35)' }}>
           + Sell Now
         </Link>
 

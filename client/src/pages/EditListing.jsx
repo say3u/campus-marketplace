@@ -127,7 +127,7 @@ export default function EditListing() {
           </button>
           <button type="submit" disabled={loading}
             className="flex-1 text-white py-2.5 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
-            style={{ backgroundColor: '#14B8A6' }}>
+            style={{ backgroundColor: 'var(--brand)' }}>
             {loading ? 'Saving...' : 'Save changes'}
           </button>
         </div>

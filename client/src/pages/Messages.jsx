@@ -70,7 +70,7 @@ function ChatPanel({ conversation, other }) {
       <div className="px-5 py-3 border-b flex items-center justify-between" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface)' }}>
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-            style={{ backgroundColor: '#14B8A6' }}>
+            style={{ backgroundColor: 'var(--brand)' }}>
             {other?.[0]?.toUpperCase() || '?'}
           </div>
           <div>
@@ -82,7 +82,7 @@ function ChatPanel({ conversation, other }) {
           {isSeller && conversation.listing_status === 'active' && (
             <button onClick={handleMarkSold} disabled={markingSold}
               className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border transition-colors hover:opacity-80 disabled:opacity-50"
-              style={{ borderColor: '#14B8A6', color: '#14B8A6', backgroundColor: '#F0FDFA' }}>
+              style={{ borderColor: 'var(--brand)', color: 'var(--brand)', backgroundColor: 'var(--brand-bg)' }}>
               <CheckCircle size={12} /> Mark Sold
             </button>
           )}
@@ -106,7 +106,7 @@ function ChatPanel({ conversation, other }) {
               <div className="max-w-xs lg:max-w-sm">
                 <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${mine ? 'rounded-br-sm' : 'rounded-bl-sm'}`}
                   style={{
-                    backgroundColor: mine ? '#14B8A6' : 'var(--surface)',
+                    backgroundColor: mine ? 'var(--brand)' : 'var(--surface)',
                     color: mine ? '#fff' : 'var(--text)',
                     border: mine ? 'none' : '1px solid var(--border)'
                   }}>
@@ -129,7 +129,7 @@ function ChatPanel({ conversation, other }) {
           style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }} />
         <button type="submit" disabled={!draft.trim()}
           className="flex items-center justify-center w-10 h-10 rounded-xl disabled:opacity-40 transition-opacity hover:opacity-80"
-          style={{ backgroundColor: '#14B8A6' }}>
+          style={{ backgroundColor: 'var(--brand)' }}>
           <Send size={15} className="text-white" />
         </button>
       </form>
@@ -172,16 +172,16 @@ export default function Messages() {
                 className="block px-4 py-3 border-b transition-colors hover:opacity-80"
                 style={{
                   borderColor: 'var(--surface2)',
-                  backgroundColor: isActive ? '#F0FDFA' : 'transparent'
+                  backgroundColor: isActive ? 'var(--brand-bg)' : 'transparent'
                 }}>
                 <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                    style={{ backgroundColor: isActive ? '#14B8A6' : '#CBD5E1' }}>
+                    style={{ backgroundColor: isActive ? 'var(--brand)' : '#CBD5E1' }}>
                     {other[0].toUpperCase()}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between">
-                      <p className="text-sm font-medium truncate" style={{ color: isActive ? '#0D9488' : 'var(--text)' }}>{other}</p>
+                      <p className="text-sm font-medium truncate" style={{ color: isActive ? 'var(--brand-dark)' : 'var(--text)' }}>{other}</p>
                       {hasUnread && !isActive && (
                         <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#f43f5e' }} />
                       )}

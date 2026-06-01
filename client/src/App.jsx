@@ -15,8 +15,15 @@ import EditListing from './pages/EditListing';
 import Favorites from './pages/Favorites';
 import VerifyEmail from './pages/VerifyEmail';
 import Admin from './pages/Admin';
+import { useSchoolTheme } from './hooks/useSchoolTheme';
 
 const queryClient = new QueryClient();
+
+function SchoolThemeLoader() {
+  const { user } = useAuth();
+  useSchoolTheme(user?.school);
+  return null;
+}
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
@@ -36,6 +43,7 @@ export default function App() {
       <ThemeProvider>
       <AuthProvider>
         <BrowserRouter>
+          <SchoolThemeLoader />
           <div className="min-h-screen">
             <Navbar />
             <Routes>

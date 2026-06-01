@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── School brand colors (overridden dynamically per school) ── */
+:root {
+  --brand:       #14B8A6;
+  --brand-dark:  #0D9488;
+  --brand-light: #CCFBF1;
+  --brand-bg:    #F0FDFA;
+}
+
 /* ── Light theme (default) ─────────────────────────────── */
 :root {
   --bg:         #F2EDE4;
