@@ -89,12 +89,12 @@ export default function Landing() {
             </button>
           </form>
           {/* ── Categories ── */}
-          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mt-6 max-w-3xl mx-auto">
+          <div className="grid grid-cols-6 gap-2 mt-6">
             {CATEGORIES.map(({ name }) => (
               <button key={name} onClick={() => openCategory(name)}
-                className="py-4 px-4 border rounded-xl text-center transition-all hover:opacity-80"
+                className="py-2.5 border rounded-xl transition-all hover:opacity-80 flex items-center justify-center"
                 style={{ backgroundColor: '#CCFBF1', borderColor: '#99F6E4' }}>
-                <span className="text-base font-bold" style={{ color: '#0D9488' }}>{name}</span>
+                <span className="text-sm font-bold text-center" style={{ color: '#0D9488' }}>{name}</span>
               </button>
             ))}
           </div>
