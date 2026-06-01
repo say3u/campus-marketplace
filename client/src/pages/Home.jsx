@@ -51,13 +51,13 @@ export default function Home() {
   const inputStyle = { backgroundColor: 'var(--surface)', border: '1px solid var(--border)', color: 'var(--text)' };
 
   return (
-    <div className="flex min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
+    <div className="flex overflow-hidden" style={{ backgroundColor: 'var(--bg)', height: 'calc(100vh - 64px)' }}>
 
       {/* ── Sidebar ──────────────────────────────────────── */}
       <div className="relative flex-shrink-0">
         {/* Sliding content */}
         <aside
-          className="overflow-hidden border-r transition-all duration-300 h-full"
+          className="overflow-y-auto border-r transition-all duration-300 h-full"
           style={{
             width: sidebarOpen ? '260px' : '0px',
             borderColor: 'var(--border)',
@@ -140,10 +140,10 @@ export default function Home() {
       </div>
 
       {/* ── Main ─────────────────────────────────────────── */}
-      <div className="flex-1 min-w-0 flex flex-col">
+      <div className="flex-1 min-w-0 flex flex-col overflow-hidden">
 
         {/* Header banner */}
-        <div className="px-6 pt-8 pb-6"
+        <div className="px-6 pt-8 pb-6 flex-shrink-0"
           style={{
             background: 'linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 50%, #F0FDFA 100%)',
             borderBottom: '1px solid var(--border)',
@@ -166,8 +166,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Listings area */}
-        <div className="flex-1 p-6">
+        {/* Listings area — only this scrolls */}
+        <div className="flex-1 overflow-y-auto p-6">
           {/* Count */}
           {!isLoading && (
             <p className="text-xs mb-4" style={{ color: 'var(--very-muted)' }}>

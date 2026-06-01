@@ -36,9 +36,9 @@ export default function Navbar() {
   }
 
   return (
-    <>
+    <div className="sticky top-0 z-50">
     {user && !user.email_verified && !bannerDismissed && (
-      <div className="sticky top-0 z-50 flex items-center justify-center gap-3 text-xs py-2 px-4 font-medium"
+      <div className="flex items-center justify-center gap-3 text-xs py-2 px-4 font-medium"
         style={{ backgroundColor: '#FEF9C3', color: '#854D0E' }}>
         <span>
           Please verify your email to unlock all features.{' '}
@@ -50,7 +50,7 @@ export default function Navbar() {
           style={{ color: '#854D0E' }}>✕</button>
       </div>
     )}
-    <nav className="sticky top-0 z-50 h-16 flex items-center px-6 border-b gap-4"
+    <nav className="h-16 flex items-center px-6 border-b gap-4"
       style={{
         backgroundColor: dark ? '#0F0F0F' : 'var(--surface)',
         borderColor: dark ? '#1F1F1F' : 'var(--border)',
@@ -129,6 +129,6 @@ export default function Navbar() {
         )}
       </div>
     </nav>
-    </>
+    </div>
   );
 }
