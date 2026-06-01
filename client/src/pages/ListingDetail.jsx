@@ -1,7 +1,7 @@
 ﻿import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Pencil, Trash2, MessageCircle, Flag, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Pencil, Trash2, MessageCircle, Flag, CheckCircle, ArrowLeft, Share2 } from 'lucide-react';
 import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
 
@@ -51,14 +51,28 @@ export default function ListingDetail() {
 
   const isSeller = user?.id === listing.seller_id;
   const cat = CATEGORY_COLORS[listing.category] || CATEGORY_COLORS.Other;
+  const [copied, setCopied] = useState(false);
+
+  function handleShare() {
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <button onClick={() => navigate(-1)}
-        className="flex items-center gap-1.5 text-sm mb-6 transition-colors hover:text-slate-700"
-        style={{ color: 'var(--muted)' }}>
-        <ArrowLeft size={14} /> Back
-      </button>
+      <div className="flex items-center justify-between mb-6">
+        <button onClick={() => navigate(-1)}
+          className="flex items-center gap-1.5 text-sm transition-colors hover:opacity-70"
+          style={{ color: 'var(--muted)' }}>
+          <ArrowLeft size={14} /> Back
+        </button>
+        <button onClick={handleShare}
+          className="flex items-center gap-1.5 text-sm font-medium px-3 py-1.5 rounded-lg border transition-colors"
+          style={{ borderColor: 'var(--border)', color: 'var(--text3)', backgroundColor: 'var(--surface)' }}>
+          <Share2 size={13} /> {copied ? 'Copied!' : 'Share'}
+        </button>
+      </div>
 
       <div className="rounded-2xl border bg-white overflow-hidden" style={{ borderColor: 'var(--border)', boxShadow: '0 1px 8px rgba(0,0,0,0.06)' }}>
         <div className="w-full overflow-hidden" style={{ backgroundColor: 'var(--surface2)', maxHeight: '400px' }}>

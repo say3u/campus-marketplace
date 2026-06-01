@@ -42,6 +42,43 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET /api/listings/favorites — must be before /:id
+router.get('/favorites', auth, async (req, res) => {
+  try {
+    const { rows } = await db.query(
+      `SELECT l.*, u.username, u.rep_score, u.school, TRUE as is_favorited
+       FROM listings l
+       JOIN favorites f ON f.listing_id = l.id
+       JOIN users u ON u.id = l.seller_id
+       WHERE f.user_id = $1
+       ORDER BY f.created_at DESC`,
+      [req.user.id]
+    );
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// POST /api/listings/:id/favorite — toggle
+router.post('/:id/favorite', auth, async (req, res) => {
+  try {
+    const existing = await db.query(
+      'SELECT 1 FROM favorites WHERE user_id=$1 AND listing_id=$2',
+      [req.user.id, req.params.id]
+    );
+    if (existing.rows.length) {
+      await db.query('DELETE FROM favorites WHERE user_id=$1 AND listing_id=$2', [req.user.id, req.params.id]);
+      res.json({ favorited: false });
+    } else {
+      await db.query('INSERT INTO favorites (user_id, listing_id) VALUES ($1,$2) ON CONFLICT DO NOTHING', [req.user.id, req.params.id]);
+      res.json({ favorited: true });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // GET /api/listings/:id
 router.get('/:id', async (req, res) => {
   try {

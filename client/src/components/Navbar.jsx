@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sun, Moon, Search } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
+import api from '../lib/api';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const { dark, toggle } = useTheme();
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
+
+  const { data: conversations = [] } = useQuery({
+    queryKey: ['conversations'],
+    queryFn: () => api.get('/conversations').then(r => r.data),
+    enabled: !!user,
+    refetchInterval: 15000,
+  });
+  const totalUnread = conversations.reduce((sum, c) => sum + (c.unread_count || 0), 0);
 
   function handleLogout() {
     logout();
@@ -25,6 +35,14 @@ export default function Navbar() {
   }
 
   return (
+    <>
+    {user && !user.email_verified && (
+      <div className="text-center text-xs py-2 font-medium" style={{ backgroundColor: '#FEF9C3', color: '#854D0E' }}>
+        Please verify your email to unlock all features.{' '}
+        <button onClick={() => api.post('/auth/resend-verification', { email: user.email }).catch(() => {})}
+          className="underline font-semibold">Resend email</button>
+      </div>
+    )}
     <nav className="sticky top-0 z-50 h-16 flex items-center px-6 border-b gap-4"
       style={{
         backgroundColor: dark ? '#0F0F0F' : 'var(--surface)',
@@ -40,8 +58,18 @@ export default function Navbar() {
           <div className="hidden sm:flex items-center gap-6">
             <Link to="/browse" className="text-sm font-medium transition-colors"
               style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Browse</Link>
-            <Link to="/messages" className="text-sm font-medium transition-colors"
-              style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Messages</Link>
+            <Link to="/favorites" className="text-sm font-medium transition-colors"
+              style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Saved</Link>
+            <Link to="/messages" className="text-sm font-medium transition-colors relative"
+              style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>
+              Messages
+              {totalUnread > 0 && (
+                <span className="absolute -top-1.5 -right-3 min-w-[16px] h-4 flex items-center justify-center rounded-full text-white px-1"
+                  style={{ backgroundColor: '#f43f5e', fontSize: '10px', fontWeight: 700 }}>
+                  {totalUnread > 9 ? '9+' : totalUnread}
+                </span>
+              )}
+            </Link>
           </div>
         )}
       </div>
@@ -94,5 +122,6 @@ export default function Navbar() {
         )}
       </div>
     </nav>
+    </>
   );
 }

@@ -36,9 +36,10 @@ router.post('/conversations', auth, async (req, res) => {
 router.get('/conversations', auth, async (req, res) => {
   try {
     const { rows } = await db.query(
-      `SELECT c.*, l.title as listing_title, l.image_url, l.price,
+      `SELECT c.*, l.title as listing_title, l.image_url, l.price, l.status as listing_status,
               b.username as buyer_username, s.username as seller_username,
-              (SELECT body FROM messages WHERE conversation_id=c.id ORDER BY sent_at DESC LIMIT 1) as last_message
+              (SELECT body FROM messages WHERE conversation_id=c.id ORDER BY sent_at DESC LIMIT 1) as last_message,
+              (SELECT COUNT(*) FROM messages WHERE conversation_id=c.id AND sender_id != $1 AND read = FALSE)::int as unread_count
        FROM conversations c
        JOIN listings l ON l.id = c.listing_id
        JOIN users b ON b.id = c.buyer_id
@@ -48,6 +49,19 @@ router.get('/conversations', auth, async (req, res) => {
       [req.user.id]
     );
     res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PATCH /api/conversations/:id/read — mark all messages as read
+router.patch('/conversations/:id/read', auth, async (req, res) => {
+  try {
+    await db.query(
+      `UPDATE messages SET read=TRUE WHERE conversation_id=$1 AND sender_id != $2`,
+      [req.params.id, req.user.id]
+    );
+    res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }

@@ -51,6 +51,26 @@ router.patch('/me/avatar', auth, upload.single('avatar'), async (req, res) => {
   }
 });
 
+// POST /api/users/:id/block — toggle block
+router.post('/:id/block', auth, async (req, res) => {
+  if (req.params.id === req.user.id) return res.status(400).json({ error: 'Cannot block yourself' });
+  try {
+    const existing = await db.query(
+      'SELECT 1 FROM blocks WHERE blocker_id=$1 AND blocked_id=$2',
+      [req.user.id, req.params.id]
+    );
+    if (existing.rows.length) {
+      await db.query('DELETE FROM blocks WHERE blocker_id=$1 AND blocked_id=$2', [req.user.id, req.params.id]);
+      res.json({ blocked: false });
+    } else {
+      await db.query('INSERT INTO blocks (blocker_id, blocked_id) VALUES ($1,$2)', [req.user.id, req.params.id]);
+      res.json({ blocked: true });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // POST /api/users/:id/rate — rate a user
 router.post('/:id/rate', auth, async (req, res) => {
   const { score, comment, listing_id } = req.body;

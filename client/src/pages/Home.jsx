@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 import { Search, X, ChevronLeft, ChevronRight, Laptop, BookOpen, Sofa, Shirt, Wrench, Package } from 'lucide-react';
 import api from '../lib/api';
 import { useAuth } from '../hooks/useAuth';
@@ -17,11 +18,17 @@ const CATEGORIES = [
 
 export default function Home() {
   const { user } = useAuth();
+  const [searchParams] = useSearchParams();
   const [category, setCategory] = useState('');
-  const [search, setSearch]     = useState('');
+  const [search, setSearch]     = useState(searchParams.get('search') || '');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  useEffect(() => {
+    const q = searchParams.get('search');
+    if (q) setSearch(q);
+  }, [searchParams]);
 
   useFeed(user?.school);
 
