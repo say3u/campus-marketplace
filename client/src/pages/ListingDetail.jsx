@@ -20,6 +20,7 @@ export default function ListingDetail() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const [reported, setReported] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const { data: listing, isLoading } = useQuery({
     queryKey: ['listing', id],
@@ -51,7 +52,6 @@ export default function ListingDetail() {
 
   const isSeller = user?.id === listing.seller_id;
   const cat = CATEGORY_COLORS[listing.category] || CATEGORY_COLORS.Other;
-  const [copied, setCopied] = useState(false);
 
   function handleShare() {
     navigator.clipboard.writeText(window.location.href);
