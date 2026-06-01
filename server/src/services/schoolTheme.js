@@ -5,10 +5,25 @@ const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const FALLBACK = { primary: '#14B8A6', secondary: '#0D9488', light: '#CCFBF1', bg: '#F0FDFA' };
 
+// Basic sanity check — skip API call for obvious junk domains
+function isLikelyRealSchool(domain) {
+  if (!domain || !domain.endsWith('.edu')) return false;
+  const name = domain.slice(0, -4); // strip .edu
+  if (name.length < 3) return false;          // too short (e.g. "x.edu")
+  if (/^\d+$/.test(name)) return false;       // all numbers
+  if (/[^a-z0-9.\-]/i.test(name)) return false; // weird chars
+  return true;
+}
+
 async function getSchoolTheme(domain) {
   // Return cached if exists
   const cached = await db.query('SELECT * FROM school_themes WHERE domain=$1', [domain]);
   if (cached.rows.length) return cached.rows[0];
+
+  // Skip API call for domains that don't look like real schools
+  if (!isLikelyRealSchool(domain)) {
+    return { domain, primary_color: FALLBACK.primary, secondary_color: FALLBACK.secondary };
+  }
 
   // Ask Claude Haiku — cheapest model, perfect for a simple lookup
   let colors = FALLBACK;

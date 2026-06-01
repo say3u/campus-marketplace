@@ -84,15 +84,61 @@ export default function Home() {
               )}
             </div>
 
+            {/* Price range */}
+            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Price</p>
+
+            {/* Budget presets */}
+            <div className="grid grid-cols-2 gap-1.5 mb-3">
+              {[
+                { label: 'Under $10',  min: '',   max: '10'  },
+                { label: 'Under $25',  min: '',   max: '25'  },
+                { label: 'Under $50',  min: '',   max: '50'  },
+                { label: 'Under $100', min: '',   max: '100' },
+                { label: '$100+',      min: '100',max: ''    },
+                { label: 'Free',       min: '',   max: '0'   },
+              ].map(({ label, min, max }) => {
+                const active = minPrice === min && maxPrice === max;
+                return (
+                  <button key={label}
+                    onClick={() => { setMinPrice(min); setMaxPrice(max); }}
+                    className="text-xs font-medium py-1.5 px-2 rounded-lg border transition-colors"
+                    style={{
+                      backgroundColor: active ? 'var(--brand-bg)' : 'var(--surface2)',
+                      borderColor: active ? 'var(--brand)' : 'var(--border)',
+                      color: active ? 'var(--brand-dark)' : 'var(--text3)',
+                    }}>
+                    {label}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Custom range */}
+            <div className="flex items-center gap-1.5 mb-1">
+              <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
+                className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                style={inputStyle} />
+              <span className="text-xs flex-shrink-0" style={{ color: 'var(--muted)' }}>to</span>
+              <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
+                className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
+                style={inputStyle} />
+            </div>
+            {(minPrice || maxPrice) && (
+              <button onClick={() => { setMinPrice(''); setMaxPrice(''); }}
+                className="flex items-center gap-1 text-xs mt-1 mb-1" style={{ color: 'var(--muted)' }}>
+                <X size={10} /> Clear price
+              </button>
+            )}
+
             {/* Categories */}
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Category</p>
+            <p className="text-xs font-bold uppercase tracking-widest mb-2 mt-5" style={{ color: 'var(--muted)' }}>Category</p>
             <div className="space-y-0.5 mb-5">
               <button
                 onClick={() => setCategory('')}
                 className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors"
                 style={{
-                  backgroundColor: !category ? '#F0FDFA' : 'transparent',
-                  color: !category ? '#0D9488' : 'var(--text3)',
+                  backgroundColor: !category ? 'var(--brand-bg)' : 'transparent',
+                  color: !category ? 'var(--brand-dark)' : 'var(--text3)',
                 }}>
                 All categories
               </button>
@@ -109,24 +155,6 @@ export default function Home() {
                 </button>
               ))}
             </div>
-
-            {/* Price range */}
-            <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: 'var(--muted)' }}>Price</p>
-            <div className="flex items-center gap-1.5 mb-1">
-              <input type="number" placeholder="Min" value={minPrice} onChange={e => setMinPrice(e.target.value)}
-                className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
-                style={inputStyle} />
-              <span className="text-xs flex-shrink-0" style={{ color: 'var(--muted)' }}>to</span>
-              <input type="number" placeholder="Max" value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
-                className="w-full rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400/40"
-                style={inputStyle} />
-            </div>
-            {(minPrice || maxPrice) && (
-              <button onClick={() => { setMinPrice(''); setMaxPrice(''); }}
-                className="flex items-center gap-1 text-xs mt-1" style={{ color: 'var(--muted)' }}>
-                <X size={10} /> Clear price
-              </button>
-            )}
           </div>
         </aside>
 
