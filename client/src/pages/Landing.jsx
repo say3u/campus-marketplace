@@ -89,10 +89,10 @@ export default function Landing() {
             </button>
           </form>
           {/* ── Categories ── */}
-          <div className="flex border rounded-lg overflow-hidden mt-6" style={{ borderColor: 'var(--border)' }}>
+          <div className="flex border rounded-lg overflow-hidden mt-5 mb-5" style={{ borderColor: 'var(--border)' }}>
             {CATEGORIES.map(({ name }) => (
               <button key={name} onClick={() => openCategory(name)}
-                className="flex-1 py-2.5 text-sm font-semibold text-center transition-colors hover:opacity-75 border-r last:border-r-0"
+                className="flex-1 py-3.5 text-sm font-semibold text-center transition-colors hover:opacity-75 border-r last:border-r-0"
                 style={{ backgroundColor: 'var(--surface2)', borderColor: 'var(--border)', color: 'var(--text3)' }}>
                 {name}
               </button>
@@ -102,7 +102,7 @@ export default function Landing() {
 
         {/* ── Live listing marquee ── */}
         {previewListings.length > 0 && (
-          <div className="mt-10">
+          <div>
             <div className="marquee-container overflow-hidden cursor-pointer">
               {/* Duplicate cards for seamless loop */}
               <div className="marquee-track flex gap-3 w-max">
