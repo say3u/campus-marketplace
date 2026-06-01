@@ -67,7 +67,7 @@ export default function Landing() {
           </h1>
           <p className="text-lg leading-relaxed max-w-md mx-auto mb-8"
             style={{ color: 'var(--text3)' }}>
-            Students Only. Zero Fees.
+            Zero Fees. Students Only.
           </p>
 
           <form action="/register" className="flex gap-2 max-w-md mx-auto">
@@ -88,6 +88,16 @@ export default function Landing() {
               Search
             </button>
           </form>
+          {/* ── Categories ── */}
+          <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mt-6 max-w-3xl mx-auto">
+            {CATEGORIES.map(({ name }) => (
+              <button key={name} onClick={() => openCategory(name)}
+                className="py-4 px-4 border rounded-xl text-center transition-all hover:opacity-80"
+                style={{ backgroundColor: '#CCFBF1', borderColor: '#99F6E4' }}>
+                <span className="text-base font-bold" style={{ color: '#0D9488' }}>{name}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* ── Live listing marquee ── */}
@@ -127,19 +137,6 @@ export default function Landing() {
             </p>
           </div>
         )}
-      </div>
-
-      {/* ── Categories ───────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-6 pb-16">
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
-          {CATEGORIES.map(({ name }) => (
-            <button key={name} onClick={() => openCategory(name)}
-              className="py-4 px-4 border rounded-xl text-center transition-all hover:opacity-80"
-              style={{ backgroundColor: '#CCFBF1', borderColor: '#99F6E4' }}>
-              <span className="text-base font-bold" style={{ color: '#0D9488' }}>{name}</span>
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* ── Trust bar ────────────────────────────────────── */}
