@@ -90,35 +90,37 @@ export default function Landing() {
           </form>
         </div>
 
-        {/* ── Live listing preview strip ── */}
+        {/* ── Live listing marquee ── */}
         {previewListings.length > 0 && (
-          <div className="mt-10 px-6 overflow-x-auto scrollbar-hide">
-            <div className="flex gap-3 w-max mx-auto pb-1">
-              {previewListings.map(l => {
-                const cat = CATEGORY_COLORS[l.category] || { bg: '#F3F4F6', color: '#6B7280' };
-                return (
-                  <Link to="/register" key={l.id}
-                    className="flex-shrink-0 w-36 rounded-xl border overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5"
-                    style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
-                    <div className="w-full h-24 overflow-hidden"
-                      style={{ backgroundColor: 'var(--surface2)' }}>
-                      {l.image_url
-                        ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover" />
-                        : <div className="w-full h-full flex items-center justify-center text-2xl font-bold"
-                            style={{ color: 'var(--border)' }}>?</div>
-                      }
-                    </div>
-                    <div className="p-2">
-                      <p className="text-xs font-semibold truncate" style={{ color: 'var(--text)' }}>{l.title}</p>
-                      <p className="text-xs font-bold mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
-                      <span className="inline-block text-xs px-1.5 py-0.5 rounded-full mt-1"
-                        style={{ backgroundColor: cat.bg, color: cat.color, fontSize: '10px' }}>
-                        {l.category}
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
+          <div className="mt-10">
+            <div className="marquee-container overflow-hidden cursor-pointer">
+              {/* Duplicate cards for seamless loop */}
+              <div className="marquee-track flex gap-3 w-max">
+                {[...previewListings, ...previewListings].map((l, i) => {
+                  const cat = CATEGORY_COLORS[l.category] || { bg: '#F3F4F6', color: '#6B7280' };
+                  return (
+                    <Link to="/register" key={`${l.id}-${i}`}
+                      className="flex-shrink-0 w-40 rounded-xl border overflow-hidden transition-shadow hover:shadow-lg"
+                      style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
+                      <div className="w-full h-28 overflow-hidden" style={{ backgroundColor: 'var(--surface2)' }}>
+                        {l.image_url
+                          ? <img src={l.image_url} alt={l.title} className="w-full h-full object-cover" />
+                          : <div className="w-full h-full flex items-center justify-center text-2xl font-bold"
+                              style={{ color: 'var(--border)' }}>?</div>
+                        }
+                      </div>
+                      <div className="p-2.5">
+                        <p className="text-xs font-semibold truncate" style={{ color: 'var(--text)' }}>{l.title}</p>
+                        <p className="text-sm font-bold mt-0.5" style={{ color: '#14B8A6' }}>${Number(l.price).toFixed(2)}</p>
+                        <span className="inline-block px-1.5 py-0.5 rounded-full mt-1"
+                          style={{ backgroundColor: cat.bg, color: cat.color, fontSize: '10px', fontWeight: 600 }}>
+                          {l.category}
+                        </span>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
             <p className="text-xs mt-3" style={{ color: 'var(--muted)' }}>
               Sign up to see all listings from students at your school

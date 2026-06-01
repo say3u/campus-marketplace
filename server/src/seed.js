@@ -15,9 +15,9 @@ const PASSWORD = 'password123';
 
 // Use a real .edu domain so the school field parses correctly
 const USERS = [
-  { email: 'alex@mit.edu',    username: 'alex_m'   },
-  { email: 'priya@mit.edu',   username: 'priya_k'  },
-  { email: 'jordan@mit.edu',  username: 'jordan_t' },
+  { email: 'alex@mit.edu',   username: 'alex_m',   avatar: 'https://api.dicebear.com/8.x/avataaars/svg?seed=alex_m&backgroundColor=b6e3f4' },
+  { email: 'priya@mit.edu',  username: 'priya_k',  avatar: 'https://api.dicebear.com/8.x/avataaars/svg?seed=priya_k&backgroundColor=ffd5dc' },
+  { email: 'jordan@mit.edu', username: 'jordan_t', avatar: 'https://api.dicebear.com/8.x/avataaars/svg?seed=jordan_t&backgroundColor=c0aede' },
 ];
 
 const LISTINGS = [
@@ -61,11 +61,11 @@ async function seed() {
   for (const u of USERS) {
     const school = u.email.split('@')[1];
     const { rows } = await db.query(
-      `INSERT INTO users (email, username, password, school)
-       VALUES ($1, $2, $3, $4)
-       ON CONFLICT (email) DO UPDATE SET username=EXCLUDED.username
+      `INSERT INTO users (email, username, password, school, avatar_url)
+       VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (email) DO UPDATE SET username=EXCLUDED.username, avatar_url=EXCLUDED.avatar_url
        RETURNING id, username`,
-      [u.email, u.username, hash, school]
+      [u.email, u.username, hash, school, u.avatar]
     );
     userMap[u.username] = rows[0].id;
     console.log(`  user: ${u.username} (id ${rows[0].id})`);
