@@ -71,7 +71,7 @@ export default function Landing() {
       </div>
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <div className="pt-16 pb-10 text-center">
+      <div className="pt-24 pb-10 text-center">
         <div className="max-w-2xl mx-auto px-6">
           <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.1] mb-4 tracking-tight"
             style={{ color: 'var(--text)' }}>
