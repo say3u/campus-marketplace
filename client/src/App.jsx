@@ -15,6 +15,8 @@ import EditListing from './pages/EditListing';
 import Favorites from './pages/Favorites';
 import VerifyEmail from './pages/VerifyEmail';
 import Admin from './pages/Admin';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
 import { useSchoolTheme } from './hooks/useSchoolTheme';
 
 const queryClient = new QueryClient();
@@ -60,6 +62,8 @@ export default function App() {
               <Route path="/favorites" element={<PrivateRoute><Favorites /></PrivateRoute>} />
               <Route path="/verify/:token" element={<VerifyEmail />} />
               <Route path="/admin" element={<PrivateRoute><Admin /></PrivateRoute>} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
             </Routes>
           </div>
         </BrowserRouter>

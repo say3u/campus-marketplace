@@ -1,11 +1,13 @@
 ﻿import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useAuth } from '../hooks/useAuth';
 
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', username: '', password: '' });
+  const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -62,7 +64,17 @@ export default function Register() {
                 {error}
               </p>
             )}
-            <button type="submit" disabled={loading}
+            <label className="flex items-start gap-2 cursor-pointer">
+              <input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)}
+                className="mt-0.5 flex-shrink-0" />
+              <span className="text-xs" style={{ color: 'var(--muted)' }}>
+                I agree to the{' '}
+                <Link to="/terms" target="_blank" className="underline font-medium" style={{ color: 'var(--brand)' }}>Terms of Service</Link>
+                {' '}and{' '}
+                <Link to="/privacy" target="_blank" className="underline font-medium" style={{ color: 'var(--brand)' }}>Privacy Policy</Link>
+              </span>
+            </label>
+            <button type="submit" disabled={loading || !agreed}
               className="w-full text-white py-2 rounded-lg text-sm font-semibold disabled:opacity-50 hover:opacity-85 transition-opacity"
               style={{ backgroundColor: 'var(--brand)' }}>
               {loading ? 'Creating account...' : 'Create account'}

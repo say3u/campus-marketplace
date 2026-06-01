@@ -162,7 +162,11 @@ export default function Landing() {
       <div className="border-t px-6 py-5" style={{ borderColor: 'var(--border)' }}>
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <span className="text-sm font-bold" style={{ color: 'var(--brand)' }}>doormly</span>
-          <span className="text-xs" style={{ color: 'var(--very-muted)' }}>&copy; 2025 doormly. Built for students.</span>
+          <div className="flex items-center gap-4">
+            <Link to="/terms" className="text-xs hover:underline" style={{ color: 'var(--very-muted)' }}>Terms</Link>
+            <Link to="/privacy" className="text-xs hover:underline" style={{ color: 'var(--very-muted)' }}>Privacy</Link>
+            <span className="text-xs" style={{ color: 'var(--very-muted)' }}>&copy; 2025 doormly</span>
+          </div>
         </div>
       </div>
 
