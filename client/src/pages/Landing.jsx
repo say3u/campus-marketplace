@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
-  Search, ArrowRight, ShieldCheck, Tag, MessageCircle,
+  ArrowRight, ShieldCheck, Tag, MessageCircle,
   Laptop, BookOpen, Sofa, Shirt, Wrench, Package, X,
 } from 'lucide-react';
 import api from '../lib/api';
@@ -57,6 +57,19 @@ export default function Landing() {
   return (
     <div style={{ backgroundColor: 'var(--bg)' }}>
 
+      {/* ── Category sub-bar ─────────────────────────────── */}
+      <div className="border-b" style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
+        <div className="flex">
+          {CATEGORIES.map(({ name }) => (
+            <button key={name} onClick={() => openCategory(name)}
+              className="flex-1 py-3 text-sm font-semibold text-center transition-colors hover:opacity-70 border-r last:border-r-0"
+              style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text3)' }}>
+              {name}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* ── Hero ─────────────────────────────────────────── */}
       <div className="pt-16 pb-10 text-center">
         <div className="max-w-2xl mx-auto px-6">
@@ -69,35 +82,6 @@ export default function Landing() {
             style={{ color: 'var(--text3)' }}>
             Zero Fees. Students Only.
           </p>
-
-          <form action="/register" className="flex gap-2 max-w-md mx-auto">
-            <div className="relative flex-1">
-              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
-                style={{ color: 'var(--muted)' }} />
-              <input
-                type="text"
-                name="q"
-                placeholder="Search for anything..."
-                className="w-full rounded-xl pl-10 pr-4 py-3 text-sm border focus:outline-none focus:ring-2 focus:ring-teal-400/40"
-                style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)' }}
-              />
-            </div>
-            <button type="submit"
-              className="font-semibold text-white px-5 py-3 rounded-xl text-sm transition-opacity hover:opacity-85 whitespace-nowrap"
-              style={{ backgroundColor: '#14B8A6' }}>
-              Search
-            </button>
-          </form>
-          {/* ── Categories ── */}
-          <div className="flex border rounded-lg overflow-hidden mt-5 mb-5" style={{ borderColor: 'var(--border)' }}>
-            {CATEGORIES.map(({ name }) => (
-              <button key={name} onClick={() => openCategory(name)}
-                className="flex-1 py-3.5 text-sm font-semibold text-center transition-colors hover:opacity-75 border-r last:border-r-0"
-                style={{ backgroundColor: 'var(--surface2)', borderColor: 'var(--border)', color: 'var(--text3)' }}>
-                {name}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* ── Live listing marquee ── */}
