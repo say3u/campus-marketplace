@@ -39,7 +39,7 @@ export default function Navbar() {
     <div className="sticky top-0 z-50">
     {user && !user.email_verified && !bannerDismissed && (
       <div className="flex items-center justify-center gap-3 text-xs py-2 px-4 font-medium"
-        style={{ backgroundColor: '#FEF9C3', color: '#854D0E' }}>
+        style={{ backgroundColor: '#FEF2F2', color: '#991B1B' }}>
         <span>
           Please verify your email to unlock all features.{' '}
           <button onClick={() => api.post('/auth/resend-verification', { email: user.email }).catch(() => {})}
@@ -47,7 +47,7 @@ export default function Navbar() {
         </span>
         <button onClick={() => setBannerDismissed(true)}
           className="ml-2 text-base leading-none font-bold hover:opacity-60"
-          style={{ color: '#854D0E' }}>✕</button>
+          style={{ color: '#991B1B' }}>✕</button>
       </div>
     )}
     <nav className="h-16 flex items-center px-6 border-b gap-4"
