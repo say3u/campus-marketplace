@@ -73,8 +73,8 @@ export default function Landing() {
       {/* ── Hero ─────────────────────────────────────────── */}
       <div className="pt-44 pb-10 text-center">
         <div className="max-w-2xl mx-auto px-6">
-          <h1 className="text-5xl sm:text-6xl font-extrabold leading-[1.1] mb-4 tracking-tight"
-            style={{ color: 'var(--text)' }}>
+          <h1 className="text-5xl sm:text-6xl leading-[1.1] mb-4 tracking-tight"
+            style={{ color: 'var(--text)', fontFamily: "'Syne', sans-serif", fontWeight: 800 }}>
             Buy &amp; sell anything<br />
             <span style={{ color: 'var(--brand)' }}>on your campus.</span>
           </h1>
