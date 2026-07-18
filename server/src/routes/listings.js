@@ -11,10 +11,9 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
-// GET /api/listings — paginated, filterable
+// GET /api/listings — cursor-paginated, filterable
 router.get('/', async (req, res) => {
-  const { category, school, search, minPrice, maxPrice, page = 1, limit = 20 } = req.query;
-  const offset = (page - 1) * limit;
+  const { category, school, search, minPrice, maxPrice, limit = 20, cursor } = req.query;
   const params = [];
   const conditions = ["l.status = 'active'"];
 
@@ -24,7 +23,16 @@ router.get('/', async (req, res) => {
   if (minPrice) { params.push(minPrice);      conditions.push(`l.price >= $${params.length}`); }
   if (maxPrice) { params.push(maxPrice);      conditions.push(`l.price <= $${params.length}`); }
 
-  params.push(limit, offset);
+  // Cursor: "created_at__id" — skip boosted rows from cursor logic, handle separately
+  if (cursor) {
+    const [cursorDate, cursorId] = cursor.split('__');
+    params.push(cursorDate, cursorId);
+    conditions.push(
+      `(l.boosted = FALSE OR l.boosted_until <= NOW()) AND (l.created_at < $${params.length - 1} OR (l.created_at = $${params.length - 1} AND l.id < $${params.length}))`
+    );
+  }
+
+  params.push(Number(limit) + 1); // fetch one extra to detect hasMore
   const where = conditions.join(' AND ');
 
   try {
@@ -32,11 +40,17 @@ router.get('/', async (req, res) => {
       `SELECT l.*, u.username, u.rep_score, u.school
        FROM listings l JOIN users u ON u.id = l.seller_id
        WHERE ${where}
-       ORDER BY (l.boosted = TRUE AND l.boosted_until > NOW()) DESC, l.created_at DESC
-       LIMIT $${params.length - 1} OFFSET $${params.length}`,
+       ORDER BY (l.boosted = TRUE AND l.boosted_until > NOW()) DESC, l.created_at DESC, l.id DESC
+       LIMIT $${params.length}`,
       params
     );
-    res.json(rows);
+
+    const hasMore = rows.length > Number(limit);
+    const items = hasMore ? rows.slice(0, Number(limit)) : rows;
+    const last = items[items.length - 1];
+    const nextCursor = hasMore && last ? `${last.created_at.toISOString()}__${last.id}` : null;
+
+    res.json({ items, nextCursor, hasMore });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
@@ -84,13 +98,19 @@ router.post('/:id/favorite', auth, async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { rows } = await db.query(
+      `UPDATE listings SET view_count = view_count + 1 WHERE id = $1
+       RETURNING id`,
+      [req.params.id]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'Not found' });
+
+    const { rows: full } = await db.query(
       `SELECT l.*, u.username, u.rep_score, u.school, u.avatar_url
        FROM listings l JOIN users u ON u.id = l.seller_id
        WHERE l.id = $1`,
       [req.params.id]
     );
-    if (!rows.length) return res.status(404).json({ error: 'Not found' });
-    res.json(rows[0]);
+    res.json(full[0]);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }

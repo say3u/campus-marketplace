@@ -79,6 +79,15 @@ db.query(`
     reason TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW()
   );
+  ALTER TABLE listings ADD COLUMN IF NOT EXISTS view_count INTEGER DEFAULT 0;
+  CREATE INDEX IF NOT EXISTS idx_listings_status_created ON listings (status, created_at DESC);
+  CREATE INDEX IF NOT EXISTS idx_listings_category ON listings (category);
+  CREATE INDEX IF NOT EXISTS idx_listings_seller ON listings (seller_id);
+  CREATE INDEX IF NOT EXISTS idx_listings_price ON listings (price);
+  CREATE INDEX IF NOT EXISTS idx_listings_boosted ON listings (boosted, boosted_until);
+  CREATE INDEX IF NOT EXISTS idx_users_school ON users (school);
+  CREATE INDEX IF NOT EXISTS idx_favorites_user ON favorites (user_id);
+  CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages (conversation_id, sent_at DESC);
 `).catch(e => console.error('Migration:', e.message));
 
 app.use('/api/admin', require('./routes/admin'));

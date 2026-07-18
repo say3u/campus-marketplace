@@ -34,7 +34,7 @@ export default function Landing() {
   // Hero preview listings
   const { data: previewListings = [] } = useQuery({
     queryKey: ['hero-preview'],
-    queryFn: () => api.get('/listings', { params: { limit: 10 } }).then(r => r.data),
+    queryFn: () => api.get('/listings', { params: { limit: 10 } }).then(r => r.data.items),
     staleTime: 60_000,
   });
 
@@ -44,7 +44,7 @@ export default function Landing() {
     queryFn: () =>
       api.get('/listings', {
         params: { ...(activeCategory && { category: activeCategory }), limit: 18 },
-      }).then(r => r.data),
+      }).then(r => r.data.items),
     enabled: !!activeCategory,
     staleTime: 60_000,
   });

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { Search, X, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Laptop, BookOpen, Sofa, Shirt, Wrench, Package } from 'lucide-react';
 import api from '../lib/api';
@@ -34,17 +34,45 @@ export default function Home() {
 
   useFeed(user?.school);
 
-  const { data: listings = [], isLoading } = useQuery({
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
     queryKey: ['listings', { category, search, minPrice, maxPrice }],
-    queryFn: () => api.get('/listings', {
+    queryFn: ({ pageParam }) => api.get('/listings', {
       params: {
         category:  category  || undefined,
         search:    search    || undefined,
         minPrice:  minPrice  || undefined,
         maxPrice:  maxPrice  || undefined,
+        cursor:    pageParam || undefined,
+        limit:     20,
       },
     }).then(r => r.data),
+    getNextPageParam: last => last.nextCursor ?? undefined,
+    initialPageParam: undefined,
   });
+
+  const listings = data?.pages.flatMap(p => p.items) ?? [];
+
+  // Infinite scroll sentinel
+  const sentinelRef = useRef(null);
+  const onIntersect = useCallback(entries => {
+    if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(onIntersect, { rootMargin: '200px' });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [onIntersect]);
 
   const hasFilters = category || minPrice || maxPrice;
   const hour = new Date().getHours();
@@ -209,9 +237,9 @@ export default function Home() {
         {/* Listings area — only this scrolls */}
         <div className="flex-1 overflow-y-auto p-6">
           {/* Count */}
-          {!isLoading && (
+          {!isLoading && listings.length > 0 && (
             <p className="text-xs mb-4" style={{ color: 'var(--very-muted)' }}>
-              {listings.length} {listings.length === 1 ? 'listing' : 'listings'}
+              {listings.length}{hasNextPage ? '+' : ''} {listings.length === 1 ? 'listing' : 'listings'}
               {category ? ` in ${category}` : ''}
               {search ? ` matching "${search}"` : ''}
             </p>
@@ -238,9 +266,22 @@ export default function Home() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
-              {listings.map(l => <ListingCard key={l.id} listing={l} />)}
-            </div>
+            <>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3">
+                {listings.map(l => <ListingCard key={l.id} listing={l} />)}
+              </div>
+              {/* Infinite scroll sentinel */}
+              <div ref={sentinelRef} className="h-12 flex items-center justify-center mt-4">
+                {isFetchingNextPage && (
+                  <div className="flex gap-1">
+                    {[0,1,2].map(i => (
+                      <div key={i} className="w-1.5 h-1.5 rounded-full animate-bounce"
+                        style={{ backgroundColor: 'var(--brand)', animationDelay: `${i * 0.15}s` }} />
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>
