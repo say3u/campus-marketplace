@@ -88,6 +88,7 @@ db.query(`
   CREATE INDEX IF NOT EXISTS idx_users_school ON users (school);
   CREATE INDEX IF NOT EXISTS idx_favorites_user ON favorites (user_id);
   CREATE INDEX IF NOT EXISTS idx_messages_conversation ON messages (conversation_id, sent_at DESC);
+  CREATE INDEX IF NOT EXISTS idx_listings_fts ON listings USING GIN (to_tsvector('english', title || ' ' || COALESCE(description, '')));
 `).catch(e => console.error('Migration:', e.message));
 
 app.use('/api/admin', require('./routes/admin'));

@@ -11,17 +11,24 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
-// GET /api/listings — cursor-paginated, filterable
+// GET /api/listings — cursor-paginated, filterable, full-text search
 router.get('/', async (req, res) => {
   const { category, school, search, minPrice, maxPrice, limit = 20, cursor } = req.query;
   const params = [];
   const conditions = ["l.status = 'active'"];
 
-  if (category) { params.push(category);      conditions.push(`l.category = $${params.length}`); }
-  if (school)   { params.push(school);        conditions.push(`u.school = $${params.length}`); }
-  if (search)   { params.push(`%${search}%`); conditions.push(`l.title ILIKE $${params.length}`); }
-  if (minPrice) { params.push(minPrice);      conditions.push(`l.price >= $${params.length}`); }
-  if (maxPrice) { params.push(maxPrice);      conditions.push(`l.price <= $${params.length}`); }
+  if (category) { params.push(category); conditions.push(`l.category = $${params.length}`); }
+  if (school)   { params.push(school);   conditions.push(`u.school = $${params.length}`); }
+  if (minPrice) { params.push(minPrice); conditions.push(`l.price >= $${params.length}`); }
+  if (maxPrice) { params.push(maxPrice); conditions.push(`l.price <= $${params.length}`); }
+
+  // Full-text search across title + description with prefix matching
+  if (search) {
+    params.push(search);
+    conditions.push(
+      `(to_tsvector('english', l.title || ' ' || COALESCE(l.description, '')) @@ websearch_to_tsquery('english', $${params.length}) OR l.title ILIKE $${params.length} || '%')`
+    );
+  }
 
   // Cursor: "created_at__id" — skip boosted rows from cursor logic, handle separately
   if (cursor) {
