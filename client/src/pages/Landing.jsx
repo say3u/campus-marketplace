@@ -58,7 +58,7 @@ export default function Landing() {
     <div style={{ backgroundColor: 'var(--bg)' }}>
 
       {/* ── Category sub-bar ─────────────────────────────── */}
-      <div className="sticky top-16 z-40 border-b" style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
+      <div className="sticky top-16 z-40 border-b overflow-x-auto" style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--border)' }}>
         <div className="flex w-max">
           {CATEGORIES.map(({ name }) => (
             <button key={name} onClick={() => openCategory(name)}
