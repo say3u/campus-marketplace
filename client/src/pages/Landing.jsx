@@ -123,21 +123,38 @@ export default function Landing() {
         )}
       </div>
 
-      {/* ── Trust bar ────────────────────────────────────── */}
-      <div className="border-y py-10" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface)' }}>
-        <div className="max-w-3xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      {/* ── Trust bar (image cards) ──────────────────────── */}
+      <div className="py-12 px-6" style={{ backgroundColor: 'var(--bg)' }}>
+        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { icon: Tag,           title: 'Always free',   desc: 'Zero fees for buyers and sellers, ever.' },
-            { icon: ShieldCheck,   title: '.edu verified', desc: 'Every account requires a school email.' },
-            { icon: MessageCircle, title: 'Direct chat',   desc: 'Message sellers instantly inside the app.' },
-          ].map(({ icon: Icon, title, desc }) => (
-            <div key={title} className="flex flex-col items-center gap-2">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-1"
-                style={{ backgroundColor: 'var(--brand-bg)' }}>
-                <Icon size={18} style={{ color: 'var(--brand)' }} />
+            {
+              icon: Tag, title: 'Always free', desc: 'Zero fees for buyers and sellers, ever.',
+              img: 'https://images.unsplash.com/photo-1554672408-17d1c1e7f8d0?w=800&q=80',
+            },
+            {
+              icon: ShieldCheck, title: '.edu verified', desc: 'Every account requires a school email.',
+              img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80',
+            },
+            {
+              icon: MessageCircle, title: 'Direct chat', desc: 'Message sellers instantly inside the app.',
+              img: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=800&q=80',
+            },
+          ].map(({ icon: Icon, title, desc, img }) => (
+            <div key={title}
+              className="relative rounded-2xl overflow-hidden h-52 flex flex-col justify-end p-6 group">
+              {/* Background image */}
+              <img src={img} alt="" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              {/* Gradient overlay */}
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.15) 100%)' }} />
+              {/* Content */}
+              <div className="relative">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-2"
+                  style={{ backgroundColor: 'var(--brand)' }}>
+                  <Icon size={17} className="text-white" />
+                </div>
+                <p className="font-bold text-base text-white">{title}</p>
+                <p className="text-sm text-white/80 mt-0.5">{desc}</p>
               </div>
-              <p className="font-bold text-sm" style={{ color: 'var(--text)' }}>{title}</p>
-              <p className="text-sm" style={{ color: 'var(--muted)' }}>{desc}</p>
             </div>
           ))}
         </div>
