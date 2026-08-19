@@ -129,11 +129,11 @@ export default function Landing() {
           {[
             {
               icon: Tag, title: 'Always free', desc: 'Zero fees for buyers and sellers, ever.',
-              img: 'https://images.unsplash.com/photo-1554672408-17d1c1e7f8d0?w=800&q=80',
+              img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
             },
             {
               icon: ShieldCheck, title: '.edu verified', desc: 'Every account requires a school email.',
-              img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80',
+              img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&q=80',
             },
             {
               icon: MessageCircle, title: 'Direct chat', desc: 'Message sellers instantly inside the app.',
