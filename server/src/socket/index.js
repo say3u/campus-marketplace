@@ -26,6 +26,28 @@ module.exports = function initSocket(io) {
       socket.leave(`conversation:${conversationId}`);
     });
 
+    // Typing indicators
+    socket.on('typing:start', (conversationId) => {
+      socket.to(`conversation:${conversationId}`).emit('typing:start', { userId: socket.user.id });
+    });
+    socket.on('typing:stop', (conversationId) => {
+      socket.to(`conversation:${conversationId}`).emit('typing:stop', { userId: socket.user.id });
+    });
+
+    // Read receipts — mark the other party's messages as read
+    socket.on('message:read', async (conversationId) => {
+      try {
+        await db.query(
+          `UPDATE messages SET read = TRUE
+           WHERE conversation_id = $1 AND sender_id <> $2 AND read = FALSE`,
+          [conversationId, socket.user.id]
+        );
+        socket.to(`conversation:${conversationId}`).emit('message:read', { byUserId: socket.user.id });
+      } catch (err) {
+        console.error('message:read error', err);
+      }
+    });
+
     // Send a message
     socket.on('message:send', async ({ conversationId, body }) => {
       if (!body?.trim()) return;

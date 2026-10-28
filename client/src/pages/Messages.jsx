@@ -10,7 +10,7 @@ function ChatPanel({ conversation, other }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { messages, loading, sendMessage } = useChat(conversation.id);
+  const { messages, loading, sendMessage, otherTyping, otherRead, notifyTyping } = useChat(conversation.id);
   const [draft, setDraft] = useState('');
   const [blocking, setBlocking] = useState(false);
   const [markingSold, setMarkingSold] = useState(false);
@@ -28,7 +28,7 @@ function ChatPanel({ conversation, other }) {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+  }, [messages, otherTyping]);
 
   function handleSend(e) {
     e.preventDefault();
@@ -99,8 +99,9 @@ function ChatPanel({ conversation, other }) {
         {messages.length === 0 && (
           <p className="text-center text-sm py-8" style={{ color: 'var(--muted)' }}>No messages yet. Say hi!</p>
         )}
-        {messages.map(m => {
+        {messages.map((m, i) => {
           const mine = m.sender_id === user.id;
+          const isLastMine = mine && i === messages.length - 1;
           return (
             <div key={m.id} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}>
               <div className="max-w-xs lg:max-w-sm">
@@ -114,17 +115,30 @@ function ChatPanel({ conversation, other }) {
                 </div>
                 <p className="text-xs mt-1 px-1" style={{ color: 'var(--very-muted)', textAlign: mine ? 'right' : 'left' }}>
                   {new Date(m.sent_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  {isLastMine && otherRead && <span style={{ color: 'var(--brand)' }}> · Read</span>}
                 </p>
               </div>
             </div>
           );
         })}
+        {/* Typing indicator */}
+        {otherTyping && (
+          <div className="flex justify-start">
+            <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1"
+              style={{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)' }}>
+              {[0, 1, 2].map(i => (
+                <span key={i} className="w-1.5 h-1.5 rounded-full animate-bounce"
+                  style={{ backgroundColor: 'var(--muted)', animationDelay: `${i * 0.15}s` }} />
+              ))}
+            </div>
+          </div>
+        )}
         <div ref={bottomRef} />
       </div>
 
       {/* Input */}
       <form onSubmit={handleSend} className="p-4 border-t flex gap-2" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--surface)' }}>
-        <input value={draft} onChange={e => setDraft(e.target.value)} placeholder="Type a message..."
+        <input value={draft} onChange={e => { setDraft(e.target.value); notifyTyping(); }} placeholder="Type a message..."
           className="flex-1 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-teal-400/40"
           style={{ backgroundColor: 'var(--bg)', border: '1px solid var(--border)', color: 'var(--text)' }} />
         <button type="submit" disabled={!draft.trim()}
