@@ -13,6 +13,7 @@ import Messages from './pages/Messages';
 import Profile from './pages/Profile';
 import EditListing from './pages/EditListing';
 import Favorites from './pages/Favorites';
+import Dashboard from './pages/Dashboard';
 import VerifyEmail from './pages/VerifyEmail';
 import Admin from './pages/Admin';
 import Terms from './pages/Terms';
@@ -60,6 +61,7 @@ export default function App() {
               <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
               <Route path="/listings/:id/edit" element={<PrivateRoute><EditListing /></PrivateRoute>} />
               <Route path="/favorites" element={<PrivateRoute><Favorites /></PrivateRoute>} />
+              <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
               <Route path="/verify/:token" element={<VerifyEmail />} />
               <Route path="/admin" element={<PrivateRoute><Admin /></PrivateRoute>} />
               <Route path="/terms" element={<Terms />} />

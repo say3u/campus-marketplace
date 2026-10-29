@@ -69,6 +69,8 @@ export default function Navbar() {
                 style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Browse</Link>
               <Link to="/favorites" className="text-sm font-medium transition-colors"
                 style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Saved</Link>
+              <Link to="/dashboard" className="text-sm font-medium transition-colors"
+                style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Dashboard</Link>
               <Link to="/messages" className="text-sm font-medium transition-colors relative"
                 style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>
                 Messages
@@ -154,6 +156,7 @@ export default function Navbar() {
         <div className="md:hidden flex items-center gap-5 px-4 pb-2.5 text-sm font-medium overflow-x-auto">
           <Link to="/browse" style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Browse</Link>
           <Link to="/favorites" style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Saved</Link>
+          <Link to="/dashboard" style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>Dashboard</Link>
           <Link to="/messages" className="relative" style={{ color: dark ? '#A3A3A3' : '#4B5563' }}>
             Messages
             {totalUnread > 0 && (

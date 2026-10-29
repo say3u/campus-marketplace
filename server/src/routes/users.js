@@ -96,6 +96,56 @@ router.post('/:id/rate', auth, async (req, res) => {
   }
 });
 
+// GET /api/users/me/dashboard — seller analytics
+router.get('/me/dashboard', auth, async (req, res) => {
+  try {
+    const stats = await db.query(
+      `SELECT
+         COUNT(*)::int                                            AS total_listings,
+         COUNT(*) FILTER (WHERE status = 'active')::int           AS active_listings,
+         COUNT(*) FILTER (WHERE status = 'sold')::int             AS sold_listings,
+         COALESCE(SUM(view_count), 0)::int                        AS total_views,
+         COALESCE(SUM(price) FILTER (WHERE status = 'sold'), 0)   AS revenue_sold
+       FROM listings WHERE seller_id = $1`,
+      [req.user.id]
+    );
+
+    const favs = await db.query(
+      `SELECT COUNT(*)::int AS total_favorites
+       FROM favorites f JOIN listings l ON l.id = f.listing_id
+       WHERE l.seller_id = $1`,
+      [req.user.id]
+    );
+
+    const rating = await db.query(
+      `SELECT COALESCE(ROUND(AVG(score), 1), 0) AS avg_rating, COUNT(*)::int AS rating_count
+       FROM ratings WHERE ratee_id = $1`,
+      [req.user.id]
+    );
+
+    const topListings = await db.query(
+      `SELECT l.id, l.title, l.price, l.view_count, l.status, l.image_url,
+              (SELECT COUNT(*)::int FROM favorites f WHERE f.listing_id = l.id) AS favorites
+       FROM listings l
+       WHERE l.seller_id = $1
+       ORDER BY l.view_count DESC NULLS LAST, l.created_at DESC
+       LIMIT 5`,
+      [req.user.id]
+    );
+
+    res.json({
+      ...stats.rows[0],
+      total_favorites: favs.rows[0].total_favorites,
+      avg_rating: Number(rating.rows[0].avg_rating),
+      rating_count: rating.rows[0].rating_count,
+      top_listings: topListings.rows,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // GET /api/users/me/listings
 router.get('/me/listings', auth, async (req, res) => {
   try {
