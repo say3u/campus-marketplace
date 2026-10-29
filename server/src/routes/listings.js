@@ -13,7 +13,8 @@ const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 // GET /api/listings — cursor-paginated, filterable, full-text search
 router.get('/', async (req, res) => {
-  const { category, school, search, minPrice, maxPrice, limit = 20, cursor } = req.query;
+  const { category, school, search, minPrice, maxPrice, limit = 20, cursor, sort } = req.query;
+  const trending = sort === 'trending';
   const params = [];
   const conditions = ["l.status = 'active'"];
 
@@ -30,8 +31,8 @@ router.get('/', async (req, res) => {
     );
   }
 
-  // Cursor: "created_at__id" — skip boosted rows from cursor logic, handle separately
-  if (cursor) {
+  // Cursor only applies to the chronological feed (trending loads a single ranked page)
+  if (cursor && !trending) {
     const [cursorDate, cursorId] = cursor.split('__');
     params.push(cursorDate, cursorId);
     conditions.push(
@@ -42,18 +43,27 @@ router.get('/', async (req, res) => {
   params.push(Number(limit) + 1); // fetch one extra to detect hasMore
   const where = conditions.join(' AND ');
 
+  // Trending: engagement score (views + weighted saves) decayed by listing age.
+  // Gravity formula keeps fresh, popular listings on top without pinning old hits forever.
+  const orderBy = trending
+    ? `(
+         (l.view_count + 4 * (SELECT COUNT(*) FROM favorites f WHERE f.listing_id = l.id) + 1)
+         / POWER(EXTRACT(EPOCH FROM (NOW() - l.created_at)) / 3600 + 2, 1.5)
+       ) DESC, l.created_at DESC`
+    : `(l.boosted = TRUE AND l.boosted_until > NOW()) DESC, l.created_at DESC, l.id DESC`;
+
   try {
     const { rows } = await db.query(
       `SELECT l.*, u.username, u.rep_score, u.school
        FROM listings l JOIN users u ON u.id = l.seller_id
        WHERE ${where}
-       ORDER BY (l.boosted = TRUE AND l.boosted_until > NOW()) DESC, l.created_at DESC, l.id DESC
+       ORDER BY ${orderBy}
        LIMIT $${params.length}`,
       params
     );
 
-    const hasMore = rows.length > Number(limit);
-    const items = hasMore ? rows.slice(0, Number(limit)) : rows;
+    const hasMore = !trending && rows.length > Number(limit);
+    const items = hasMore ? rows.slice(0, Number(limit)) : rows.slice(0, Number(limit));
     const last = items[items.length - 1];
     const nextCursor = hasMore && last ? `${last.created_at.toISOString()}__${last.id}` : null;
 

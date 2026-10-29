@@ -26,6 +26,7 @@ export default function Home() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [priceOpen, setPriceOpen] = useState(true);
   const [catOpen, setCatOpen] = useState(true);
+  const [sort, setSort] = useState('latest');
 
   useEffect(() => {
     const q = searchParams.get('search');
@@ -41,15 +42,16 @@ export default function Home() {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    queryKey: ['listings', { category, search, minPrice, maxPrice }],
+    queryKey: ['listings', { category, search, minPrice, maxPrice, sort }],
     queryFn: ({ pageParam }) => api.get('/listings', {
       params: {
         category:  category  || undefined,
         search:    search    || undefined,
         minPrice:  minPrice  || undefined,
         maxPrice:  maxPrice  || undefined,
+        sort:      sort === 'trending' ? 'trending' : undefined,
         cursor:    pageParam || undefined,
-        limit:     20,
+        limit:     sort === 'trending' ? 40 : 20,
       },
     }).then(r => r.data),
     getNextPageParam: last => last.nextCursor ?? undefined,
@@ -236,14 +238,32 @@ export default function Home() {
 
         {/* Listings area — only this scrolls */}
         <div className="flex-1 overflow-y-auto p-6">
-          {/* Count */}
-          {!isLoading && listings.length > 0 && (
-            <p className="text-xs mb-4" style={{ color: 'var(--very-muted)' }}>
-              {listings.length}{hasNextPage ? '+' : ''} {listings.length === 1 ? 'listing' : 'listings'}
-              {category ? ` in ${category}` : ''}
-              {search ? ` matching "${search}"` : ''}
-            </p>
-          )}
+          {/* Count + sort */}
+          <div className="flex items-center justify-between mb-4 gap-3">
+            {!isLoading && listings.length > 0 ? (
+              <p className="text-xs" style={{ color: 'var(--very-muted)' }}>
+                {listings.length}{hasNextPage ? '+' : ''} {listings.length === 1 ? 'listing' : 'listings'}
+                {category ? ` in ${category}` : ''}
+                {search ? ` matching "${search}"` : ''}
+              </p>
+            ) : <span />}
+            {!search && (
+              <div className="flex items-center rounded-lg p-0.5 flex-shrink-0"
+                style={{ backgroundColor: 'var(--surface2)', border: '1px solid var(--border)' }}>
+                {['latest', 'trending'].map(opt => (
+                  <button key={opt} onClick={() => setSort(opt)}
+                    className="text-xs font-semibold px-3 py-1 rounded-md transition-colors capitalize"
+                    style={{
+                      backgroundColor: sort === opt ? 'var(--surface)' : 'transparent',
+                      color: sort === opt ? 'var(--brand)' : 'var(--muted)',
+                      boxShadow: sort === opt ? '0 1px 2px rgba(0,0,0,0.06)' : 'none',
+                    }}>
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* Grid */}
           {isLoading ? (
